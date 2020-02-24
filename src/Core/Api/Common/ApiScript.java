@@ -1,4 +1,4 @@
-package Core;
+package Core.Api.Common;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ public interface ApiScript {
 
     void paint(Graphics2D g);
 
-    public HashMap<String, Integer> tasks = null;
+    HashMap<String, Integer> tasks = null;
 
     void setTask(HashMap<String, Integer> tasks);
 

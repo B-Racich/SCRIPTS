@@ -1,5 +1,8 @@
 package Core.Api;
 
+import Core.Api.Common.LootLogger;
+import Core.Api.Common.StatTracker;
+import Core.Api.Common.Utility;
 import org.osbot.rs07.Bot;
 import org.osbot.rs07.script.MethodProvider;
 

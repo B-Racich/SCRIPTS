@@ -1,6 +1,6 @@
 package Core;
 
-import Core.Api.Timing;
+import Core.Api.Common.Timing;
 import org.osbot.rs07.api.model.*;
 import org.osbot.rs07.script.MethodProvider;
 
@@ -11,7 +11,7 @@ public class Camera {
     private Client client;
     private MethodProvider mp;
 
-    public Camera(Client client) {
+    Camera(Client client) {
         this.client = client;
         mp = client.osBot.getBot().getMethods();
     }
@@ -36,13 +36,13 @@ public class Camera {
         thread.start();
     }
 
-    public void lookAt(Entity ob) {
+    void lookAt(Entity ob) {
         Thread thread = new Thread(() -> {
             if(ob != null) {
                 if(!ob.isVisible()) {
                     client.api.util.log("Camera: Move Entity : "+ob.getName());
                     mp.getCamera().toEntity(ob);
-                    Timing.waitCondition(() -> ob.isVisible(), 250, 1000);
+                    Timing.waitCondition(ob::isVisible, 250, 1000);
                 }
             }
         });

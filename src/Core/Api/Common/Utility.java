@@ -1,5 +1,6 @@
-package Core.Api;
+package Core.Api.Common;
 
+import Core.Api.API;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.map.constants.Banks;
@@ -14,7 +15,7 @@ public class Utility {
     private API api;
     private MethodProvider mp;
 
-    Utility(API api) {
+    public Utility(API api) {
         this.api = api;
         mp = api.mp;
     }

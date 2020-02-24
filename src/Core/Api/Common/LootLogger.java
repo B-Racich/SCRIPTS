@@ -1,4 +1,6 @@
-package Core.Api;
+package Core.Api.Common;
+
+import Core.Api.API;
 
 import java.util.HashMap;
 
@@ -7,7 +9,7 @@ public class LootLogger {
     private HashMap<String, Long> items = new HashMap<>();
     private API api;
 
-    LootLogger(API api) {
+    public LootLogger(API api) {
         this.api = api;
     }
 

@@ -1,5 +1,6 @@
-package Core.Api;
+package Core.Api.Common;
 
+import Core.Api.API;
 import org.osbot.rs07.Bot;
 import org.osbot.rs07.api.ui.Skill;
 import org.osbot.rs07.script.MethodProvider;
@@ -13,9 +14,9 @@ public class StatTracker {
     private Bot bot;
     private MethodProvider mp;
 
-    private HashMap<String, Integer> startLvls = new HashMap<String, Integer>();
+    private HashMap<String, Integer> startLvls = new HashMap<>();
 
-    StatTracker(API api) {
+    public StatTracker(API api) {
         this.api = api;
         bot = api.bot;
         mp = bot.getMethods();

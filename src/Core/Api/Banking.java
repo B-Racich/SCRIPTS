@@ -1,5 +1,6 @@
 package Core.Api;
 
+import Core.Api.Common.Timing;
 import org.osbot.rs07.Bot;
 import org.osbot.rs07.api.model.NPC;
 import org.osbot.rs07.script.MethodProvider;

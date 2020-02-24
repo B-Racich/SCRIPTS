@@ -1,6 +1,6 @@
 package Core;
 
-import Core.Api.Timing;
+import Core.Api.Common.Timing;
 import org.osbot.rs07.api.model.*;
 import org.osbot.rs07.api.ui.Tab;
 import org.osbot.rs07.script.MethodProvider;

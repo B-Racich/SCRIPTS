@@ -1,4 +1,4 @@
-package Core.Api;
+package Core.Api.Common;
 
 import java.util.function.BooleanSupplier;
 import java.util.concurrent.TimeUnit;

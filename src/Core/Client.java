@@ -1,16 +1,17 @@
 package Core;
 
 import Core.Api.API;
+import Core.Api.Common.ApiScript;
 import org.osbot.rs07.script.Script;
 
 public class Client {
 
-    public Script osBot;
+    Script osBot;
     public API api;
 
     public ApiScript script;
-    public Antiban antiban;
-    public Camera camera;
+    private Antiban antiban;
+    Camera camera;
 
     public Client(Script osBot) {
         this.osBot = osBot;

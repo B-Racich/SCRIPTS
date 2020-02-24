@@ -1,4 +1,5 @@
 import Core.Api.*;
+import Core.Api.Common.Utility;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.script.Script;

@@ -1,7 +1,8 @@
 import Core.*;
 import Core.Api.API;
 import Core.Api.Banking;
-import Core.Api.Timing;
+import Core.Api.Common.ApiScript;
+import Core.Api.Common.Timing;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.map.constants.Banks;
