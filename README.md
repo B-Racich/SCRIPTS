@@ -13,7 +13,8 @@ Some of the main points of this API are:
 - multithreaded NPC tracker module used for tracking enemies/npcs
 
 
-Design of API and Script Launcher:
+# Design of API and Script Launcher:
+
 Every script uses a "Launcher" which replaces the default script entry point which is normally done by extending the OSBOT Script class.
 The Launcher then creates a Client which controls all of the API functionality, the script is created with the Client reference allowing it to access the API through the client.
 Finally the Client script is set to our newly created script (confused yet?) what this achieves is both the client and the script have control over each others execution, this allows the API to stop the script
