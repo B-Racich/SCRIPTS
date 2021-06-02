@@ -1,9 +1,10 @@
 <component name="ArtifactManager">
   <artifact type="jar" build-on-make="true" name="scripts_jar">
-    <output-path>$USER_HOME$/OSBot/Scripts/</output-path>
+    <output-path>$USER_HOME$/OSBOT/scripts/</output-path>
     <root id="archive" name="scripts_jar.jar">
+      <element id="library" level="project" name="osbot" />
+      <element id="file-copy" path="$USER_HOME$/Desktop/osbot 2.6.5.jar" />
       <element id="module-output" name="SCRIPTS" />
-      <element id="library" level="project" name="osbot 2.5.70" />
     </root>
   </artifact>
 </component>

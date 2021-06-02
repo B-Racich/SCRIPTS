@@ -12,6 +12,7 @@ import static org.osbot.rs07.script.MethodProvider.random;
 public class Antiban extends Thread {
 
     private Client client;
+    private API api;
     private MethodProvider mp;
     private long last;
     private long time;
@@ -23,20 +24,21 @@ public class Antiban extends Thread {
 
     public Antiban(Client client) {
         this.client = client;
+        api = client.api;
         mp = client.osBot.getBot().getMethods();
     }
 
     public void run() {
-        while(runTime) {
-            if(check())
-                activate();
-            try {
-                sleep(sleepTime);
-            } catch (InterruptedException e) {
-                client.api.util.log(e.toString());
+        try {
+            while(runTime) {
+                if(check())
+                    activate();
+                    sleep(sleepTime);
             }
+            client.api.util.log("Antiban: Shutting down");
+        } catch (InterruptedException e) {
+            client.api.util.log(e.toString());
         }
-        client.api.util.log("Antiban: Shutting down");
     }
 
     public void pause() {
@@ -50,6 +52,7 @@ public class Antiban extends Thread {
     }
 
     public boolean check() {
+        clickContinue();
         time = System.currentTimeMillis();
         long diff = (time - last)/1000;
         client.api.util.log("Antiban: check "+diff+" : "+checkTime);
@@ -80,6 +83,12 @@ public class Antiban extends Thread {
         this.interrupt();
     }
 
+    public void clickContinue() {
+        if(mp.dialogues.isPendingContinuation()) {
+            mp.dialogues.clickContinue();
+        }
+    }
+
     public void moveMouseOutside() {
         client.api.util.log("Antiban: Examine : " + "Move outside screen");
         mp.getMouse().moveOutsideScreen();
@@ -91,7 +100,7 @@ public class Antiban extends Thread {
     }
 
     public void examineObject() {
-        List<RS2Object> obs = mp.getObjects().filter(ob -> ob.getPosition().distance(mp.myPosition()) <= 5);
+        List<RS2Object> obs = mp.getObjects().filter(ob -> ob.getPosition().distance(mp.myPosition()) <= 5 && ob.getName() != null);
         if(obs != null && !obs.isEmpty()) {
             RS2Object en = obs.get(0);
             if(en != null) {

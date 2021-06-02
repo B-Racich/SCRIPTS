@@ -1,5 +1,6 @@
 package Core.Api;
 
+import Core.API;
 import Core.Api.Common.Timing;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
@@ -10,7 +11,7 @@ import org.osbot.rs07.script.MethodProvider;
 
 import java.util.List;
 
-public class Enemy {
+public class Enemy extends Thread {
 
     /**
      * VARIABLES
@@ -23,10 +24,13 @@ public class Enemy {
     private String my_name = "";
     private NPC npc;
     private int npc_index = 0;
+
     private state npc_state;
     private int npc_health = 0;
     private Position npc_position;
     private String npc_interacting = "";
+
+    private NpcTracker tracker;
 
     private int search_radius = 5;
 
@@ -34,7 +38,8 @@ public class Enemy {
         NULL,
         IDLE,
         DEAD,
-        FIGHT
+        FIGHTING,
+        LOOT,
     }
 
     public Enemy(MethodProvider mp, MyPlayer myPlayer, String npc_name) {
@@ -49,6 +54,35 @@ public class Enemy {
         mp = api.mp;
         myPlayer = api.myPlayer;
         my_name = mp.myPlayer().getName();
+    }
+
+    private void trackNPC(NPC npc) {
+        tracker = new NpcTracker(api, npc);
+    }
+
+    public void run() {
+        try {
+            while(tracker != null) {
+                switch(tracker.getStatus()) {
+                    case DEAD:
+                        tracker.shutdown();
+                        npc_state = state.DEAD;
+                        break;
+                    case IDLE:
+                        npc_state = state.IDLE;
+                        break;
+                    case FIGHTING_PLAYER:
+                        npc_state = state.FIGHTING;
+                        break;
+                    case FIGHTING_OTHER:
+                        npc_state = state.NULL;
+                }
+                sleep(250);
+            }
+            sleep(250);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setEnemy(String enemyName) {
@@ -68,7 +102,7 @@ public class Enemy {
             case    DEAD:
                 lootNpc();
                 break;
-            case    FIGHT:
+            case    FIGHTING:
                 updateNpc();
                 break;
         }
@@ -80,7 +114,7 @@ public class Enemy {
      * @return
      */
     public boolean getNpc() {
-        List<NPC> npcs = mp.getNpcs().filter(npc -> npc != null && npc.getName().equals(npc_name) && (npc.getInteracting() == null || (npc.getInteracting() != null && npc.getInteracting().getName().equals(my_name))) && npc.getHealthPercent() > 0);
+        List<NPC> npcs = mp.getNpcs().filter(npc -> npc != null && mp.getMap().canReach(npc) && npc.getName().equals(npc_name) && (npc.getInteracting() == null || (npc.getInteracting() != null && npc.getInteracting().getName().equals(my_name))) && npc.getHealthPercent() > 0);
         mp.log(npcs.size());
         mp.log(npc_name);
         if(npcs != null && !npcs.isEmpty()) {
@@ -90,7 +124,7 @@ public class Enemy {
             boolean npc_hot = false;
             for (int i = 0; i < npcs.size(); i++) {
                 NPC temp = npcs.get(i);
-                distances[i] = temp.getPosition().distance(mp.myPosition());
+                distances[i] = mp.getMap().realDistance(temp.getPosition(), mp.myPosition());
                 Area npc_area = temp.getPosition().getArea(search_radius);
                 List<Player> players = mp.getPlayers().filter(player-> npc_area.contains(player) && !player.getName().equals(my_name));
                 for (Player player : players) {
@@ -123,7 +157,7 @@ public class Enemy {
             npc_position = npc.getPosition();
             npc_index = npc.getIndex();
             if(npc_health > 0) {
-                if(isFightingNpc()) { npc_state = state.FIGHT; }
+                if(isFightingNpc()) { npc_state = state.FIGHTING; }
                 else if(validNpc()) { npc_state = state.IDLE; }
                 else { npc_state = state.IDLE; }
             } else { npc_state = state.DEAD; }
@@ -147,6 +181,8 @@ public class Enemy {
             else if(isFightingNpc()) { mp.log(2); return true; }
             //  If npc is interacting with us
             else if(!npc_interacting.equals("") && npc_interacting.equals(my_name)) { mp.log(3); return true; }
+            // If npc is reachable
+            else if(!mp.getMap().canReach(npc)) { return false;}
             else { return true; }
         } else { return false; }
     }
@@ -194,7 +230,7 @@ public class Enemy {
     }
 
     /**
-     * Checks if the NPC is eligble for fighting:
+     * Checks if the NPC is eligible for fighting:
      * Checks if NPC is valid
      * @return
      */
@@ -203,7 +239,7 @@ public class Enemy {
             if(npc_state == state.IDLE) { return true; }
             else { return false; }
         }
-        mp.log("Dont fight");
+        mp.log("Don't Fight");
         npc_state = state.NULL;
         return false;
     }
@@ -214,11 +250,11 @@ public class Enemy {
      */
     public boolean fightNpc() {
         if(shouldFight()) {
-            mp.log("Trying to fight");
+            mp.log("Trying to Fight");
             npc.interact("Attack");
             Timing.waitCondition(() -> isFightingNpc() || !validNpc(),250, 5000);
             if(isFightingNpc()) {
-                npc_state = state.FIGHT;
+                npc_state = state.FIGHTING;
                 return true;
             } else if(!validNpc()) { npc_state = state.NULL; return false; }
             else { return false; }

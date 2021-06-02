@@ -1,5 +1,6 @@
 package Core.Api;
 
+import Core.API;
 import Core.Api.Common.Timing;
 import org.osbot.rs07.Bot;
 import org.osbot.rs07.api.model.Entity;
@@ -16,7 +17,7 @@ public class Miner {
     private HashMap<String, Integer> tasks;
     private boolean taskSet = false, taskComplete = false;
 
-    Miner(API api) {
+    public Miner(API api) {
         this.api = api;
     }
 

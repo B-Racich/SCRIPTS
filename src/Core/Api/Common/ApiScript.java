@@ -1,11 +1,26 @@
 package Core.Api.Common;
 
+import Core.Client;
+
 import java.awt.*;
 import java.util.HashMap;
 
+/**
+ * This interface is a replacement for extending the osBot Tester class
+ *
+ * By implementing this interface the Client class can run the script concurrently/parallel to other Classes such as
+ * the Antiban and Camera.
+ *
+ * run() - the onLoop method of osBot, main Method
+ *
+ * pause() - pause functionality for other components to pause the script if supported
+ *
+ * tasks - A script can have tasks which can be used to designate a botting goal
+ */
+
 public interface ApiScript {
 
-    void run();
+    void run() throws NullPointerException;
 
     void pause();
 
@@ -18,5 +33,7 @@ public interface ApiScript {
     boolean hasTask();
 
     boolean completedTask();
+
+    <state> state getState();
 
 }

@@ -1,23 +1,52 @@
 package Core;
 
-import Core.Api.API;
 import Core.Api.Common.ApiScript;
 import org.osbot.rs07.script.Script;
 
+/**
+ * This class is the parent to:
+ *  - osBot
+ *  - API
+ *  - script
+ *  - Antiban
+ *  - Camera
+ * As such it connects and wraps all the classes together so they can communicate
+ *
+ *  The Antiban is ran as a thread as is the Camera so that they run concurrent/parallel to the script execution
+ */
+
 public class Client {
 
-    Script osBot;
+    public Script osBot;
     public API api;
 
     public ApiScript script;
-    private Antiban antiban;
-    Camera camera;
+    public Antiban antiban;
+    public Camera camera;
+
+    enum Debug {
+        ALL,
+        BANKING,
+        COOKING,
+        ENEMY,
+        FIGHTER,
+        MINER,
+        MYPLAYER,
+        ANTIBAN,
+        CAMERA,
+        SCRIPT,
+        NONE
+    }
+
+    private Debug debugLevel = Debug.NONE;
 
     public Client(Script osBot) {
+        osBot.log("Client initiating...");
         this.osBot = osBot;
-        api = new API(osBot.bot);
+        api = new API(this);
         antiban = new Antiban(this);
         camera = new Camera(this);
+        osBot.log("Client initiated...");
     }
 
     public void setScript(ApiScript script) {
@@ -38,6 +67,7 @@ public class Client {
         if(!antiban.isAlive()) {
             antiban.setup();
             antiban.start();
+            osBot.log("Antiban initiated...");
         }
     }
 
@@ -48,6 +78,9 @@ public class Client {
     public void shutdown() {
         antiban.runTime = false;
         antiban.shutdown();
+        api.fighter.shutdown();
+        api.myPlayer.shutdown();
+        osBot.log("Client shutdown...");
     }
 
 }

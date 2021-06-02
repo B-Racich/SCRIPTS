@@ -1,6 +1,6 @@
 package Core.Api.Common;
 
-import Core.Api.API;
+import Core.API;
 import org.osbot.rs07.Bot;
 import org.osbot.rs07.api.ui.Skill;
 import org.osbot.rs07.script.MethodProvider;

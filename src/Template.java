@@ -1,37 +1,67 @@
-import Core.Api.API;
-import org.osbot.rs07.script.Script;
-import org.osbot.rs07.script.ScriptManifest;
+import Core.API;
+import Core.Api.Common.ApiScript;
+import Core.Client;
 
 import java.awt.*;
+import java.util.HashMap;
 
+/**
+ * The basic script template
+ *
+ * state - can be used to setup a state based script, otherwise create a regular onLoop script within the run() method
+ *
+ * pause() - if setup can be used by other classes to pause the script when needed
+ *
+ * if tasks are supported complete the task methods
+ */
 
-@ScriptManifest(name = "", author = "Bones", version = 1.0, info = "", logo = "")
-public class Template extends Script {
+public class Template implements ApiScript {
 
+    private Client client;
     private API api;
 
-    @Override
-    public void onStart() {
-        //Code here will execute before the loop is started
-        api = new API(this.bot);
+    private long timeBegan;
+    private long timeRan;
+
+    public Template(Client client) {
+        this.client = client;
+        api = client.api;
     }
 
-    @Override
-    public void onExit() {
-        //Code here will execute after the script ends
-
-    }
+    enum state {}
 
     @Override
-    public int onLoop() throws InterruptedException {
-
-        return random(250,500); //The amount of time in milliseconds before the loop starts over
+    public void run() {
 
     }
 
     @Override
-    public void onPaint(Graphics2D g) {
+    public void pause() {
 
     }
 
+    @Override
+    public void paint(Graphics2D g) {
+
+    }
+
+    @Override
+    public void setTask(HashMap<String, Integer> tasks) {
+
+    }
+
+    @Override
+    public boolean hasTask() {
+        return false;
+    }
+
+    @Override
+    public boolean completedTask() {
+        return false;
+    }
+
+    @Override
+    public state getState() {
+        return null;
+    }
 }

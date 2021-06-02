@@ -1,6 +1,6 @@
 package Core.Api.Common;
 
-import Core.Api.API;
+import Core.API;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.map.constants.Banks;

@@ -1,6 +1,6 @@
 package Core.Api.Common;
 
-import Core.Api.API;
+import Core.API;
 
 import java.util.HashMap;
 
@@ -15,9 +15,7 @@ public class LootLogger {
 
     public void log(String name, long amount) {
         if(items.containsKey(name)) {
-            long pre = items.get(name);
-            long post = pre+amount;
-            items.put(name, post);
+            items.put(name, items.get(name)+amount);
         } else {
             items.put(name, amount);
         }
@@ -31,6 +29,11 @@ public class LootLogger {
         return name+": "+items.get(name);
     }
 
+    /**
+     * Looks in the logged items for the correct items+counts
+     * @param needs HashMap<String, Integer>
+     * @return boolean
+     */
     public boolean hasItems(HashMap<String, Integer> needs) {
         String[] these = needs.keySet().toArray(new String[needs.keySet().size()]);
         for (String item : these) {
