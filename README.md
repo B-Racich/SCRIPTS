@@ -20,3 +20,5 @@ The Launcher then creates a Client which controls all of the API functionality, 
 Finally the Client script is set to our newly created script (confused yet?) what this achieves is both the client and the script have control over each others execution, this allows the API to stop the script
 as needed, or the script to stop the API and any of its components, this can be invaluable in developing precise scripts that shouldn't be interrupted during their execution.
 As mentioned above this also allows for dynamic loading of new scripts since the Launcher is now the entry point.
+
+This work is for educational purposes
