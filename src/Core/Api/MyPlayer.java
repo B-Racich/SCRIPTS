@@ -77,8 +77,8 @@ public class MyPlayer {
         return false;
     }
 
-    public void moveTo(Area area) {
-        Timing.waitCondition(() -> mp.getWalking().webWalk(area), 3000);
+    public boolean moveTo(Area area) {
+        return Timing.waitCondition(() -> mp.getWalking().webWalk(area), 3000);
     }
 
     public void moveTo(Position pos) {

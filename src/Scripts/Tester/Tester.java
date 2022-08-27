@@ -21,7 +21,7 @@ import java.util.HashMap;
 
 public class Tester implements ApiScript {
 
-    public final static String scriptName = "Tester Yeet";
+    public final static String scriptName = "Miner Yeet";
 
     private Client client;
     private API api;
@@ -75,14 +75,14 @@ public class Tester implements ApiScript {
         try {
             getZone();
             if(api.myPlayer.ableToFight() && api.myPlayer.isWithin(fight_area, 30)) {
-                client.osBot.log("Fight");
+                client.osbot.log("Fight");
                 api.fighter.fight();
             } else if(!api.myPlayer.isWithin(fight_area, 30)){
-                client.osBot.log("Move");
+                client.osbot.log("Move");
                 api.myPlayer.moveTo(fight_area);
             }
         } catch(NullPointerException e) {
-            client.osBot.log("Oopsie");
+            client.osbot.log("Oopsie");
         }
     }
 

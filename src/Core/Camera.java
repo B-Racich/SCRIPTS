@@ -13,7 +13,7 @@ public class Camera {
 
     Camera(Client client) {
         this.client = client;
-        mp = client.osBot.getBot().getMethods();
+        mp = client.osbot.getBot().getMethods();
     }
 
     public void moveRandom() {

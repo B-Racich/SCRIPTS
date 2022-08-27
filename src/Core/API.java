@@ -37,7 +37,7 @@ public class API {
     public API(Client client) {
         this.client = client;
 
-        bot = client.osBot.bot;
+        bot = client.osbot.bot;
         antiban = client.antiban;
         camera = client.camera;
 

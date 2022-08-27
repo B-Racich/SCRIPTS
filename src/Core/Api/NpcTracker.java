@@ -94,7 +94,7 @@ public class NpcTracker extends Thread {
         npc_fighting = npc.isUnderAttack();
         npc_animating = npc.isAnimating();
         npc_moving = npc.isMoving();
-        npc_visible = npc.isOnScreen();
+        npc_visible = npc.isVisible();
         npc_position = npc.getPosition();
 //        mp.log("NpcTracker: updateNPC Complete");
         return true;

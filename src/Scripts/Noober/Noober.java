@@ -174,7 +174,7 @@ public class Noober implements ApiScript {
             }
 
         } catch(NullPointerException e) {
-            client.osBot.log("Oopsie " + e.toString());
+            client.osbot.log("Oopsie " + e.toString());
         }
     }
 

@@ -25,7 +25,7 @@ public class Antiban extends Thread {
     public Antiban(Client client) {
         this.client = client;
         api = client.api;
-        mp = client.osBot.getBot().getMethods();
+        mp = client.osbot.getBot().getMethods();
     }
 
     public void run() {

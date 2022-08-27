@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.HashMap;
 
 /**
- *  This class is the entry bot into osBot and invokes the run method of the client class.
+ *  This class is the entry script into osBot and invokes the run method of the client class.
  *
  *  Some variables are required to be set
  *  Initialization can be done within the first run loop

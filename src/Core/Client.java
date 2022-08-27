@@ -17,7 +17,7 @@ import org.osbot.rs07.script.Script;
 
 public class Client {
 
-    public Script osBot;
+    public Script osbot;
     public API api;
 
     public ApiScript script;
@@ -40,13 +40,13 @@ public class Client {
 
     private Debug debugLevel = Debug.NONE;
 
-    public Client(Script osBot) {
-        osBot.log("Client initiating...");
-        this.osBot = osBot;
+    public Client(Script osbot) {
+        osbot.log("CLIENT: initiating...");
+        this.osbot = osbot;
         api = new API(this);
         antiban = new Antiban(this);
         camera = new Camera(this);
-        osBot.log("Client initiated...");
+        osbot.log("CLIENT: initiated...");
     }
 
     public void setScript(ApiScript script) {
@@ -55,7 +55,13 @@ public class Client {
 
     public void run() {
         if(!antiban.idle && !script.completedTask()) {
-            script.run();
+            try {
+                script.run();
+            } catch(Exception e){
+                osbot.log("CLIENT: Exception: ");
+                osbot.log(e.getMessage());
+                shutdown();
+            }
         }
     }
 
@@ -67,7 +73,7 @@ public class Client {
         if(!antiban.isAlive()) {
             antiban.setup();
             antiban.start();
-            osBot.log("Antiban initiated...");
+            osbot.log("CLIENT: Antiban initiated...");
         }
     }
 
@@ -80,7 +86,11 @@ public class Client {
         antiban.shutdown();
         api.fighter.shutdown();
         api.myPlayer.shutdown();
-        osBot.log("Client shutdown...");
+        osbot.log("CLIENT: shutdown...");
+    }
+
+    public void log(String str) {
+        osbot.log(str);
     }
 
 }
