@@ -98,59 +98,56 @@ public class WitchesPotion implements ApiScript {
 //        client.log("Witches Potion: " + quest_id + " - " + quest_state);
         switch (quest_state) {
             case 0:
-                if(Hettys_House.contains(api.mp.myPlayer())) {
-                    api.interact.talkNPC("Hetty", new int[]{1,1});
-                } else { api.myPlayer.moveTo(Hettys_House); }
+                api.interact.moveToAreaAnd(Hettys_House,()->api.interact.talkNPC("Hetty", new int[]{1,1}));
+                break;
             case 1:
                 if(hasItems()) {
-                    if(Hettys_House.contains(api.mp.myPlayer())) {
-                        api.interact.talkNPC("Hetty");
-                    } else { api.myPlayer.moveTo(Hettys_House); }
+                    api.interact.moveToAreaAnd(Hettys_House,()->api.interact.talkNPC("Hetty"));
                 }
                 else if(!api.myPlayer.hasItem("Rat's tail")) {
-                    if(Archery_Shop.contains(api.mp.myPlayer())) {
+                    api.interact.moveToAreaAnd(Archery_Shop,()->{
                         api.client.log("Getting tail");
                         api.fighter.setEnemy("Rat");
                         api.fighter.setLootables(new String[]{"Rat's tail"});
                         api.fighter.fight();
-                    } else { api.myPlayer.moveTo(Archery_Shop); }
+                        return true;
+                    });
                 }
                 else if(!api.myPlayer.hasItem("Burnt meat")) {
                     if(api.myPlayer.hasItem("Raw rat meat") || api.myPlayer.hasItem("Cooked meat")) {
-                        if(api.myPlayer.isWithin(Range, 1)) {
+                        api.interact.moveToPosAnd(Range,1,()->{
                             if(api.myPlayer.hasItem("Raw rat meat")) { api.interact.useItemWithObject("Raw rat meat", "Range"); }
                             else if(api.myPlayer.hasItem("Cooked meat")) { api.interact.useItemWithObject("Cooked meat", "Range"); }
-                        } else { api.myPlayer.moveTo(Range); }
+                            return true;
+                        });
                     } else {
-                        if(api.myPlayer.isWithin(Giant_Rat, 10)) {
+                        api.interact.moveToPosAnd(Giant_Rat,10,()->{
                             api.fighter.setEnemy("Giant rat");
                             api.fighter.setLootables(new String[]{"Raw rat meat"});
                             api.fighter.fight();
-                        } else { api.myPlayer.moveTo(Giant_Rat); }
+                            return true;
+                        });
                     }
                 }
                 else if(!api.myPlayer.hasItem("Eye of newt")) {
                     if(!api.myPlayer.hasItem("Coins", 3)) {
-                        if(api.myPlayer.isWithin(Range, 20)) {
+                        api.interact.moveToPosAnd(Range,20,()->{
                             api.fighter.setEnemies(new String[]{"Man","Woman"});
                             api.fighter.setLootables(new String[]{"Coins"});
                             api.fighter.fight();
-                        } else {api.myPlayer.moveTo(Range); }
+                            return true;
+                        });
                     } else {
-                        if(Bettys_Shop.contains(api.mp.myPlayer())) {
-                            api.interact.shop("Betty", "Eye of newt", 1);
-                        } else {api.myPlayer.moveTo(Bettys_Shop); }
+                        api.interact.moveToAreaAnd(Bettys_Shop,()-> api.interact.shop("Betty", "Eye of newt", 1));
                     }
                 }
                 else if(!api.myPlayer.hasItem("Onion")) {
-                    if(api.myPlayer.isWithin(Onion_Patch, 5)) {
-                        api.interact.interactOb("Onion", "Pick");
-                    } else { api.myPlayer.moveTo(Onion_Patch); }
+                    api.interact.moveToPosAnd(Onion_Patch,5,()->api.interact.interactOb("Onion", "Pick"));
                 }
+                break;
             case 2:
-                if(Hettys_House.contains(api.mp.myPlayer())) {
-                    api.interact.interactOb("Cauldron", "Drink From");
-                } else { api.myPlayer.moveTo(Hettys_House); }
+                api.interact.moveToAreaAnd(Hettys_House,()->api.interact.interactOb("Cauldron", "Drink From"));
+                break;
         }
     }
 }

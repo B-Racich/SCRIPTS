@@ -44,11 +44,12 @@ public class Interact {
         return false;
     }
 
-    public void interactNpc(String name, String act) {
+    public boolean interactNpc(String name, String act) {
         NPC ob = mp.getNpcs().closest(name);
         if(ob != null) {
-            ob.interact(act);
+            return Timing.waitCondition(()->ob.interact(act),2500);
         }
+        return false;
     }
 
     public boolean isTalking() {
@@ -136,16 +137,17 @@ public class Interact {
      *  Object, Item, Etc Interactions
      */
 
-    public void shop(String name, String item, int amt) {
+    public boolean shop(String name, String item, int amt) {
         NPC npc = mp.getNpcs().closest(name);
         if (npc != null) {
             if(!mp.getStore().isOpen()) {
                 Timing.waitCondition(()-> mp.getStore().isOpen(),2500);
+                return false;
             } else {
-                Timing.waitCondition(()->mp.getStore().buy(item, amt),2500);
-                Timing.waitCondition(()->mp.getInventory().contains(item),2500);
+                return Timing.waitCondition(()->mp.getStore().buy(item, amt),2500);
             }
         }
+        return false;
     }
 
     public boolean interactOb(String name, String act) {
@@ -156,14 +158,12 @@ public class Interact {
         return false;
     }
 
-    public void interactOb(String name, String act, String expectedItem) {
+    public boolean interactOb(String name, String act, String expectedItem) {
         RS2Object ob = mp.getObjects().closest(name);
         if(ob != null) {
-            Timing.waitCondition(() -> ob.interact(act), 2500);
-            if (mp.myPlayer().isAnimating() || mp.myPlayer().isMoving()) {
-                Timing.waitCondition(() -> !mp.myPlayer().isMoving() && !mp.myPlayer().isAnimating() && api.myPlayer.hasItem(expectedItem), 2500);
-            }
+            return Timing.waitCondition(() -> ob.interact(act), 2500);
         }
+        return false;
     }
 
     public void useItemWithObject(String item, String object) {
@@ -180,11 +180,12 @@ public class Interact {
         }
     }
 
-    public void pickUpItem(String itemName) {
+    public boolean pickUpItem(String itemName) {
         GroundItem item = mp.getGroundItems().closest(itemName);
         if(item != null) {
-            item.interact("Take");
+            return Timing.waitCondition(()->item.interact("Take"),2500);
         }
+        return false;
     }
 
     public boolean waitForInventoryChange(int waitTime) {

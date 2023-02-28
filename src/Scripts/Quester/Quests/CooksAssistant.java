@@ -5,6 +5,7 @@ import Core.Api.Common.ApiScript;
 import Core.Api.Common.Timing;
 import Core.Client;
 import Scripts.Quester.Quester;
+import org.osbot.Wh;
 import org.osbot.rs07.api.Quests;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
@@ -85,7 +86,7 @@ public class CooksAssistant implements ApiScript {
 
     private boolean ground_flour = false;
     private boolean filled_hopper = false;
-    private boolean has_all_items = true;
+    private boolean has_all_items = false;
 
     public final int quest_id = 29;
     private int quest_state;
@@ -101,90 +102,58 @@ public class CooksAssistant implements ApiScript {
         client.log("Cook's Assistant: " + quest_id + " - " + quest_state);
         switch (quest_state) {
             case 0:
-                if (!Lumbridge_Cook.contains(api.mp.myPlayer())) {
-                    api.myPlayer.moveTo(Lumbridge_Cook);
-                } else {
-                    api.interact.talkNPC("Cook", new int[]{1, 1});
-                }
+                api.interact.moveToAreaAnd(Lumbridge_Cook,()->api.interact.talkNPC("Cook", new int[]{1,1}));
+                break;
             case 1:
                 if ((!api.myPlayer.hasItem("Pot of flour") || !api.myPlayer.hasItem("Bucket of milk") || !api.myPlayer.hasItem("Egg")) && !has_all_items) {
                     // Get Pot
                     if (!api.myPlayer.hasItem("Pot") && !api.myPlayer.hasItem("Pot of flour")) {
                         client.log("Getting Pot");
-                        if (!Lumbridge_Cook.contains(api.mp.myPlayer())) {
-                            api.myPlayer.moveTo(Lumbridge_Cook);
-                        } else {
-                            api.interact.pickUpItem("Pot");
-                        }
+                        api.interact.moveToAreaAnd(Lumbridge_Cook,()->api.interact.pickUpItem("Pot"));
                     }
                     // Get Bucket
                     else if (!api.myPlayer.hasItem("Bucket") && !api.myPlayer.hasItem("Bucket of milk")) {
                         client.log("Getting Bucket");
-                        if (!Lumbridge_Cellar.contains(api.mp.myPlayer())) {
-                            api.myPlayer.moveTo(Lumbridge_Cellar);
-                        } else {
-                            api.interact.pickUpItem("Bucket");
-                        }
+                        api.interact.moveToAreaAnd(Lumbridge_Cellar,()->api.interact.pickUpItem("Bucket"));
                     }
                     // Get Flour
                     else if (api.myPlayer.hasItem("Pot") && !api.myPlayer.hasItem("Pot of flour")) {
                         client.log("Getting Flour");
                         if (ground_flour) {
                             client.log("here: distance: " + Flour_Bin.distance(api.mp.myPosition()));
-                            if (api.myPlayer.isWithin(Flour_Bin, 3)) {
-                                api.interact.interactOb("Flour bin", "Empty");
-                            } else {
-                                api.myPlayer.moveTo(Flour_Bin);
-                            }
+                            api.interact.moveToPosAnd(Flour_Bin,3,()-> api.interact.interactOb("Flour bin", "Empty"));
                         } else if (filled_hopper) {
-                            if (api.myPlayer.isWithin(Hopper_Controls, 5)) {
+                            api.interact.moveToPosAnd(Hopper_Controls,5,()-> {
                                 api.interact.interactOb("Hopper controls", "Operate");
                                 Timing.waitCondition(() -> !api.mp.myPlayer().isAnimating(), 2000);
                                 ground_flour = true;
-                            } else {
-                                api.myPlayer.moveTo(Hopper_Controls);
-                            }
+                                return true;
+                            });
                         } else if (api.myPlayer.hasItem("Grain") && !filled_hopper) {
-                            if (api.myPlayer.isWithin(Hopper_Controls, 5)) {
+                            api.interact.moveToPosAnd(Hopper_Controls,5,()-> {
                                 api.interact.interactOb("Hopper", "Fill");
                                 Timing.waitCondition(() -> !api.myPlayer.hasItem("Grain"), 2000);
                                 filled_hopper = true;
-                            } else {
-                                api.myPlayer.moveTo(Hopper_Controls);
-                            }
+                                return true;
+                            });
                         } else {
-                            if (api.myPlayer.isWithin(Wheat_Field, 3)) {
-                                api.interact.interactOb("Wheat", "Pick");
-                            } else {
-                                api.myPlayer.moveTo(Wheat_Field);
-                            }
+                            api.interact.moveToPosAnd(Wheat_Field,3,()->api.interact.interactOb("Wheat", "Pick"));
                         }
                     }
                     // Get Milk
                     else if (api.myPlayer.hasItem("Bucket") && !api.myPlayer.hasItem("Bucket of milk")) {
                         client.log("Getting Milk");
-                        if (api.myPlayer.isWithin(Dairy_Cow, 1)) {
-                            api.interact.interactOb("Dairy cow", "Milk", "Bucket of milk");
-                        } else {
-                            api.myPlayer.moveTo(Dairy_Cow);
-                        }
+                        api.interact.moveToPosAnd(Dairy_Cow,5,()->api.interact.interactOb("Dairy cow", "Milk", "Bucket of milk"));
                     } else if (!api.myPlayer.hasItem("Egg")) {
                         client.log("Getting Egg");
-                        if (api.myPlayer.isWithin(Chicken_Coup, 5)) {
-                            api.interact.pickUpItem("Egg");
-                        } else {
-                            api.myPlayer.moveTo(Chicken_Coup);
-                        }
+                        api.interact.moveToPosAnd(Chicken_Coup,10,()->api.interact.pickUpItem("Egg"));
                     }
                 } else if ((api.myPlayer.hasItem("Pot of flour") && api.myPlayer.hasItem("Bucket of milk") && api.myPlayer.hasItem("Egg")) || has_all_items) {
                     client.log("Turn in");
                     has_all_items = true;
-                    if (Lumbridge_Cook.contains(api.mp.myPlayer())) {
-                        api.interact.talkNPC("Cook");
-                    } else {
-                        api.myPlayer.moveTo(Lumbridge_Cook);
-                    }
+                    api.interact.moveToAreaAnd(Lumbridge_Cook,()-> api.interact.talkNPC("Cook"));
                 }
+                break;
             case 2:
                 client.log("Cook's Assistant Finished!");
         }

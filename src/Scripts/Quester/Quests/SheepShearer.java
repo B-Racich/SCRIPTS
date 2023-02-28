@@ -35,10 +35,6 @@ public class SheepShearer implements ApiScript {
         else return false;
     }
 
-    private Area Freds_House = new Area(3191,3274,3189,3272);
-    private Area Sheep_Pen = new Area(3195,3259,3209,3273);
-    private Position Loom = new Position(3209,3213,1);
-
     enum state {}
 
     @Override
@@ -82,6 +78,10 @@ public class SheepShearer implements ApiScript {
         else return false;
     }
 
+    private Area Freds_House = new Area(3191,3274,3189,3272);
+    private Area Sheep_Pen = new Area(3195,3259,3209,3273);
+    private Position Loom = new Position(3209,3213,1);
+
     private void quest() {
         int quest_state = api.mp.getConfigs().get(quest_id);
 
@@ -89,42 +89,39 @@ public class SheepShearer implements ApiScript {
             case 0:
                 if(hasWoolOrBall()) {
                     if(api.mp.getInventory().getAmount("Ball of wool") < 20) {
-                        if(api.myPlayer.isWithin(Loom, 5)) {
+                        api.interact.moveToPosAnd(Loom,5,()->{
                             api.interact.interactOb("Spinning wheel", "Spin");
                             Timing.waitCondition(() -> api.mp.getWidgets().isVisible(270,14), 3000);
                             if(api.mp.getWidgets().isVisible(270,14)) {
                                 api.mp.getWidgets().interact(270,14, "Spin");
                                 Timing.waitCondition(() -> !api.mp.getInventory().contains("Wool") && !api.myPlayer.isBusy(false), 60000);
+                                return true;
                             }
-                        } else api.myPlayer.moveTo(Loom);
+                            return false;
+                        });
                     }
                     else if(api.mp.getInventory().getAmount("Ball of wool") >= 20) {
-                        if(Freds_House.contains(api.mp.myPlayer())) {
-                            api.interact.talkNPC("Fred the Farmer", new int[]{1});
-                        } else api.myPlayer.moveTo(Freds_House);
+                        api.interact.moveToAreaAnd(Freds_House,()->api.interact.talkNPC("Fred the Farmer", new int[]{1}));
                     }
                 }
                 else if(hasRoomForWool()) {
                     if(api.myPlayer.hasItem("Shears")) {
-                        if(Sheep_Pen.contains(api.mp.myPlayer())) {
-                            if(api.mp.getInventory().getAmount("Wool")<20) {
-                                api.interact.interactNpc("Sheep", "Shear");
-                            }
-                        } else api.myPlayer.moveTo(Sheep_Pen);
+                        api.interact.moveToAreaAnd(Sheep_Pen,()->api.interact.interactNpc("Sheep", "Shear"));
                     } else {
                         client.log("Go to freds");
-                        if(Freds_House.contains(api.mp.myPlayer())) {
-                            api.interact.pickUpItem("Shears");
-                        } else api.myPlayer.moveTo(Freds_House);
+                        api.interact.moveToAreaAnd(Freds_House,()-> api.interact.pickUpItem("Shears"));
                     }
                 } else {
-                    if(Banks.LUMBRIDGE_UPPER.contains(api.mp.myPlayer())) {
+                    api.interact.moveToAreaAnd(Banks.LUMBRIDGE_UPPER,()->{
                         if(api.banking.open()) {
                             HashMap withdraw = new HashMap<String, Integer>(){{put("Shears",1);}};
                             api.banking.bank(null, withdraw, Banking.methods.DEPOSIT_ALL_WITHDRAW);
+                            return true;
                         }
-                    }
+                        return false;
+                    });
                 }
+                break;
             case 1:
             case 21:
         }

@@ -3,10 +3,7 @@ package Scripts.Quester;
 import Core.API;
 import Core.Api.Common.ApiScript;
 import Core.Client;
-import Scripts.Quester.Quests.CooksAssistant;
-import Scripts.Quester.Quests.RomeoAndJuliet;
-import Scripts.Quester.Quests.SheepShearer;
-import Scripts.Quester.Quests.WitchesPotion;
+import Scripts.Quester.Quests.*;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -32,6 +29,7 @@ public class Quester implements ApiScript {
     private WitchesPotion witchesPotion;
     private SheepShearer sheepShearer;
     private RomeoAndJuliet romeoAndJuliet;
+    private RuneMysteries runeMysteries;
 
     public Quester(Client client) {
         this.client = client;
@@ -41,6 +39,7 @@ public class Quester implements ApiScript {
         witchesPotion = new WitchesPotion(client);
         sheepShearer = new SheepShearer(client);
         romeoAndJuliet = new RomeoAndJuliet(client);
+        runeMysteries = new RuneMysteries(client);
     }
 
     enum state {}
@@ -52,6 +51,7 @@ public class Quester implements ApiScript {
             if(!witchesPotion.isCompleted()) witchesPotion.run();
             if(!sheepShearer.isCompleted()) sheepShearer.run();
             if(!romeoAndJuliet.isCompleted()) romeoAndJuliet.run();
+            if(!runeMysteries.isCompleted()) runeMysteries.run();
         } catch (Exception e) {
             client.log("SCRIPT: Exception: ");
             client.log(e.getMessage());
