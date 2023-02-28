@@ -1,4 +1,4 @@
-package Scripts.Quester.Quests;
+package Scripts.Quester.Quests.F2P;
 
 import Core.API;
 import Core.Api.Common.ApiScript;
@@ -68,13 +68,13 @@ public class WitchesPotion implements ApiScript {
         return null;
     }
 
-    Area Aggies_House = new Area(new Position(3083,3256,0), new Position(3088,3261,0));
-    Area Hettys_House = new Area(new Position(2965,3203,0), new Position(2970,3208,0));
-    Area Archery_Shop = new Area(new Position(2953,3202,0), new Position(2960,3205,0));
-    Area Bettys_Shop = new Area(new Position(3011,3256,0), new Position(3016,3261,0));
-    Position Giant_Rat = new Position(2998,3194,0);
-    Position Range = new Position(3018,3238,0);
-    Position Onion_Patch = new Position(2950,3252,0);
+    private Area Aggies_House = new Area(new Position(3083,3256,0), new Position(3088,3261,0));
+    private Area Hettys_House = new Area(new Position(2965,3203,0), new Position(2970,3208,0));
+    private Area Archery_Shop = new Area(new Position(2953,3202,0), new Position(2960,3205,0));
+    private Area Bettys_Shop = new Area(new Position(3011,3256,0), new Position(3016,3261,0));
+    private Position Giant_Rat = new Position(2998,3194,0);
+    private Position Range = new Position(3018,3238,0);
+    private Position Onion_Patch = new Position(2950,3252,0);
 
     public final int quest_id = 67;
 

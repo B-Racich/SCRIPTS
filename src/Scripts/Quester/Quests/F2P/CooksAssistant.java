@@ -1,11 +1,9 @@
-package Scripts.Quester.Quests;
+package Scripts.Quester.Quests.F2P;
 
 import Core.API;
 import Core.Api.Common.ApiScript;
 import Core.Api.Common.Timing;
 import Core.Client;
-import Scripts.Quester.Quester;
-import org.osbot.Wh;
 import org.osbot.rs07.api.Quests;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;

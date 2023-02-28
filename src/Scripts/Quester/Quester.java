@@ -3,7 +3,7 @@ package Scripts.Quester;
 import Core.API;
 import Core.Api.Common.ApiScript;
 import Core.Client;
-import Scripts.Quester.Quests.*;
+import Scripts.Quester.Quests.F2P.*;
 
 import java.awt.*;
 import java.util.HashMap;

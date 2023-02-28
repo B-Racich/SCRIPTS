@@ -1,4 +1,4 @@
-package Scripts.Quester.Quests;
+package Scripts.Quester.Quests.F2P;
 
 import Core.API;
 import Core.Api.Common.ApiScript;
