@@ -36,7 +36,7 @@ public class Camera {
         thread.start();
     }
 
-    void lookAt(Entity ob) {
+    public void lookAt(Entity ob) {
         Thread thread = new Thread(() -> {
             if(ob != null) {
                 if(!ob.isVisible()) {

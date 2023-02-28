@@ -82,7 +82,7 @@ public class RuneCrafter implements ApiScript {
             craftRune();
         } else {
             if (altar.bank.contains(mp.myPlayer())) {
-                if (!api.myPlayer.hasEquiped(EquipmentSlot.HAT, altar.tiara)) {
+                if (!api.myPlayer.hasEquipped(EquipmentSlot.HAT, altar.tiara)) {
                     api.banking.bank(altar.getRune(), altar.getTiara(), Banking.methods.DEPOSIT_ALL_WITHDRAW);
                     api.banking.close();
                     api.myPlayer.equip(altar.tiara);
@@ -91,7 +91,7 @@ public class RuneCrafter implements ApiScript {
                 api.util.log("Move to altar");
             } else {
                 if(api.util.existsOb("Portal")) {
-                    api.myPlayer.interactOb("Portal", "Use");
+                    api.interact.interactOb("Portal", "Use");
                     Timing.waitCondition(() -> !api.util.existsOb("Portal"), 250, 2000);
                 }
                 if(!api.util.existsOb("Portal")) {
@@ -103,14 +103,14 @@ public class RuneCrafter implements ApiScript {
 
     private void moveToAltar() {
         if(altar.ruins.contains(mp.myPlayer())) {
-            api.myPlayer.interactOb("Mysterious ruins", "Enter");
+            api.interact.interactOb("Mysterious ruins", "Enter");
             Timing.waitCondition(() -> api.util.existsOb("Altar"), 250, 3000);
             if(api.util.existsOb("Altar")) {
                 state = states.CRAFT_RUNE;
             }
         } else {
             if(api.util.existsOb("Portal")) {
-                api.myPlayer.interactOb("Portal", "Use");
+                api.interact.interactOb("Portal", "Use");
                 Timing.waitCondition(() -> !api.util.existsOb("Portal"), 250, 2000);
             }
             if(!api.util.existsOb("Portal")) {
@@ -121,7 +121,7 @@ public class RuneCrafter implements ApiScript {
 
     private void craftRune() {
         if(api.util.existsOb("Altar")) {
-            api.myPlayer.interactOb("Altar", "Craft-rune");
+            api.interact.interactOb("Altar", "Craft-rune");
             Timing.waitCondition(() -> !mp.getInventory().contains("Rune essence"), 250, 3000);
             if(!mp.getInventory().contains("Rune essence")) {
                 state = states.BANK;
@@ -140,7 +140,7 @@ public class RuneCrafter implements ApiScript {
             }
         } else {
             if(api.util.existsOb("Portal")) {
-                api.myPlayer.interactOb("Portal", "Use");
+                api.interact.interactOb("Portal", "Use");
                 Timing.waitCondition(() -> !api.util.existsOb("Portal"), 250, 2000);
             }
             if(!api.util.existsOb("Portal")) {

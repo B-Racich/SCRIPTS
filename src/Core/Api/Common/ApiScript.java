@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.HashMap;
 
 /**
- * This interface is a replacement for extending the osBot Quester class
+ * This interface is a replacement for extending the osBot Script class
  *
  * By implementing this interface the Client class can run the script concurrently/parallel to other Classes such as
  * the Antiban and Camera.

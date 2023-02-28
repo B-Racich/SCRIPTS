@@ -26,6 +26,7 @@ public class API {
     public MethodProvider mp;
 
     public MyPlayer myPlayer;
+    public Interact interact;
     public Enemy enemy;
     public Fighter fighter;
     public Utility util;
@@ -43,6 +44,7 @@ public class API {
 
         mp = bot.getMethods();
         myPlayer = new MyPlayer(this);
+        interact = new Interact(this);
         enemy = new Enemy(this);
         fighter = new Fighter(this);
         banking = new Banking(this);

@@ -9,6 +9,7 @@ import org.osbot.rs07.api.model.NPC;
 import org.osbot.rs07.api.model.Player;
 import org.osbot.rs07.script.MethodProvider;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,9 @@ public class Fighter {
     private int npc_health = 0;
     private Position npc_position;
     private String npc_interacting = "";
+
+    private String[] lootables;
+    private String[] enemies;
 
     public NpcTracker tracker;
 
@@ -77,21 +81,26 @@ public class Fighter {
         tracker = new NpcTracker(api, npc);
     }
 
+    public String getNpcName() { return npc_name; }
+
     public void setEnemy(String enemyName) {
-        npc_name = enemyName;
+//        npc_name = enemyName;
+        this.enemies = new String[]{enemyName};
     }
+
+    public void setEnemies(String[] enemies) { this.enemies = enemies; }
 
     public void shutdown() { if(tracker != null) tracker.shutdown();}
 
     public state getState() {
         if(npc == null || tracker == null) {
-            if(npc_name == "") return state.IDLE;
+            if(npc_name == "" && enemies.length <= 0) return state.IDLE;
             mp.log("Fighter: getState(): getNPC()");
             getNpc();
             if(npc != null)
                 trackNPC(npc);
         }
-//        mp.log("Fighter: getState(): Switch");
+        mp.log("Fighter: getState(): Switch");
         switch(tracker.getStatus()) {
             case IDLE:
                 fight_state = state.READY;
@@ -114,7 +123,7 @@ public class Fighter {
 
     public void fight() {
         getState();
-//        mp.log("Fighter: State: "+ fight_state);
+        mp.log("Fighter: State: "+ fight_state);
         switch (fight_state) {
             case    IDLE:
                 checkHealth();
@@ -136,6 +145,8 @@ public class Fighter {
         }
     }
 
+    public void setLootables(String[] lootables) { this.lootables = lootables; }
+
     public void checkHealth() {
         if(api.myPlayer.shouldEat()) {
             if(api.myPlayer.hasFood()) {
@@ -154,9 +165,9 @@ public class Fighter {
     }
 
     public void getNpc() {
-//        mp.log("GET NPC");
+        mp.log("GET NPC");
         List<NPC> npcs = mp.getNpcs().filter(npc ->
-                npc != null && npc.getName().equals(npc_name) && mp.getMap().canReach(npc)
+                npc != null && Arrays.asList(enemies).contains(npc.getName()) && mp.getMap().canReach(npc)
                     && npc.isAttackable()
             );
 
@@ -184,34 +195,39 @@ public class Fighter {
             this.npc = npcs.get(index);
 //            mp.log("Found NPC ");
             tracker.setNPC(npc);
+            npc_name = npc.getName();
         }
         else {
 //            mp.log("Cant find NPC");
         }
     }
 
-
-
-
     /**
      * Loots the npc
      * @return
      */
     public void lootNpc() {
+        //  Tracker reports DEAD
         if(tracker.getStatus() == NpcTracker.status.DEAD) {
+            //  Player has free Inventory spaces
             if(api.myPlayer.canLoot()) {
-//                mp.log(tracker.npc_position);
                 int loot_checks = 0;
                 List<GroundItem> loot = mp.getGroundItems().filter(item -> item.getPosition().distance(tracker.npc_position) <= 0);
+                //  Check for dropped items, loop and wait in-between checks
                 while (loot != null && loot.isEmpty() && loot_checks < 5) {
                     loot = mp.getGroundItems().filter(item -> item.getPosition().distance(tracker.npc_position) == 0);
                     Timing.waitCondition(() -> false, 150, 750);
                     loot_checks++;
                 }
-//                mp.log(loot.size());
+                // Found loot
                 if (loot != null && !loot.isEmpty()) {
-//                    mp.log("Try to get loot");
                     for (GroundItem item : loot) {
+                        api.client.log("Loot: "+item.getName());
+                        if(lootables != null && lootables.length > 0) {
+                            if(!Arrays.asList(lootables).contains(item.getName())) {
+                                continue;
+                            }
+                        }
                         long item_count_before = mp.getInventory().getAmount(item.getName());
                         item.interact("Take");
                         Timing.waitCondition(() -> mp.getInventory().getAmount(item.getName()) > item_count_before, 3000);

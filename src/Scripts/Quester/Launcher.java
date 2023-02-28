@@ -58,6 +58,7 @@ public class Launcher extends Script {
 
     @Override
     public void onPaint(Graphics2D g) {
+        g.drawString("LAUNCHER: npc_name: "+api.fighter.getNpcName(), 14, 306);
         g.drawString("LAUNCHER: Player State: "+api.myPlayer.tracker.player_status, 14, 316);
         g.drawString("LAUNCHER: NpcTracker State: "+api.fighter.tracker.getStatus(), 14, 326);
         g.drawString("LAUNCHER: Fighter State: "+api.fighter.fight_state, 14, 336);

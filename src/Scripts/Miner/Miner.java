@@ -79,33 +79,33 @@ public class Miner implements ApiScript {
         public int miningLvl;
         public int attackLvl;
 
-        public List inInventory() {
-            HashMap<String, Integer> picks = new HashMap<String, Integer>();
-
-            PICKAXE.stream().filter(e -> e.miningLvl <= miningLvl)
-            .forEach(pick -> picks.put(pick.name,pick.miningLvl));
-
-            return picks.t();
-    }
+//        public List inInventory() {
+//            HashMap<String, Integer> picks = new HashMap<String, Integer>();
+//
+//            PICKAXE.stream().filter(e -> e.miningLvl <= miningLvl)
+//            .forEach(pick -> picks.put(pick.name,pick.miningLvl));
+//
+//            return picks.t();
+//    }
 
         public static Stream<PICKAXE> stream() {
             return Stream.of(PICKAXE.values());
         }
 
-        public List<String> getList() {
-            List names = new ArrayList<String>() {{
-                add(BRONZE.name);
-                add(IRON.name);
-                add(STEEL.name);
-                add(BLACK.name);
-                add(MITHRIL.name);
-                add(ADAMANT.name);
-                add(RUNE.name);
-                add(DRAGON.name);
-            }};
-
-            return names;
-        }
+//        public List<String> getList() {
+//            List names = new ArrayList<String>() {{
+//                add(BRONZE.name);
+//                add(IRON.name);
+//                add(STEEL.name);
+//                add(BLACK.name);
+//                add(MITHRIL.name);
+//                add(ADAMANT.name);
+//                add(RUNE.name);
+//                add(DRAGON.name);
+//            }};
+//
+//            return names;
+//        }
 
         PICKAXE(String name, int miningLvl, int attackLvl) {
             this.name = name;
@@ -126,7 +126,7 @@ public class Miner implements ApiScript {
 
         if(mining_lvl <= 20) {
            if(api.myPlayer.moveTo(Banks.LUMBRIDGE_LOWER)) {
-                api.miner.
+//                api.miner.
            }
         }
 

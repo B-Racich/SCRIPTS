@@ -2,20 +2,15 @@ package Core.Api;
 
 import Core.API;
 import Core.Api.Common.Timing;
+import org.osbot.rs07.api.Inventory;
 import org.osbot.rs07.api.map.Area;
-import org.osbot.rs07.api.model.Item;
-import org.osbot.rs07.api.model.NPC;
-import org.osbot.rs07.api.model.Player;
+import org.osbot.rs07.api.model.*;
 import org.osbot.rs07.api.map.Position;
-import org.osbot.rs07.api.model.RS2Object;
 import org.osbot.rs07.api.ui.EquipmentSlot;
 import org.osbot.rs07.api.ui.Skill;
 import org.osbot.rs07.script.MethodProvider;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class MyPlayer {
     public MyPlayerTracker tracker;
@@ -178,7 +173,7 @@ public class MyPlayer {
         else { return false; }
     }
 
-    public boolean hasEquiped(EquipmentSlot slot, String item) {
+    public boolean hasEquipped(EquipmentSlot slot, String item) {
         if(mp.getEquipment().isWearingItem(slot, item)) { return true; }
         else return false;
     }
@@ -188,22 +183,22 @@ public class MyPlayer {
         else return false;
     }
 
-    /**
-     *  [Actions]
-     */
-
-    public void interactOb(String name, String act) {
-        RS2Object ob = mp.getObjects().closest(name);
-        if(ob != null) {
-            ob.interact(act);
-        }
+    public boolean hasItem(String item, int amt) {
+        if(mp.getInventory().contains(item) && mp.getInventory().getAmount(item) >= amt) return true;
+        else return false;
     }
 
-    public void interactNpc(String name, String act) {
-        NPC ob = mp.getNpcs().closest(name);
-        if(ob != null) {
-            ob.interact(act);
-        }
+    public boolean isBusy(boolean combatCheck) {
+        if(mp.myPlayer().isAnimating() || mp.myPlayer().isMoving()) {
+            if(combatCheck && mp.myPlayer().isUnderAttack()) {
+                return true;
+            }
+            else return true;
+        } else return false;
+    }
+
+    public boolean isIdle(boolean combatCheck) {
+        return !isBusy(combatCheck);
     }
 
     public boolean equip(String item) {

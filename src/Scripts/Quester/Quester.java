@@ -3,11 +3,12 @@ package Scripts.Quester;
 import Core.API;
 import Core.Api.Common.ApiScript;
 import Core.Client;
+import Scripts.Quester.Quests.CooksAssistant;
+import Scripts.Quester.Quests.RomeoAndJuliet;
+import Scripts.Quester.Quests.SheepShearer;
+import Scripts.Quester.Quests.WitchesPotion;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -27,37 +28,30 @@ public class Quester implements ApiScript {
     private Client client;
     private API api;
 
-    private long timeBegan;
-    private long timeRan;
-
-    private JFrame map_frame = new JFrame();
-    private String img_str;
-    private Image map_img;
-    private ImageIcon map_icon;
-    private JLabel label;
-
-    private boolean isGUIOpen = false;
-    private boolean hasLocation = false;
+    private CooksAssistant cooksAssistant;
+    private WitchesPotion witchesPotion;
+    private SheepShearer sheepShearer;
+    private RomeoAndJuliet romeoAndJuliet;
 
     public Quester(Client client) {
         this.client = client;
         api = client.api;
+
+        cooksAssistant = new CooksAssistant(client);
+        witchesPotion = new WitchesPotion(client);
+        sheepShearer = new SheepShearer(client);
+        romeoAndJuliet = new RomeoAndJuliet(client);
     }
 
     enum state {}
 
-    private int[] combat_stats = new int[7];
-    private int cmb_lvl;
-
-    private void getStats() {
-    }
-
-
-
     @Override
     public void run() {
         try {
-
+            if(!cooksAssistant.isCompleted()) cooksAssistant.run();
+            if(!witchesPotion.isCompleted()) witchesPotion.run();
+            if(!sheepShearer.isCompleted()) sheepShearer.run();
+            if(!romeoAndJuliet.isCompleted()) romeoAndJuliet.run();
         } catch (Exception e) {
             client.log("SCRIPT: Exception: ");
             client.log(e.getMessage());
