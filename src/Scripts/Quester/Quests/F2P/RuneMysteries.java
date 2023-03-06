@@ -2,13 +2,14 @@ package Scripts.Quester.Quests.F2P;
 
 import Core.API;
 import Core.Api.Common.Interfaces.ApiScript;
+import Core.Api.Common.Interfaces.Quest;
 import org.osbot.rs07.api.Quests;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
 
 import java.awt.*;
 
-public class RuneMysteries implements ApiScript {
+public class RuneMysteries implements ApiScript, Quest {
 
     public final static String scriptName = "Romeo And Juliet";
 
@@ -22,6 +23,7 @@ public class RuneMysteries implements ApiScript {
     }
 
     public final int quest_id = 63;
+    public int quest_state;
 
     public boolean isCompleted() {
         if(api.mp.getQuests().isComplete(Quests.Quest.RUNE_MYSTERIES)) return true;
@@ -46,7 +48,7 @@ public class RuneMysteries implements ApiScript {
     private Area Aubury_Hut = new Area(new Position(3252,3399,0), new Position(3254,3402,0));
 
     private void quest() {
-        int quest_state = api.mp.getConfigs().get(quest_id);
+        quest_state = api.mp.getConfigs().get(quest_id);
 
         switch(quest_state) {
             case 0:

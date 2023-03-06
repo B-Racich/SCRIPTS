@@ -2,6 +2,7 @@ package Scripts.Quester.Quests.F2P;
 
 import Core.API;
 import Core.Api.Common.Interfaces.ApiScript;
+import Core.Api.Common.Interfaces.Quest;
 import Core.Api.Common.Timing;
 import org.osbot.rs07.api.Quests;
 import org.osbot.rs07.api.map.Area;
@@ -10,7 +11,7 @@ import org.osbot.rs07.api.ui.EquipmentSlot;
 
 import java.awt.*;
 
-public class RestlessGhost implements ApiScript {
+public class RestlessGhost implements ApiScript, Quest {
 
     public final static String scriptName = "Restless Ghost";
 

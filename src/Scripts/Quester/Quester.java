@@ -57,7 +57,7 @@ public class Quester implements ApiScript {
 
     @Override
     public void run() {
-//        try {
+        try {
 //            if(!cooksAssistant.isCompleted()) cooksAssistant.run();
 //            if(!witchesPotion.isCompleted()) witchesPotion.run();
 //            if(!sheepShearer.isCompleted()) sheepShearer.run();
@@ -67,12 +67,12 @@ public class Quester implements ApiScript {
 //            if(!goblinDiplomacy.isCompleted()) goblinDiplomacy.run();
 //            if(!restlessGhost.isCompleted()) restlessGhost.run();
 //            if(!ernestTheChicken.isCompleted()) ernestTheChicken.run();
-//        } catch (Exception e) {
-//            api.log("SCRIPT: STARTS:========");
-//            api.log(e.getMessage());
-//            api.osbot.log(e.getStackTrace());
-//            api.log("SCRIPT: ENDS:==========");
-//        }
+        } catch (Exception e) {
+            api.log("SCRIPT: STARTS:========");
+            api.log(e.getMessage());
+            api.osbot.log(e.getStackTrace());
+            api.log("SCRIPT: ENDS:==========");
+        }
     }
 
     @Override

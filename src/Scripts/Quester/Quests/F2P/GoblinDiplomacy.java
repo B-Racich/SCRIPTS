@@ -2,6 +2,7 @@ package Scripts.Quester.Quests.F2P;
 
 import Core.API;
 import Core.Api.Common.Interfaces.ApiScript;
+import Core.Api.Common.Interfaces.Quest;
 import org.osbot.rs07.api.Quests;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
@@ -9,7 +10,7 @@ import org.osbot.rs07.api.map.constants.Banks;
 
 import java.awt.*;
 
-public class GoblinDiplomacy implements ApiScript {
+public class GoblinDiplomacy implements ApiScript, Quest {
 
     public final static String scriptName = "Goblin Diplomacy";
 
@@ -23,6 +24,7 @@ public class GoblinDiplomacy implements ApiScript {
     }
 
     public final int quest_id = 62;
+    public int quest_state;
 
     public boolean isCompleted() {
         if(api.mp.getQuests().isComplete(Quests.Quest.GOBLIN_DIPLOMACY)) return true;
@@ -118,7 +120,7 @@ public class GoblinDiplomacy implements ApiScript {
 
     @Override
     public void run() throws NullPointerException {
-        int quest_state = api.mp.getConfigs().get(quest_id);
+        quest_state = api.mp.getConfigs().get(quest_id);
         madeDyes = madeBlueDye && madeRedDye && madeYellowDye;
         hasGoblinMails = hasGoblinMail_1 && hasGoblinMail_2 && hasGoblinMail_3;
 

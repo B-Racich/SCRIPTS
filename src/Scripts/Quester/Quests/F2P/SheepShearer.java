@@ -26,6 +26,7 @@ public class SheepShearer implements ApiScript {
     }
 
     public final int quest_id = 179;
+    public int quest_state;
 
     public boolean isCompleted() {
         if(api.mp.getQuests().isComplete(Quests.Quest.SHEEP_SHEARER)) return true;
@@ -80,7 +81,7 @@ public class SheepShearer implements ApiScript {
     private Position Loom = new Position(3209,3213,1);
 
     private void quest() {
-        int quest_state = api.mp.getConfigs().get(quest_id);
+        quest_state = api.mp.getConfigs().get(quest_id);
 
         switch(quest_state) {
             case 0:

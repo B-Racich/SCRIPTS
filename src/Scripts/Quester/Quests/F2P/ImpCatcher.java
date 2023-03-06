@@ -2,12 +2,13 @@ package Scripts.Quester.Quests.F2P;
 
 import Core.API;
 import Core.Api.Common.Interfaces.ApiScript;
+import Core.Api.Common.Interfaces.Quest;
 import org.osbot.rs07.api.Quests;
 import org.osbot.rs07.api.map.Position;
 
 import java.awt.*;
 
-public class ImpCatcher implements ApiScript {
+public class ImpCatcher implements ApiScript, Quest {
 
     public final static String scriptName = "Imp Catcher";
 
@@ -21,6 +22,7 @@ public class ImpCatcher implements ApiScript {
     }
 
     public final int quest_id = 160;
+    public int quest_state;
 
     public boolean isCompleted() {
         if(api.mp.getQuests().isComplete(Quests.Quest.IMP_CATCHER)) return true;
@@ -64,7 +66,7 @@ public class ImpCatcher implements ApiScript {
     }
 
     public void quest() {
-        int quest_state = api.mp.getConfigs().get(quest_id);
+        quest_state = api.mp.getConfigs().get(quest_id);
         api.log("Here: "+neededBeads().length);
         switch(quest_state) {
             case 0:

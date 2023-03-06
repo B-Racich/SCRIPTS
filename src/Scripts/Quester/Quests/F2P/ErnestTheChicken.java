@@ -36,7 +36,7 @@ public class ErnestTheChicken implements ApiScript, Quest {
     }
 
     public final int quest_id = 32;
-    private int quest_state;
+    public int quest_state;
 
     public API.ScriptState getState() {
         return IDLE;

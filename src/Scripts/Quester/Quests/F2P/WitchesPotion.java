@@ -2,13 +2,14 @@ package Scripts.Quester.Quests.F2P;
 
 import Core.API;
 import Core.Api.Common.Interfaces.ApiScript;
+import Core.Api.Common.Interfaces.Quest;
 import org.osbot.rs07.api.Quests;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
 
 import java.awt.*;
 
-public class WitchesPotion implements ApiScript {
+public class WitchesPotion implements ApiScript, Quest {
 
     public final static String scriptName = "Witches Potion";
 
@@ -58,6 +59,7 @@ public class WitchesPotion implements ApiScript {
     private Position Onion_Patch = new Position(2950,3252,0);
 
     public final int quest_id = 67;
+    public int quest_state;
 
     public boolean isCompleted() {
         if(api.mp.getQuests().isComplete(Quests.Quest.WITCHS_POTION)) return true;
@@ -74,7 +76,7 @@ public class WitchesPotion implements ApiScript {
     }
 
     private void quest() {
-        int quest_state = api.mp.getConfigs().get(quest_id);
+        quest_state = api.mp.getConfigs().get(quest_id);
 
 //        client.log("Witches Potion: " + quest_id + " - " + quest_state);
         switch (quest_state) {

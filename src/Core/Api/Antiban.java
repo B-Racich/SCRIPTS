@@ -54,11 +54,19 @@ public class Antiban extends Thread {
 
     public boolean check() {
         clickContinue();
+
+        if(idleFight && api.script.getState() == IDLE)
+            idleFight();
+
         time = System.currentTimeMillis();
         long diff = (time - last)/1000;
         api.util.log("Antiban: check "+diff+" : "+checkTime);
-        sleepTime = ((checkTime-diff)*1000 >= 500) ? (checkTime-diff)*1000 : 500;
+        int rand = (int)(Math.random()*1000);
+//        sleepTime = ((checkTime-diff)*1000 >= 500) ? (checkTime-diff)*1000 : 500;
+        sleepTime = rand;
+
         if(diff >= checkTime) return true;
+
         else return false;
     }
 
@@ -69,9 +77,6 @@ public class Antiban extends Thread {
         int rand = random(0,10);
         api.util.log("Antiban: Activate : "+rand);
         idle = true;
-
-        if(idleFight && api.script.getState() == IDLE)
-            idleFight();
 
         if(rand <= 2)
             examineObject();
