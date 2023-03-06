@@ -2,6 +2,7 @@ package Scripts.Quester;
 
 import Core.API;
 import Core.Api.Common.Interfaces.ApiScript;
+import Core.Api.Common.Interfaces.Quest;
 import Scripts.Quester.Quests.F2P.*;
 import sun.font.Script;
 
@@ -35,6 +36,8 @@ public class Quester implements ApiScript {
     private RestlessGhost restlessGhost;
     private ErnestTheChicken ernestTheChicken;
 
+    private ApiScript quest;
+
     private API.ScriptState scriptState;
 
     public Quester(API api) {
@@ -50,7 +53,7 @@ public class Quester implements ApiScript {
         restlessGhost = new RestlessGhost(api);
         ernestTheChicken = new ErnestTheChicken(api);
 
-        api.antiban.idleFight = true;
+//        api.antiban.idleFight = true;
     }
 
     enum state {}
@@ -58,15 +61,17 @@ public class Quester implements ApiScript {
     @Override
     public void run() {
         try {
-//            if(!cooksAssistant.isCompleted()) cooksAssistant.run();
-//            if(!witchesPotion.isCompleted()) witchesPotion.run();
-//            if(!sheepShearer.isCompleted()) sheepShearer.run();
-//            if(!romeoAndJuliet.isCompleted()) romeoAndJuliet.run();
-//            if(!runeMysteries.isCompleted()) runeMysteries.run();
-//            if(!impCatcher.isCompleted()) impCatcher.run();
-//            if(!goblinDiplomacy.isCompleted()) goblinDiplomacy.run();
-//            if(!restlessGhost.isCompleted()) restlessGhost.run();
-//            if(!ernestTheChicken.isCompleted()) ernestTheChicken.run();
+            if(!cooksAssistant.isCompleted()) quest = cooksAssistant;
+            if(!witchesPotion.isCompleted()) quest = witchesPotion;
+            if(!sheepShearer.isCompleted()) quest = sheepShearer;
+            if(!romeoAndJuliet.isCompleted()) quest = romeoAndJuliet;
+            if(!runeMysteries.isCompleted()) quest = runeMysteries;
+            if(!impCatcher.isCompleted()) quest = impCatcher;
+            if(!goblinDiplomacy.isCompleted()) quest = goblinDiplomacy;
+            if(!restlessGhost.isCompleted()) quest = restlessGhost;
+            if(!ernestTheChicken.isCompleted()) quest = ernestTheChicken;
+
+            quest.run();
         } catch (Exception e) {
             api.log("SCRIPT: STARTS:========");
             api.log(e.getMessage());
@@ -87,6 +92,6 @@ public class Quester implements ApiScript {
 
     @Override
     public API.ScriptState getState() {
-        return API.ScriptState.IDLE;
+        return quest.getState();
     }
 }

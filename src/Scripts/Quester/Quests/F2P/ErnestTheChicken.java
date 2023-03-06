@@ -37,9 +37,10 @@ public class ErnestTheChicken implements ApiScript, Quest {
 
     public final int quest_id = 32;
     public int quest_state;
+    private API.ScriptState scriptState;
 
     public API.ScriptState getState() {
-        return IDLE;
+        return scriptState;
     }
 
     private Area Veronica_Area = new Area(3109,3329,3110,3330);
@@ -47,25 +48,6 @@ public class ErnestTheChicken implements ApiScript, Quest {
     private Area Poison_Area = new Area(3097,3365,3100,3365);
     private Position Bookcase_Pos = new Position(3098,3359,0);
     private Area Downstairs_Area = new Area(new Position(3090,9745,0), new Position(3118,9767,0));
-
-    private Position door1Entry = new Position(3108,9757,0);
-    private Position door1Exit = new Position(3108,9759,0);
-    private Position door2Entry = new Position(3106,9760,0);
-    private Position door2Exit = new Position(3104,9760,0);
-    private Position door3Entry = new Position(3102,9759,0);
-    private Position door3Exit = new Position(3102,9757,0);
-    private Position door4Entry = new Position(3101,9760,0);
-    private Position door4Exit = new Position(3099,9757,0);
-    private Position door5Entry = new Position(3097,9762,0);
-    private Position door5Exit = new Position(3097,9764,0);
-    private Position door6Entry = new Position(3099,9765,0);
-    private Position door6Exit = new Position(3101,9765,0);
-    private Position door7Entry = new Position(3104,9765,0);
-    private Position door7Exit = new Position(3106,9765,0);
-    private Position door8Entry = new Position(3102,9764,0);
-    private Position door8Exit = new Position(3102,9762,0);
-    private Position door9Entry = new Position(3106,9760,0);
-    private Position door9Exit = new Position(3102,9757,0);
 
     private Area roomPos1 = new Area(3105,9758,3112,9767);
     private Area roomPos2 = new Area(3096,9763,3099,9767);
@@ -89,14 +71,15 @@ public class ErnestTheChicken implements ApiScript, Quest {
     private boolean stage12 = false;
     private boolean stage13 = false;
 
-    private Position Maze_Door_1 = new Position(3108, 9758, 0);
-    private Position Maze_Door_2 = new Position(3105, 9760, 0);
-    private Position Maze_Door_3 = new Position(3102, 9758, 0);
-    private Position Maze_Door_4 = new Position(3097, 9763, 0);
-    private Position Maze_Door_6 = new Position(3100, 9765, 0);
-    private Position Maze_Door_7 = new Position(3105, 9765, 0);
-    private Position Maze_Door_8 = new Position(3102, 9763, 0);
-    private Position Maze_Door_9 = new Position(3100, 9755, 0);
+    private static Position Maze_Door_1 = new Position(3108, 9758, 0);
+    private static Position Maze_Door_2 = new Position(3105, 9760, 0);
+    private static Position Maze_Door_3 = new Position(3102, 9758, 0);
+    private static Position Maze_Door_4 = new Position(3100, 9760, 0);
+    private static Position Maze_Door_5 = new Position(3097, 9763, 0);
+    private static Position Maze_Door_6 = new Position(3100, 9765, 0);
+    private static Position Maze_Door_7 = new Position(3105, 9765, 0);
+    private static Position Maze_Door_8 = new Position(3102, 9763, 0);
+    private static Position Maze_Door_9 = new Position(3100, 9755, 0);
 
     private enum LeverState {
         UP(2108),
@@ -145,46 +128,28 @@ public class ErnestTheChicken implements ApiScript, Quest {
     }
 
     enum mazeState {
-        STAGE_1(new HashMap<String, LeverState>(){{
-            put("Lever A", LeverState.DOWN);
-            put("Lever B", LeverState.DOWN);
-        }}),
-        STAGE_2(new HashMap<String, LeverState>(){{
-            put("Lever D", LeverState.DOWN);
-        }}),
-        STAGE_3(new HashMap<String, LeverState>(){{
-            put("Lever A", LeverState.UP);
-            put("Lever B", LeverState.UP);
-        }}),
-        STAGE_4(new HashMap<String, LeverState>(){{
-            put("Lever E", LeverState.DOWN);
-            put("Lever F", LeverState.DOWN);
-        }}),
-        STAGE_5(new HashMap<String, LeverState>(){{
-            put("Lever C", LeverState.DOWN);
-        }}),
-        STAGE_6(new HashMap<String, LeverState>(){{
-            put("Lever E", LeverState.UP);
-        }});
-
-        HashMap<String, LeverState> leverStates;
-
-        mazeState(HashMap<String, LeverState> state) {
-            this.leverStates = state;
-        }
+        STAGE_1,
+        STAGE_2,
+        STAGE_3,
+        STAGE_4,
+        STAGE_5,
+        STAGE_6;
     }
+
+    HashMap<String, Boolean> doorStates = new HashMap<String, Boolean>();
+    HashMap<String, String> leverStates = new HashMap<String, String>();
 
     private void getLeverStates() {
         List<RS2Object> objects = api.mp.getObjects().getAll();
         List<RS2Object> levers = new ArrayList<>();
-
         Iterator<RS2Object> itr = objects.iterator();
 
         while(itr.hasNext()) {
             RS2Object ob = itr.next();
             if(ob.getName().contains("Lever"))  {
                 levers.add(ob);
-                api.log(ob.getName()+"\t:"+LeverState.getState(ob.getModelIds()[0]));
+                leverStates.put(ob.getName(), LeverState.getState(ob.getModelIds()[0]));
+//                api.log(ob.getName()+"\t:"+LeverState.getState(ob.getModelIds()[0]));
             }
         }
     }
@@ -193,15 +158,41 @@ public class ErnestTheChicken implements ApiScript, Quest {
         List<RS2Object> objects = api.mp.getObjects().getAll();
         List<RS2Object> doors = new ArrayList<>();
 
+        Position[] doorPosArr = new Position[]{
+            Maze_Door_1,
+            Maze_Door_2,
+            Maze_Door_3,
+            Maze_Door_4,
+            Maze_Door_5,
+            Maze_Door_6,
+            Maze_Door_7,
+            Maze_Door_8,
+            Maze_Door_9,
+        };
+
         Iterator<RS2Object> itr = objects.iterator();
 
         while(itr.hasNext()) {
             RS2Object ob = itr.next();
-            if(ob.getName().contains("Door"))  {
+            if(ob != null && ob.getName().contains("Door"))  {
                 doors.add(ob);
-                api.log(ob.getName()+"\t:"+ob.getPosition()+"\t:"+ob.getModelIds()[0]);
+                for(int i = 0; i < doorPosArr.length; i++) {
+                    if(ob.getPosition().distance(doorPosArr[i]) <= 0) {
+                        boolean isOpen = ob.getModelIds()[0] == 11813 ? true : false;
+                        doorStates.put("Door "+(i+1), isOpen);
+                        //  api.log(ob.getName()+"\t:"+ob.getPosition()+"\t:"+isOpen);
+                        break;
+                    }
+                }
             }
         }
+    }
+
+    private void getMazeState() {
+        getLeverStates();
+        getDoorStates();
+
+
     }
 
     @Override
@@ -212,6 +203,9 @@ public class ErnestTheChicken implements ApiScript, Quest {
 
             api.log("Ernest The Chicken: " + quest_id + " - " + quest_state);
             switch (quest_state) {
+                default:
+                    scriptState = IDLE;
+                    break;
                 case 0:
                     api.interact.moveToAreaAnd(Veronica_Area, () -> api.interact.talkNPC("Veronica", new int[]{1}));
                     break;
@@ -233,66 +227,8 @@ public class ErnestTheChicken implements ApiScript, Quest {
                                 return true;
                             });
                         } else {
-                            getLeverStates();
-                            getDoorStates();
-                            if (pullLever("Lever A", LeverState.DOWN) && pullLever("Lever B", LeverState.DOWN) && !stage1) {
-                                api.log("1");
-                                goThroughDoor(door1Entry, door1Exit);
-                                stage1 = true;
-                            } else if (pullLever("Lever D", LeverState.DOWN) && stage1) {
-                                api.log("2");
-                                goThroughDoor(door2Entry, door2Exit);
-                                stage2 = true;
-                            } else if (stage2 && api.myPlayer.isIdle(false) && roomPos5.contains(api.mp.myPlayer())) {
-                                api.log("3");
-                                goThroughDoor(door3Entry, door3Exit);
-                                stage2 = false;
-                                stage3 = true;
-                            } else if (bigRoom.contains(api.mp.myPlayer()) && pullLever("Lever A", LeverState.UP) && pullLever("Lever B", LeverState.UP) && stage3) {
-                                api.log("4");
-                                goThroughDoor(door4Entry, door4Exit);
-                                stage3 = false;
-                                stage4 = true;
-                            } else if (stage4) {
-                                //goThroughDoor(doorPos4, roomPos4);
-                                stage4 = false;
-                                stage5 = true;
-                            } else if (stage5) {
-                                //goThroughDoor(doorPos5, roomPos2);
-                                stage5 = false;
-                                stage6 = true;
-                            } else if (pullLever("Lever E", LeverState.DOWN) && pullLever("Lever F", LeverState.DOWN) && stage6) {
-                                //goThroughDoor(doorPos6, roomPos3);
-                                stage6 = false;
-                                stage7 = true;
-                            } else if (stage7) {
-                                //goThroughDoor(doorPos7, roomPos1);
-                                stage7 = false;
-                                stage8 = true;
-                            } else if (pullLever("Lever C", LeverState.DOWN) && stage8) {
-                                //	goThroughDoor(doorPos7, roomPos3);
-                                stage8 = false;
-                                stage9 = true;
-                            } else if (stage9) {
-                                //	goThroughDoor(doorPos6, roomPos2);
-                                stage9 = false;
-                                stage10 = true;
-                            } else if (pullLever("Lever E", LeverState.UP) && stage10) {
-                                //goThroughDoor(doorPos6, roomPos3);
-                                stage10 = false;
-                                stage11 = true;
-                            } else if (stage11) {
-                                //goThroughDoor(doorPos8, roomPos5);
-                                stage11 = false;
-                                stage12 = true;
-                            } else if (stage12) {
-                                //goThroughDoor(doorPos3, bigRoom);
-                                stage12 = false;
-                                stage13 = true;
-                            } else if (stage13) {
-                                stage13 = false;
-                                api.log("Did it");
-                            }
+                            getMazeState();
+
                         }
                     }
                     break;

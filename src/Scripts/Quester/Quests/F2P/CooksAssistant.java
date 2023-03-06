@@ -20,10 +20,8 @@ public class CooksAssistant implements ApiScript, Quest {
     private long timeRan;
 
     public CooksAssistant(API api) {
-        this.api = api.api;
+        this.api = api;
     }
-
-    enum state {}
 
     @Override
     public void run() {
@@ -32,7 +30,7 @@ public class CooksAssistant implements ApiScript, Quest {
         } catch (Exception e) {
             api.log("SCRIPT: Exception: ");
             api.log(e.getMessage());
-            e.printStackTrace();
+            api.osbot.log(e.getStackTrace());
         }
     }
 
@@ -69,7 +67,7 @@ public class CooksAssistant implements ApiScript, Quest {
     private boolean has_all_items = false;
 
     public final int quest_id = 29;
-    private int quest_state;
+    public int quest_state;
 
     public boolean isCompleted() {
         if(api.mp.getQuests().isComplete(Quests.Quest.COOKS_ASSISTANT)) return true;
