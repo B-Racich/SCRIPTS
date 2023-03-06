@@ -3,8 +3,11 @@ package Scripts.Quester;
 import Core.API;
 import Core.Api.Common.Interfaces.ApiScript;
 import Scripts.Quester.Quests.F2P.*;
+import sun.font.Script;
 
 import java.awt.*;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * The basic script template
@@ -54,21 +57,22 @@ public class Quester implements ApiScript {
 
     @Override
     public void run() {
-        try {
-            if(!cooksAssistant.isCompleted()) cooksAssistant.run();
-            if(!witchesPotion.isCompleted()) witchesPotion.run();
-            if(!sheepShearer.isCompleted()) sheepShearer.run();
-            if(!romeoAndJuliet.isCompleted()) romeoAndJuliet.run();
-            if(!runeMysteries.isCompleted()) runeMysteries.run();
-            if(!impCatcher.isCompleted()) impCatcher.run();
-            if(!goblinDiplomacy.isCompleted()) goblinDiplomacy.run();
-            if(!restlessGhost.isCompleted()) restlessGhost.run();
-            if(!ernestTheChicken.isCompleted()) ernestTheChicken.run();
-        } catch (Exception e) {
-            api.log("SCRIPT: Exception: ");
-            api.log(e.getMessage());
-            e.printStackTrace();
-        }
+//        try {
+//            if(!cooksAssistant.isCompleted()) cooksAssistant.run();
+//            if(!witchesPotion.isCompleted()) witchesPotion.run();
+//            if(!sheepShearer.isCompleted()) sheepShearer.run();
+//            if(!romeoAndJuliet.isCompleted()) romeoAndJuliet.run();
+//            if(!runeMysteries.isCompleted()) runeMysteries.run();
+//            if(!impCatcher.isCompleted()) impCatcher.run();
+//            if(!goblinDiplomacy.isCompleted()) goblinDiplomacy.run();
+//            if(!restlessGhost.isCompleted()) restlessGhost.run();
+//            if(!ernestTheChicken.isCompleted()) ernestTheChicken.run();
+//        } catch (Exception e) {
+//            api.log("SCRIPT: STARTS:========");
+//            api.log(e.getMessage());
+//            api.osbot.log(e.getStackTrace());
+//            api.log("SCRIPT: ENDS:==========");
+//        }
     }
 
     @Override
@@ -82,7 +86,7 @@ public class Quester implements ApiScript {
     }
 
     @Override
-    public state getState() {
-        return null;
+    public API.ScriptState getState() {
+        return API.ScriptState.IDLE;
     }
 }

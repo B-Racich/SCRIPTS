@@ -2,6 +2,7 @@ import Core.API;
 import Core.Api.Common.Interfaces.ApiScript;
 
 import java.awt.*;
+import static Core.API.ScriptState.IDLE;
 /**
  * The basic script template
  *
@@ -41,7 +42,7 @@ public class Template implements ApiScript {
     }
 
     @Override
-    public state getState() {
-        return null;
+    public API.ScriptState getState() {
+        return API.ScriptState.IDLE;
     }
 }

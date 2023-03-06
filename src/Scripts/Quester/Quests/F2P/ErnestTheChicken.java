@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import static Core.API.ScriptState.IDLE;
+
 public class ErnestTheChicken implements ApiScript, Quest {
 
     public final static String scriptName = "Ernest The Chicken";
@@ -36,9 +38,8 @@ public class ErnestTheChicken implements ApiScript, Quest {
     public final int quest_id = 32;
     private int quest_state;
 
-    @Override
-    public <state> state getState() {
-        return null;
+    public API.ScriptState getState() {
+        return IDLE;
     }
 
     private Area Veronica_Area = new Area(3109,3329,3110,3330);
@@ -204,111 +205,104 @@ public class ErnestTheChicken implements ApiScript, Quest {
     }
 
     @Override
-    public void run() throws NullPointerException {
-        quest_state = api.mp.getConfigs().get(quest_id);
+    public void run() {
 
-        api.log("Ernest The Chicken: " + quest_id + " - " + quest_state);
-        switch (quest_state) {
-            case 0:
-                api.interact.moveToAreaAnd(Veronica_Area, ()-> api.interact.talkNPC("Veronica", new int[]{1}));
-                break;
-            case 1:
-                if(!api.myPlayer.hasItem("Poisoned fish food")) {
-                    if(api.myPlayer.hasItem("Fish food") && api.myPlayer.hasItem("Poison")) {
-                        api.interact.combineItems("Fish food", "Poison");
-                    }
-                    else if(!api.myPlayer.hasItem("Fish food")) {
-                        api.interact.moveToAreaAnd(Fish_Food_Area, ()-> api.interact.pickUpItem("Fish food"));
-                    }
-                    else if(!api.myPlayer.hasItem("Poison")) {
-                        api.interact.moveToAreaAnd(Poison_Area, ()-> api.interact.pickUpItem("Poison"));
-                    }
-                }
-                else if(!api.myPlayer.hasItem("Oil can")) {
-                    if(!Downstairs_Area.contains(api.mp.myPlayer())) {
-                        api.interact.moveToPosAnd(Bookcase_Pos, 1, ()-> {
-                            api.interact.interactOb("Bookcase", "Search");
-                            Timing.wait(1500);
-                            api.interact.interactOb("Ladder", "Climb-down");
-                            return true;
-                        });
-                    } else {
-                        getLeverStates();
-                        getDoorStates();
-                        if(pullLever("Lever A", LeverState.DOWN) && pullLever("Lever B", LeverState.DOWN) && !stage1) {
-                            api.log("1");
-                            goThroughDoor(door1Entry, door1Exit);
-                            stage1 = true;
+        try {
+            quest_state = api.mp.getConfigs().get(quest_id);
+
+            api.log("Ernest The Chicken: " + quest_id + " - " + quest_state);
+            switch (quest_state) {
+                case 0:
+                    api.interact.moveToAreaAnd(Veronica_Area, () -> api.interact.talkNPC("Veronica", new int[]{1}));
+                    break;
+                case 1:
+                    if (!api.myPlayer.hasItem("Poisoned fish food")) {
+                        if (api.myPlayer.hasItem("Fish food") && api.myPlayer.hasItem("Poison")) {
+                            api.interact.combineItems("Fish food", "Poison");
+                        } else if (!api.myPlayer.hasItem("Fish food")) {
+                            api.interact.moveToAreaAnd(Fish_Food_Area, () -> api.interact.pickUpItem("Fish food"));
+                        } else if (!api.myPlayer.hasItem("Poison")) {
+                            api.interact.moveToAreaAnd(Poison_Area, () -> api.interact.pickUpItem("Poison"));
                         }
-                        else if(pullLever("Lever D", LeverState.DOWN) && stage1) {
-                            api.log("2");
-                            goThroughDoor(door2Entry, door2Exit);
-                            stage2 = true;
-                        }
-                        else if(stage2 && api.myPlayer.isIdle(false) && roomPos5.contains(api.mp.myPlayer())) {
-                            api.log("3");
-                            goThroughDoor(door3Entry, door3Exit);
-                            stage2 = false;
-                            stage3 = true;
-                        }
-                        else if(bigRoom.contains(api.mp.myPlayer()) && pullLever("Lever A", LeverState.UP) && pullLever("Lever B", LeverState.UP) && stage3) {
-                            api.log("4");
-                            goThroughDoor(door4Entry, door4Exit);
-                            stage3 = false;
-                            stage4 = true;
-                        }
-                        else if(stage4) {
-                            //goThroughDoor(doorPos4, roomPos4);
-                            stage4 = false;
-                            stage5 = true;
-                        }
-                        else if(stage5) {
-                            //goThroughDoor(doorPos5, roomPos2);
-                            stage5 = false;
-                            stage6 = true;
-                        }
-                        else if(pullLever("Lever E", LeverState.DOWN) && pullLever("Lever F", LeverState.DOWN) && stage6) {
-                            //goThroughDoor(doorPos6, roomPos3);
-                            stage6 = false;
-                            stage7 = true;
-                        }
-                        else if(stage7) {
-                            //goThroughDoor(doorPos7, roomPos1);
-                            stage7 = false;
-                            stage8 = true;
-                        }
-                        else if(pullLever("Lever C", LeverState.DOWN) && stage8) {
-                            //	goThroughDoor(doorPos7, roomPos3);
-                            stage8 = false;
-                            stage9 = true;
-                        }
-                        else if(stage9) {
-                            //	goThroughDoor(doorPos6, roomPos2);
-                            stage9 = false;
-                            stage10 = true;
-                        }
-                        else if(pullLever("Lever E", LeverState.UP) && stage10) {
-                            //goThroughDoor(doorPos6, roomPos3);
-                            stage10 = false;
-                            stage11 = true;
-                        }
-                        else if(stage11) {
-                            //goThroughDoor(doorPos8, roomPos5);
-                            stage11 = false;
-                            stage12 = true;
-                        }
-                        else if(stage12) {
-                            //goThroughDoor(doorPos3, bigRoom);
-                            stage12 = false;
-                            stage13 = true;
-                        }
-                        else if(stage13) {
-                            stage13 = false;
-                            api.log("Did it");
+                    } else if (!api.myPlayer.hasItem("Oil can")) {
+                        if (!Downstairs_Area.contains(api.mp.myPlayer())) {
+                            api.interact.moveToPosAnd(Bookcase_Pos, 1, () -> {
+                                api.interact.interactOb("Bookcase", "Search");
+                                Timing.wait(1500);
+                                api.interact.interactOb("Ladder", "Climb-down");
+                                return true;
+                            });
+                        } else {
+                            getLeverStates();
+                            getDoorStates();
+                            if (pullLever("Lever A", LeverState.DOWN) && pullLever("Lever B", LeverState.DOWN) && !stage1) {
+                                api.log("1");
+                                goThroughDoor(door1Entry, door1Exit);
+                                stage1 = true;
+                            } else if (pullLever("Lever D", LeverState.DOWN) && stage1) {
+                                api.log("2");
+                                goThroughDoor(door2Entry, door2Exit);
+                                stage2 = true;
+                            } else if (stage2 && api.myPlayer.isIdle(false) && roomPos5.contains(api.mp.myPlayer())) {
+                                api.log("3");
+                                goThroughDoor(door3Entry, door3Exit);
+                                stage2 = false;
+                                stage3 = true;
+                            } else if (bigRoom.contains(api.mp.myPlayer()) && pullLever("Lever A", LeverState.UP) && pullLever("Lever B", LeverState.UP) && stage3) {
+                                api.log("4");
+                                goThroughDoor(door4Entry, door4Exit);
+                                stage3 = false;
+                                stage4 = true;
+                            } else if (stage4) {
+                                //goThroughDoor(doorPos4, roomPos4);
+                                stage4 = false;
+                                stage5 = true;
+                            } else if (stage5) {
+                                //goThroughDoor(doorPos5, roomPos2);
+                                stage5 = false;
+                                stage6 = true;
+                            } else if (pullLever("Lever E", LeverState.DOWN) && pullLever("Lever F", LeverState.DOWN) && stage6) {
+                                //goThroughDoor(doorPos6, roomPos3);
+                                stage6 = false;
+                                stage7 = true;
+                            } else if (stage7) {
+                                //goThroughDoor(doorPos7, roomPos1);
+                                stage7 = false;
+                                stage8 = true;
+                            } else if (pullLever("Lever C", LeverState.DOWN) && stage8) {
+                                //	goThroughDoor(doorPos7, roomPos3);
+                                stage8 = false;
+                                stage9 = true;
+                            } else if (stage9) {
+                                //	goThroughDoor(doorPos6, roomPos2);
+                                stage9 = false;
+                                stage10 = true;
+                            } else if (pullLever("Lever E", LeverState.UP) && stage10) {
+                                //goThroughDoor(doorPos6, roomPos3);
+                                stage10 = false;
+                                stage11 = true;
+                            } else if (stage11) {
+                                //goThroughDoor(doorPos8, roomPos5);
+                                stage11 = false;
+                                stage12 = true;
+                            } else if (stage12) {
+                                //goThroughDoor(doorPos3, bigRoom);
+                                stage12 = false;
+                                stage13 = true;
+                            } else if (stage13) {
+                                stage13 = false;
+                                api.log("Did it");
+                            }
                         }
                     }
-                }
-                break;
+                    break;
+            }
+
+        } catch(Exception e) {
+            api.log("INNER SCRIPT: STARTS:========");
+            api.log(e.getMessage());
+            api.osbot.log(e.getStackTrace());
+            api.log("INNER SCRIPT: STARTS:========");
         }
     }
 

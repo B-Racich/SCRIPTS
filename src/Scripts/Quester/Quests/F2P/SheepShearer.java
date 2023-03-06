@@ -1,7 +1,7 @@
 package Scripts.Quester.Quests.F2P;
 
 import Core.API;
-import Core.Api.Banking;
+import Core.Api.Modules.Banking;
 import Core.Api.Common.Interfaces.ApiScript;
 import Core.Api.Common.Timing;
 import org.osbot.rs07.api.Quests;
@@ -135,7 +135,7 @@ public class SheepShearer implements ApiScript {
     }
 
     @Override
-    public <state> state getState() {
-        return null;
+    public API.ScriptState getState() {
+        return API.ScriptState.IDLE;
     }
 }

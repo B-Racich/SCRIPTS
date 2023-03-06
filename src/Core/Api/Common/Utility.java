@@ -60,22 +60,4 @@ public class Utility {
         else { return a; }
     }
 
-    public boolean existsOb(String name) {
-        RS2Object ob = mp.getObjects().closest(name);
-        if(ob != null && ob.exists() && ob.getPosition().distance(mp.myPosition()) <= 15) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean existsNpc(String name) {
-        NPC ob = mp.getNpcs().closest(name);
-        if(ob != null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }

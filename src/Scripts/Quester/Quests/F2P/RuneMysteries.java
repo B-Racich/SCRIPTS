@@ -77,7 +77,7 @@ public class RuneMysteries implements ApiScript {
     }
 
     @Override
-    public <state> state getState() {
-        return null;
+    public API.ScriptState getState() {
+        return API.ScriptState.IDLE;
     }
 }

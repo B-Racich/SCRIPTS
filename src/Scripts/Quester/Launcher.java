@@ -38,7 +38,7 @@ public class Launcher extends Script {
         script = new Quester(api);
         api.setScript(script);
         api.runAntiban();
-        api.api.util.debug = true;
+        api.util.debug = true;
         log("LAUNCHER: Setup finished...");
     }
 

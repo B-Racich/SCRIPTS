@@ -46,8 +46,8 @@ public class CooksAssistant implements ApiScript {
     }
 
     @Override
-    public CooksAssistant.state getState() {
-        return null;
+    public API.ScriptState getState() {
+        return API.ScriptState.IDLE;
     }
 
     private Area Lumbridge_Cook = new Area(new Position(3205,3212,0), new Position(3212,3217,0));

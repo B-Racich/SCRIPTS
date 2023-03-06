@@ -1,13 +1,18 @@
 package Core;
 
 import Core.Api.*;
+import Core.Api.Antiban;
 import Core.Api.Common.Interfaces.ApiScript;
 import Core.Api.Common.LootLogger;
 import Core.Api.Common.StatTracker;
 import Core.Api.Common.Utility;
+import Core.Api.Modules.*;
 import org.osbot.rs07.Bot;
 import org.osbot.rs07.script.MethodProvider;
 import org.osbot.rs07.script.Script;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * This class is the parent to:
@@ -37,7 +42,7 @@ public class API {
     public Banking banking;
     public StatTracker stats;
     public LootLogger logger;
-    public static Miner miner;
+    public Miner miner;
 
     enum Debug {
         ALL,
@@ -56,11 +61,11 @@ public class API {
     private Debug debugLevel = Debug.NONE;
 
     public API(Script osbot) {
-        osbot.log("CLIENT: initiating...");
+        osbot.log("API: initiating...");
         this.osbot = osbot;
         antiban = new Antiban(this);
         camera = new Camera(this);
-        osbot.log("CLIENT: initiated...");
+        osbot.log("API: initiated...");
 
         bot = osbot.bot;
         antiban = antiban;
@@ -91,8 +96,10 @@ public class API {
             try {
                 script.run();
             } catch(Exception e){
-                osbot.log("CLIENT: Exception: ");
+                osbot.log("API: STARTS==========:");
                 osbot.log(e.getMessage());
+                osbot.log(e.getStackTrace());
+                osbot.log("API: ENDS============:");
                 shutdown();
             }
         }
@@ -106,7 +113,7 @@ public class API {
         if(!antiban.isAlive()) {
             antiban.setup();
             antiban.start();
-            osbot.log("CLIENT: Antiban initiated...");
+            osbot.log("API: Antiban initiated...");
         }
     }
 
@@ -117,9 +124,9 @@ public class API {
     public void shutdown() {
         antiban.runTime = false;
         antiban.shutdown();
-        api.fighter.shutdown();
-        api.myPlayer.shutdown();
-        osbot.log("CLIENT: shutdown...");
+        fighter.shutdown();
+        myPlayer.shutdown();
+        osbot.log("API: shutdown...");
     }
 
     public void log(String str) {

@@ -1,6 +1,10 @@
 package Core.Api.Common.Interfaces;
 
+import Core.API;
+
 import java.awt.*;
+
+import static Core.API.ScriptState;
 
 /**
  * This interface is a replacement for extending the osBot Script class
@@ -15,7 +19,9 @@ import java.awt.*;
 
 public interface ApiScript {
 
-    <state> state getState();
+   ScriptState scriptState = ScriptState.IDLE;
+
+   ScriptState getState();
 
     void run() throws NullPointerException;
 

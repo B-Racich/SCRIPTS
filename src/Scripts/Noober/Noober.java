@@ -1,7 +1,7 @@
 package Scripts.Noober;
 
 import Core.API;
-import Core.Api.Banking;
+import Core.Api.Modules.Banking;
 import Core.Api.Common.Interfaces.ApiScript;
 import Core.Api.Common.Timing;
 import org.osbot.rs07.api.map.Position;
@@ -12,6 +12,8 @@ import org.osbot.rs07.script.MethodProvider;
 
 import java.awt.*;
 import java.util.HashMap;
+
+import static Core.API.ScriptState.IDLE;
 
 /**
  * The basic script template
@@ -53,8 +55,11 @@ public class Noober implements ApiScript {
         MOVE_TO_ENEMY,
     }
 
-    @Override
-    public state getState() {
+    public API.ScriptState getState() {
+        return IDLE;
+    }
+
+    public state getScriptState() {
         if (api.myPlayer.hasFood() && !mp.getInventory().isFull() && api.myPlayer.isWithin(fight_area, 30)) {
             return state.FIGHTING;
         } else if (!mp.getInventory().isFull() && api.myPlayer.hasFood() && !api.myPlayer.isWithin(fight_area, 30)) {
@@ -121,7 +126,7 @@ public class Noober implements ApiScript {
         try {
             getZone();
 
-            switch (getState()) {
+            switch (getScriptState()) {
                 case BANKING:
                     if (api.myPlayer.isWithin(lumbridge_bank, 2)) {
                         HashMap<String, Integer> except = new HashMap<String, Integer>() {{

@@ -45,8 +45,8 @@ public class WitchesPotion implements ApiScript {
     }
 
     @Override
-    public <state> state getState() {
-        return null;
+    public API.ScriptState getState() {
+        return API.ScriptState.IDLE;
     }
 
     private Area Aggies_House = new Area(new Position(3083,3256,0), new Position(3088,3261,0));
