@@ -1,10 +1,7 @@
 import Core.API;
-import Core.Api.Common.ApiScript;
-import Core.Client;
+import Core.Api.Common.Interfaces.ApiScript;
 
 import java.awt.*;
-import java.util.HashMap;
-
 /**
  * The basic script template
  *
@@ -17,15 +14,13 @@ import java.util.HashMap;
 
 public class Template implements ApiScript {
 
-    private Client client;
     private API api;
 
     private long timeBegan;
     private long timeRan;
 
-    public Template(Client client) {
-        this.client = client;
-        api = client.api;
+    public Template(API api) {
+        this.api = api;
     }
 
     enum state {}
@@ -43,21 +38,6 @@ public class Template implements ApiScript {
     @Override
     public void paint(Graphics2D g) {
 
-    }
-
-    @Override
-    public void setTask(HashMap<String, Integer> tasks) {
-
-    }
-
-    @Override
-    public boolean hasTask() {
-        return false;
-    }
-
-    @Override
-    public boolean completedTask() {
-        return false;
     }
 
     @Override

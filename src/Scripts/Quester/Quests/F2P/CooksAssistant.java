@@ -1,29 +1,25 @@
 package Scripts.Quester.Quests.F2P;
 
 import Core.API;
-import Core.Api.Common.ApiScript;
+import Core.Api.Common.Interfaces.ApiScript;
 import Core.Api.Common.Timing;
-import Core.Client;
 import org.osbot.rs07.api.Quests;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
 
 import java.awt.*;
-import java.util.HashMap;
 
 public class CooksAssistant implements ApiScript {
 
     public final static String scriptName = "Cooks Assistant";
 
-    private Client client;
     private API api;
 
     private long timeBegan;
     private long timeRan;
 
-    public CooksAssistant(Client client) {
-        this.client = client;
-        api = client.api;
+    public CooksAssistant(API api) {
+        this.api = api.api;
     }
 
     enum state {}
@@ -33,8 +29,8 @@ public class CooksAssistant implements ApiScript {
         try {
            quest();
         } catch (Exception e) {
-            client.log("SCRIPT: Exception: ");
-            client.log(e.getMessage());
+            api.log("SCRIPT: Exception: ");
+            api.log(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -47,21 +43,6 @@ public class CooksAssistant implements ApiScript {
     @Override
     public void paint(Graphics2D g) {
 
-    }
-
-    @Override
-    public void setTask(HashMap<String, Integer> tasks) {
-
-    }
-
-    @Override
-    public boolean hasTask() {
-        return false;
-    }
-
-    @Override
-    public boolean completedTask() {
-        return false;
     }
 
     @Override
@@ -97,7 +78,7 @@ public class CooksAssistant implements ApiScript {
     private void quest() {
         quest_state = api.mp.getConfigs().get(quest_id);
 
-        client.log("Cook's Assistant: " + quest_id + " - " + quest_state);
+        api.log("Cook's Assistant: " + quest_id + " - " + quest_state);
         switch (quest_state) {
             case 0:
                 api.interact.moveToAreaAnd(Lumbridge_Cook,()->api.interact.talkNPC("Cook", new int[]{1,1}));
@@ -106,19 +87,19 @@ public class CooksAssistant implements ApiScript {
                 if ((!api.myPlayer.hasItem("Pot of flour") || !api.myPlayer.hasItem("Bucket of milk") || !api.myPlayer.hasItem("Egg")) && !has_all_items) {
                     // Get Pot
                     if (!api.myPlayer.hasItem("Pot") && !api.myPlayer.hasItem("Pot of flour")) {
-                        client.log("Getting Pot");
+                        api.log("Getting Pot");
                         api.interact.moveToAreaAnd(Lumbridge_Cook,()->api.interact.pickUpItem("Pot"));
                     }
                     // Get Bucket
                     else if (!api.myPlayer.hasItem("Bucket") && !api.myPlayer.hasItem("Bucket of milk")) {
-                        client.log("Getting Bucket");
+                        api.log("Getting Bucket");
                         api.interact.moveToAreaAnd(Lumbridge_Cellar,()->api.interact.pickUpItem("Bucket"));
                     }
                     // Get Flour
                     else if (api.myPlayer.hasItem("Pot") && !api.myPlayer.hasItem("Pot of flour")) {
-                        client.log("Getting Flour");
+                        api.log("Getting Flour");
                         if (ground_flour) {
-                            client.log("here: distance: " + Flour_Bin.distance(api.mp.myPosition()));
+                            api.log("here: distance: " + Flour_Bin.distance(api.mp.myPosition()));
                             api.interact.moveToPosAnd(Flour_Bin,3,()-> api.interact.interactOb("Flour bin", "Empty"));
                         } else if (filled_hopper) {
                             api.interact.moveToPosAnd(Hopper_Controls,5,()-> {
@@ -140,20 +121,20 @@ public class CooksAssistant implements ApiScript {
                     }
                     // Get Milk
                     else if (api.myPlayer.hasItem("Bucket") && !api.myPlayer.hasItem("Bucket of milk")) {
-                        client.log("Getting Milk");
+                        api.log("Getting Milk");
                         api.interact.moveToPosAnd(Dairy_Cow,5,()->api.interact.interactOb("Dairy cow", "Milk", "Bucket of milk"));
                     } else if (!api.myPlayer.hasItem("Egg")) {
-                        client.log("Getting Egg");
+                        api.log("Getting Egg");
                         api.interact.moveToPosAnd(Chicken_Coup,10,()->api.interact.pickUpItem("Egg"));
                     }
                 } else if ((api.myPlayer.hasItem("Pot of flour") && api.myPlayer.hasItem("Bucket of milk") && api.myPlayer.hasItem("Egg")) || has_all_items) {
-                    client.log("Turn in");
+                    api.log("Turn in");
                     has_all_items = true;
                     api.interact.moveToAreaAnd(Lumbridge_Cook,()-> api.interact.talkNPC("Cook"));
                 }
                 break;
             case 2:
-                client.log("Cook's Assistant Finished!");
+                api.log("Cook's Assistant Finished!");
         }
     }
 

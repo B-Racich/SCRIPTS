@@ -5,8 +5,10 @@ import Core.Api.Common.Timing;
 import org.osbot.rs07.Bot;
 import org.osbot.rs07.api.GrandExchange;
 import org.osbot.rs07.api.model.NPC;
+import org.osbot.rs07.api.model.RS2Object;
 import org.osbot.rs07.script.MethodProvider;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -43,7 +45,18 @@ public class Banking {
     }
 
     public boolean open() {
-        api.util.log("Open bank");
+        api.util.log("Use Bank booth");
+        List<RS2Object> booths = mp.getObjects().filter(ob -> ob.getName().equals("Bank booth") && Arrays.asList(ob.getActions()).contains("Bank"));
+        if(booths != null && !booths.isEmpty()) {
+            Iterator<RS2Object> boothItr = booths.iterator();
+            if(boothItr.hasNext()) {
+                RS2Object booth = boothItr.next();
+                booth.interact("Bank");
+                Timing.waitCondition(() -> mp.getBank().isOpen(), 250, 2000);
+                if (mp.getBank().isOpen()) return true;
+            }
+        }
+        api.util.log("Use Banker");
         List<NPC> bankers = mp.getNpcs().filter(npc -> npc.getName().equals("Banker"));
         if(bankers != null && !bankers.isEmpty()) {
             Iterator<NPC> bankerItr = bankers.iterator();
@@ -120,7 +133,7 @@ public class Banking {
      * @param bm One of methods
      * @see methods
      */
-    public void bank(HashMap<String, Integer> deposit, HashMap<String, Integer> withdraw, methods bm ) {
+    public boolean bank(HashMap<String, Integer> deposit, HashMap<String, Integer> withdraw, methods bm ) {
         api.util.log("Banking");
         if(deposit == null) deposit = new HashMap<>();
         if(withdraw == null) withdraw = new HashMap<>();
@@ -133,6 +146,7 @@ public class Banking {
                     HashMap<String, Integer> finalWithdraw = withdraw;
                     Timing.waitCondition(()->mp.getBank().withdraw(finalWithdraw),250,2000);
                     api.util.log("Banked");
+                    return true;
                 }
                 break;
             case DEPOSIT_ALL_EXCEPT_WITHDRAW:
@@ -142,6 +156,7 @@ public class Banking {
                     if (mp.getBank().contains(wth)) {
                         mp.getBank().withdraw(withdraw);
                         Timing.waitCondition(() -> mp.getInventory().contains(wth), 2000);
+                        return true;
                     }
                 }
                 break;
@@ -149,9 +164,17 @@ public class Banking {
                 if(open()) {
                     mp.getBank().depositAllExcept(dep);
                     Timing.waitCondition(() -> mp.getInventory().onlyContains(dep), 2000);
+                    return true;
                 }
                 break;
         }
+        return false;
+    }
+
+    public boolean withdraw(String item, int amount) {
+        if(open()) {
+            return Timing.waitCondition(()->mp.getBank().withdraw(item, amount),2500);
+        } else return false;
     }
 
     public boolean findBank() {

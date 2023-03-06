@@ -2,9 +2,8 @@ package Scripts.Noober;
 
 import Core.API;
 import Core.Api.Banking;
-import Core.Api.Common.ApiScript;
+import Core.Api.Common.Interfaces.ApiScript;
 import Core.Api.Common.Timing;
-import Core.Client;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.map.constants.Banks;
 import org.osbot.rs07.api.model.RS2Object;
@@ -28,7 +27,6 @@ public class Noober implements ApiScript {
 
     public final static String scriptName = "Noober";
 
-    private Client client;
     private API api;
     private MethodProvider mp;
 
@@ -37,9 +35,8 @@ public class Noober implements ApiScript {
 
     private boolean buryBones = true;
 
-    public Noober(Client client) {
-        this.client = client;
-        api = client.api;
+    public Noober(API api) {
+        this.api = api;
         mp = api.mp;
     }
 
@@ -58,16 +55,13 @@ public class Noober implements ApiScript {
 
     @Override
     public state getState() {
-        if(api.myPlayer.hasFood() && !mp.getInventory().isFull() && api.myPlayer.isWithin(fight_area, 30)) {
+        if (api.myPlayer.hasFood() && !mp.getInventory().isFull() && api.myPlayer.isWithin(fight_area, 30)) {
             return state.FIGHTING;
-        }
-        else if(!mp.getInventory().isFull() && api.myPlayer.hasFood() && !api.myPlayer.isWithin(fight_area, 30)){
+        } else if (!mp.getInventory().isFull() && api.myPlayer.hasFood() && !api.myPlayer.isWithin(fight_area, 30)) {
             return state.MOVE_TO_ENEMY;
-        }
-        else if(api.myPlayer.shouldEat() && !api.myPlayer.hasFood() && mp.getInventory().contains("Raw beef")) {
+        } else if (api.myPlayer.shouldEat() && !api.myPlayer.hasFood() && mp.getInventory().contains("Raw beef")) {
             return state.COOKING;
-        }
-        else if(mp.getInventory().isFull()){
+        } else if (mp.getInventory().isFull()) {
             return state.BANKING;
         }
         return state.FLEEING;
@@ -93,24 +87,24 @@ public class Noober implements ApiScript {
      * TODO: Refactor into a enum to hold additional data
      */
     private Position lumbridge_bank = new Position(Banks.LUMBRIDGE_UPPER.getCentralPosition());
-    private Position lumbridge_goblins = new Position(3247,3237,0);
-    private Position lumbridge_cows = new Position(3260,3274,0);
-    private Position lumbridge_chef = new Position(3186,3274,0);
+    private Position lumbridge_goblins = new Position(3247, 3237, 0);
+    private Position lumbridge_cows = new Position(3260, 3274, 0);
+    private Position lumbridge_chef = new Position(3186, 3274, 0);
 
     private HashMap<String, String> options = new HashMap<>();
 
     private Position fight_area;
+
     private void getZone() {
         getStats();
 
-        if(cmb_lvl <= 15) {
+        if (cmb_lvl <= 15) {
             cmb_zone = "noob_mobs";
-        }
-        else if(cmb_lvl <= 25) {
+        } else if (cmb_lvl <= 25) {
             cmb_zone = "cows";
         }
 
-        switch(cmb_zone) {
+        switch (cmb_zone) {
             case "noob_mobs":
                 api.fighter.setEnemy("Goblin");
                 fight_area = lumbridge_goblins;
@@ -127,38 +121,38 @@ public class Noober implements ApiScript {
         try {
             getZone();
 
-            switch(getState()) {
+            switch (getState()) {
                 case BANKING:
-                    if(api.myPlayer.isWithin(lumbridge_bank,2)) {
-                        HashMap<String, Integer> except = new HashMap<String, Integer>() {{put("Cooked meat", 0);}};
+                    if (api.myPlayer.isWithin(lumbridge_bank, 2)) {
+                        HashMap<String, Integer> except = new HashMap<String, Integer>() {{
+                            put("Cooked meat", 0);
+                        }};
                         api.banking.bank(except, null, Banking.methods.DEPOSIT_ALL_EXCEPT);
-                    }
-                    else {
+                    } else {
                         api.myPlayer.moveTo(lumbridge_bank);
                     }
                     break;
                 case COOKING:
-                    if(api.myPlayer.isWithin(lumbridge_chef, 1)) {
-                        while(mp.getInventory().contains("Raw beef")) {
+                    if (api.myPlayer.isWithin(lumbridge_chef, 1)) {
+                        while (mp.getInventory().contains("Raw beef")) {
                             mp.getInventory().interact("Use", "Raw beef");
-                            if(mp.getInventory().isItemSelected()) {
+                            if (mp.getInventory().isItemSelected()) {
                                 RS2Object range = mp.getObjects().closest("Cooking pot");
                                 if (range != null) {
                                     range.interact("Use");
                                     Timing.waitCondition(() -> mp.getWidgets().isVisible(270, 14, 38), 250, 2000);
                                     if (mp.getWidgets().isVisible(270, 14, 38)) {
                                         mp.getWidgets().interact(270, 14, 38, "Make");
-                                        Timing.waitCondition(() -> !mp.getInventory().contains("Raw Beef"),250,5000);
-                                        if(mp.getInventory().contains("Burnt meat")) {
+                                        Timing.waitCondition(() -> !mp.getInventory().contains("Raw Beef"), 250, 5000);
+                                        if (mp.getInventory().contains("Burnt meat")) {
                                             mp.getInventory().dropAll("Burnt meat");
-                                            Timing.waitCondition(() -> !mp.getInventory().contains("Burnt meat"),250,2000);
+                                            Timing.waitCondition(() -> !mp.getInventory().contains("Burnt meat"), 250, 2000);
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    else {
+                    } else {
                         api.myPlayer.moveTo(lumbridge_chef);
                     }
                     break;
@@ -173,8 +167,8 @@ public class Noober implements ApiScript {
 
             }
 
-        } catch(NullPointerException e) {
-            client.osbot.log("Oopsie " + e.toString());
+        } catch (NullPointerException e) {
+            api.osbot.log("Oopsie " + e.toString());
         }
     }
 
@@ -186,20 +180,5 @@ public class Noober implements ApiScript {
     @Override
     public void paint(Graphics2D g) {
 
-    }
-
-    @Override
-    public void setTask(HashMap<String, Integer> tasks) {
-
-    }
-
-    @Override
-    public boolean hasTask() {
-        return false;
-    }
-
-    @Override
-    public boolean completedTask() {
-        return false;
     }
 }

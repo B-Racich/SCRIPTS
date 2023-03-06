@@ -27,11 +27,11 @@ public class Interact {
      */
 
     public boolean moveToPosAnd(Position pos, int dist, BooleanSupplier condition) {
-        if(pos.distance(api.mp.myPosition()) <= dist) {
+        if(pos.getArea(dist).contains(api.mp.myPlayer())) {
             return condition.getAsBoolean();
         }
         else if(api.myPlayer.isIdle(false))
-            api.myPlayer.moveTo(pos);
+            api.myPlayer.moveTo(pos.getArea(dist));
         return false;
     }
 
@@ -137,14 +137,16 @@ public class Interact {
      *  Object, Item, Etc Interactions
      */
 
-    public boolean shop(String name, String item, int amt) {
-        NPC npc = mp.getNpcs().closest(name);
+    public boolean shop(String npcName, String item, int amt) {
+        NPC npc = mp.getNpcs().closest(npcName);
         if (npc != null) {
             if(!mp.getStore().isOpen()) {
+                npc.interact("Trade");
                 Timing.waitCondition(()-> mp.getStore().isOpen(),2500);
                 return false;
             } else {
-                return Timing.waitCondition(()->mp.getStore().buy(item, amt),2500);
+                mp.getStore().buy(item, amt);
+                return Timing.waitCondition(()->api.interact.waitForInventoryChange(2000),2000);
             }
         }
         return false;
@@ -153,7 +155,11 @@ public class Interact {
     public boolean interactOb(String name, String act) {
         RS2Object ob = mp.getObjects().closest(name);
         if(ob != null) {
-            return Timing.waitCondition(() -> ob.interact(act), 3500);
+            api.myPlayer.targetEn = ob;
+            Timing.waitCondition(()->api.myPlayer.isIdle(false),2500);
+            ob.interact(act);
+            Timing.waitCondition(()->api.myPlayer.isBusy(false),2500);
+            return Timing.waitCondition(()->api.myPlayer.isIdle(false),2500);
         }
         return false;
     }

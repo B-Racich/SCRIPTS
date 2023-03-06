@@ -2,12 +2,10 @@ package Core.Api;
 
 import Core.API;
 import Core.Api.Common.Timing;
-import org.osbot.rs07.api.Inventory;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.model.*;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.ui.EquipmentSlot;
-import org.osbot.rs07.api.ui.Skill;
 import org.osbot.rs07.script.MethodProvider;
 
 import java.util.*;
@@ -31,6 +29,7 @@ public class MyPlayer {
     private String[] foodStrings = new String[]{"Cooked meat"};
     private int max_hp;
     private int current_hp;
+    public Entity targetEn;
 
     public MyPlayer(API api) {
         this.api = api;

@@ -2,7 +2,8 @@ package Scripts.Quester;
 
 //import Scripts.RuneCrafter;
 import Core.API;
-import Core.Client;
+import org.osbot.rs07.api.model.Entity;
+import org.osbot.rs07.api.model.NPC;
 import org.osbot.rs07.script.Script;
 import org.osbot.rs07.script.ScriptManifest;
 
@@ -10,7 +11,7 @@ import java.awt.*;
 import java.util.HashMap;
 
 /**
- *  This class is the entry bot into osBot and invokes the run method of the client class.
+ *  This class is the entry bot into osBot and invokes the run method of the api class.
  *
  *  Some variables are required to be set
  *  Initialization can be done within the first run loop
@@ -23,7 +24,6 @@ import java.util.HashMap;
 @ScriptManifest(name = Quester.scriptName, author = "Bones", version = 1.0, info = "", logo = "")
 public class Launcher extends Script {
 
-    private Client client;
     private Quester script;
     private API api;
 
@@ -34,24 +34,23 @@ public class Launcher extends Script {
     public void onStart() {
         //Code here will execute before the loop is started
         log("LAUNCHER: Starting up...");
-        client = new Client(this);
-        api = client.api;
-        script = new Quester(client);
-        client.setScript(script);
-        client.runAntiban();
-        client.api.util.debug = true;
+        api = new API(this);
+        script = new Quester(api);
+        api.setScript(script);
+        api.runAntiban();
+        api.api.util.debug = true;
         log("LAUNCHER: Setup finished...");
     }
 
     @Override
     public void onExit() {
         //Code here will execute after the script ends
-        client.shutdown();
+        api.shutdown();
     }
 
     @Override
     public int onLoop() throws InterruptedException {
-        client.run();
+        api.run();
         return random(250,500); //The amount of time in milliseconds before the loop starts over
 
     }
@@ -63,7 +62,19 @@ public class Launcher extends Script {
         g.drawString("LAUNCHER: NpcTracker State: "+api.fighter.tracker.getStatus(), 14, 326);
         g.drawString("LAUNCHER: Fighter State: "+api.fighter.fight_state, 14, 336);
         g.drawString("LAUNCHER: Character HP %: "+api.myPlayer.tracker.my_health, 14, 296);
-        client.script.paint(g);
+
+        NPC npc = api.fighter.tracker.npc;
+        Entity en = api.myPlayer.targetEn;
+
+        if(npc != null) {
+            g.draw(npc.getModel().getBoundingBox(npc.getGridX(),npc.getGridY(),npc.getZ()));
+        }
+
+        if(en != null) {
+            g.draw(en.getModel().getBoundingBox(en.getGridX(),en.getGridY(),en.getZ()));
+        }
+
+        api.script.paint(g);
     }
 
 }

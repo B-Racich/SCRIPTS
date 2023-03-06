@@ -8,17 +8,17 @@ import static org.osbot.rs07.script.MethodProvider.random;
 
 public class Camera {
 
-    private Client client;
+    private API api;
     private MethodProvider mp;
 
-    Camera(Client client) {
-        this.client = client;
+    Camera(API client) {
+        this.api = api;
         mp = client.osbot.getBot().getMethods();
     }
 
     public void moveRandom() {
         Thread thread = new Thread(() -> {
-            client.api.util.log("Camera: Move Random");
+            api.util.log("Camera: Move Random");
             int cur_yaw = mp.getCamera().getYawAngle();
             int cur_pitch = mp.getCamera().getPitchAngle();
             int min_pitch = mp.getCamera().getLowestPitchAngle();
@@ -40,7 +40,7 @@ public class Camera {
         Thread thread = new Thread(() -> {
             if(ob != null) {
                 if(!ob.isVisible()) {
-                    client.api.util.log("Camera: Move Entity : "+ob.getName());
+                    api.api.util.log("Camera: Move Entity : "+ob.getName());
                     mp.getCamera().toEntity(ob);
                     Timing.waitCondition(ob::isVisible, 250, 1000);
                 }

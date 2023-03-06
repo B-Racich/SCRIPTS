@@ -11,7 +11,6 @@ import static org.osbot.rs07.script.MethodProvider.random;
 
 public class Antiban extends Thread {
 
-    private Client client;
     private API api;
     private MethodProvider mp;
     private long last;
@@ -21,23 +20,27 @@ public class Antiban extends Thread {
     private long lastAfk = 0;
     public boolean runTime = false;
     public boolean idle;
+    public boolean idleFight = false;
 
-    public Antiban(Client client) {
-        this.client = client;
-        api = client.api;
-        mp = client.osbot.getBot().getMethods();
+    public Antiban(API api) {
+        this.api = api;
+        this.api = api.api;
+        mp = api.osbot.getBot().getMethods();
     }
 
     public void run() {
         try {
             while(runTime) {
+                if(idleFight) {
+                    idleFight();
+                }
                 if(check())
                     activate();
                     sleep(sleepTime);
             }
-            client.api.util.log("Antiban: Shutting down");
+            api.util.log("Antiban: Shutting down");
         } catch (InterruptedException e) {
-            client.api.util.log(e.toString());
+            api.api.util.log(e.toString());
         }
     }
 
@@ -55,7 +58,7 @@ public class Antiban extends Thread {
         clickContinue();
         time = System.currentTimeMillis();
         long diff = (time - last)/1000;
-        client.api.util.log("Antiban: check "+diff+" : "+checkTime);
+        api.util.log("Antiban: check "+diff+" : "+checkTime);
         sleepTime = ((checkTime-diff)*1000 >= 500) ? (checkTime-diff)*1000 : 500;
         if(diff >= checkTime) return true;
         else return false;
@@ -66,7 +69,7 @@ public class Antiban extends Thread {
         sleepTime = 500;
         last = System.currentTimeMillis();
         int rand = random(0,10);
-        client.api.util.log("Antiban: Activate : "+rand);
+        api.util.log("Antiban: Activate : "+rand);
         idle = true;
         if(rand <= 2)
             examineObject();
@@ -90,12 +93,12 @@ public class Antiban extends Thread {
     }
 
     public void moveMouseOutside() {
-        client.api.util.log("Antiban: Examine : " + "Move outside screen");
+        api.util.log("Antiban: Examine : " + "Move outside screen");
         mp.getMouse().moveOutsideScreen();
         try {
             sleep(random(500,1500));
         } catch (InterruptedException e) {
-            client.api.util.log(e.toString());
+            api.util.log(e.toString());
         }
     }
 
@@ -104,8 +107,8 @@ public class Antiban extends Thread {
         if(obs != null && !obs.isEmpty()) {
             RS2Object en = obs.get(0);
             if(en != null) {
-                client.api.util.log("Antiban: Examine : " + en.getName());
-                client.camera.lookAt(en);
+                api.util.log("Antiban: Examine : " + en.getName());
+                api.camera.lookAt(en);
                 Timing.waitCondition(en::isVisible, 250, 1000);
                 if (en.isVisible()) {
                     en.interact("Examine");
@@ -119,8 +122,8 @@ public class Antiban extends Thread {
         if(obs != null && !obs.isEmpty()) {
             NPC en = obs.get(0);
             if(en != null) {
-                client.api.util.log("Antiban: Examine : " + en.getName());
-                client.camera.lookAt(en);
+                api.api.util.log("Antiban: Examine : " + en.getName());
+                api.camera.lookAt(en);
                 Timing.waitCondition(en::isVisible, 250, 1000);
                 if (en.isVisible()) {
                     en.interact("Examine");
@@ -134,12 +137,21 @@ public class Antiban extends Thread {
         int cur = 0;
         for (Tab tab : Tab.values()) {
             if(tab_index == cur) {
-                client.api.util.log("Antiban: Open Tab - "+tab);
+                api.util.log("Antiban: Open Tab - "+tab);
                 mp.getTabs().open(tab);
                 Timing.waitCondition(() -> mp.getTabs().isOpen(tab),250, 1000);
             }
             cur++;
         }
+    }
+    public void centerCameraOnPlayer() {
+        if(!mp.myPlayer().isVisible()) {
+            api.camera.lookAt(mp.myPlayer());
+        }
+    }
+
+    public boolean idleFight() {
+        return api.fighter.idleFight();
     }
 
 }

@@ -97,14 +97,17 @@ public class NpcTracker extends Thread {
         npc_visible = npc.isVisible();
         npc_position = npc.getPosition();
 //        mp.log("NpcTracker: updateNPC Complete");
+
+//        if(!npc.isVisible()) api.camera.lookAt(npc);
+
         return true;
     }
 
     public void run() {
         try {
+            getStatus();
             while(npc_status != status.NO_TARGET) {
                 if (mp.getMap().realDistance(npc_position, mp.myPosition()) >= 30) shutdown();
-                getStatus();
                 sleep(250);
             }
             this.shutdown();

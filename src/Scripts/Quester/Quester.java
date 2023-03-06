@@ -1,12 +1,10 @@
 package Scripts.Quester;
 
 import Core.API;
-import Core.Api.Common.ApiScript;
-import Core.Client;
+import Core.Api.Common.Interfaces.ApiScript;
 import Scripts.Quester.Quests.F2P.*;
 
 import java.awt.*;
-import java.util.HashMap;
 
 /**
  * The basic script template
@@ -22,7 +20,6 @@ public class Quester implements ApiScript {
 
     public final static String scriptName = "Quester";
 
-    private Client client;
     private API api;
 
     private CooksAssistant cooksAssistant;
@@ -30,16 +27,27 @@ public class Quester implements ApiScript {
     private SheepShearer sheepShearer;
     private RomeoAndJuliet romeoAndJuliet;
     private RuneMysteries runeMysteries;
+    private ImpCatcher impCatcher;
+    private GoblinDiplomacy goblinDiplomacy;
+    private RestlessGhost restlessGhost;
+    private ErnestTheChicken ernestTheChicken;
 
-    public Quester(Client client) {
-        this.client = client;
-        api = client.api;
+    private API.ScriptState scriptState;
 
-        cooksAssistant = new CooksAssistant(client);
-        witchesPotion = new WitchesPotion(client);
-        sheepShearer = new SheepShearer(client);
-        romeoAndJuliet = new RomeoAndJuliet(client);
-        runeMysteries = new RuneMysteries(client);
+    public Quester(API api) {
+        this.api = api;
+
+        cooksAssistant = new CooksAssistant(api);
+        witchesPotion = new WitchesPotion(api);
+        sheepShearer = new SheepShearer(api);
+        romeoAndJuliet = new RomeoAndJuliet(api);
+        runeMysteries = new RuneMysteries(api);
+        impCatcher = new ImpCatcher(api);
+        goblinDiplomacy = new GoblinDiplomacy(api);
+        restlessGhost = new RestlessGhost(api);
+        ernestTheChicken = new ErnestTheChicken(api);
+
+        api.antiban.idleFight = true;
     }
 
     enum state {}
@@ -52,9 +60,13 @@ public class Quester implements ApiScript {
             if(!sheepShearer.isCompleted()) sheepShearer.run();
             if(!romeoAndJuliet.isCompleted()) romeoAndJuliet.run();
             if(!runeMysteries.isCompleted()) runeMysteries.run();
+            if(!impCatcher.isCompleted()) impCatcher.run();
+            if(!goblinDiplomacy.isCompleted()) goblinDiplomacy.run();
+            if(!restlessGhost.isCompleted()) restlessGhost.run();
+            if(!ernestTheChicken.isCompleted()) ernestTheChicken.run();
         } catch (Exception e) {
-            client.log("SCRIPT: Exception: ");
-            client.log(e.getMessage());
+            api.log("SCRIPT: Exception: ");
+            api.log(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -67,21 +79,6 @@ public class Quester implements ApiScript {
     @Override
     public void paint(Graphics2D g) {
 
-    }
-
-    @Override
-    public void setTask(HashMap<String, Integer> tasks) {
-
-    }
-
-    @Override
-    public boolean hasTask() {
-        return false;
-    }
-
-    @Override
-    public boolean completedTask() {
-        return false;
     }
 
     @Override

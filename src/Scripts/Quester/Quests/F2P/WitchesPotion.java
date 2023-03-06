@@ -1,28 +1,24 @@
 package Scripts.Quester.Quests.F2P;
 
 import Core.API;
-import Core.Api.Common.ApiScript;
-import Core.Client;
+import Core.Api.Common.Interfaces.ApiScript;
 import org.osbot.rs07.api.Quests;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
 
 import java.awt.*;
-import java.util.HashMap;
 
 public class WitchesPotion implements ApiScript {
 
     public final static String scriptName = "Witches Potion";
 
-    private Client client;
     private API api;
 
     private long timeBegan;
     private long timeRan;
 
-    public WitchesPotion(Client client) {
-        this.client = client;
-        api = client.api;
+    public WitchesPotion(API api) {
+        this.api = api;
     }
 
     enum state {}
@@ -32,8 +28,8 @@ public class WitchesPotion implements ApiScript {
         try {
             quest();
         } catch (Exception e) {
-            client.log("SCRIPT: Exception: ");
-            client.log(e.getMessage());
+            api.log("SCRIPT: Exception: ");
+            api.log(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -46,21 +42,6 @@ public class WitchesPotion implements ApiScript {
     @Override
     public void paint(Graphics2D g) {
 
-    }
-
-    @Override
-    public void setTask(HashMap<String, Integer> tasks) {
-
-    }
-
-    @Override
-    public boolean hasTask() {
-        return false;
-    }
-
-    @Override
-    public boolean completedTask() {
-        return false;
     }
 
     @Override
@@ -106,7 +87,7 @@ public class WitchesPotion implements ApiScript {
                 }
                 else if(!api.myPlayer.hasItem("Rat's tail")) {
                     api.interact.moveToAreaAnd(Archery_Shop,()->{
-                        api.client.log("Getting tail");
+                        api.log("Getting tail");
                         api.fighter.setEnemy("Rat");
                         api.fighter.setLootables(new String[]{"Rat's tail"});
                         api.fighter.fight();

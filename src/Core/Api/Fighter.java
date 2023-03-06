@@ -51,16 +51,6 @@ public class Fighter {
         FLEE,
     }
 
-    public Fighter(MethodProvider mp, MyPlayer myPlayer, String npc_name) {
-        this.mp = mp;
-        this.myPlayer = myPlayer;
-        this.npc_name = npc_name;
-        my_name = mp.myPlayer().getName();
-
-        tracker = new NpcTracker(api);
-        tracker.start();
-    }
-
     public Fighter(API api) {
         this.api = api;
         mp = api.mp;
@@ -83,10 +73,7 @@ public class Fighter {
 
     public String getNpcName() { return npc_name; }
 
-    public void setEnemy(String enemyName) {
-//        npc_name = enemyName;
-        this.enemies = new String[]{enemyName};
-    }
+    public void setEnemy(String enemyName) { this.enemies = new String[]{enemyName}; }
 
     public void setEnemies(String[] enemies) { this.enemies = enemies; }
 
@@ -158,6 +145,17 @@ public class Fighter {
         }
     }
 
+    public boolean idleFight() {
+
+        if(true) {
+            String[] enemies = new String[]{"Spider", "Rat"};
+            setEnemies(enemies);
+            fight();
+            return true;
+        }
+        else return false;
+    }
+
     public NPC getAttacker() {
         Optional<NPC> attacker = mp.npcs.getAll().stream().filter(x -> mp.myPlayer().equals(x.getInteracting())).findFirst();
         if(attacker.isPresent()) return attacker.get();
@@ -222,7 +220,7 @@ public class Fighter {
                 // Found loot
                 if (loot != null && !loot.isEmpty()) {
                     for (GroundItem item : loot) {
-                        api.client.log("Loot: "+item.getName());
+                        api.log("Loot: "+item.getName());
                         if(lootables != null && lootables.length > 0) {
                             if(!Arrays.asList(lootables).contains(item.getName())) {
                                 continue;
@@ -248,10 +246,13 @@ public class Fighter {
     public void fightNpc() {
 //        mp.log("Trying to Fight: "+tracker.getStatus());
         if(tracker.getStatus() == NpcTracker.status.IDLE) {
-            npc.interact("Attack");
+            Timing.waitCondition(()->npc.interact("Attack"),2500);
             Timing.waitCondition(() -> tracker.getStatus() == NpcTracker.status.FIGHTING_PLAYER  ||  api.myPlayer.tracker.getStatus() == MyPlayerTracker.status.IN_COMBAT, 250, 5000);
             if (tracker.getStatus() == NpcTracker.status.FIGHTING_PLAYER || api.myPlayer.tracker.getStatus() == MyPlayerTracker.status.IN_COMBAT) {
                 fight_state = state.FIGHT;
+            }
+            else {
+                tracker.setNPC(null);
             }
         }
     }

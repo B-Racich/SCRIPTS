@@ -2,9 +2,8 @@ package Scripts.Quester.Quests.F2P;
 
 import Core.API;
 import Core.Api.Banking;
-import Core.Api.Common.ApiScript;
+import Core.Api.Common.Interfaces.ApiScript;
 import Core.Api.Common.Timing;
-import Core.Client;
 import org.osbot.rs07.api.Quests;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
@@ -17,15 +16,13 @@ public class SheepShearer implements ApiScript {
 
     public final static String scriptName = "Sheep Shearer";
 
-    private Client client;
     private API api;
 
     private long timeBegan;
     private long timeRan;
 
-    public SheepShearer(Client client) {
-        this.client = client;
-        api = client.api;
+    public SheepShearer(API api) {
+        this.api = api;
     }
 
     public final int quest_id = 179;
@@ -42,8 +39,8 @@ public class SheepShearer implements ApiScript {
         try {
             quest();
         } catch (Exception e) {
-            client.log("SCRIPT: Exception: ");
-            client.log(e.getMessage());
+            api.log("SCRIPT: Exception: ");
+            api.log(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -64,7 +61,7 @@ public class SheepShearer implements ApiScript {
 
         if(!hasShears) emptySlots--;
 
-        client.log("Empty slots: "+emptySlots+"\tWool Required: "+woolRequired);
+        api.log("Empty slots: "+emptySlots+"\tWool Required: "+woolRequired);
         if(emptySlots >= 0) return true;
         else return false;
     }
@@ -73,7 +70,7 @@ public class SheepShearer implements ApiScript {
         long woolAmt = api.mp.getInventory().getAmount("Wool");
         long ballAmt = api.mp.getInventory().getAmount("Ball of wool");
 
-        client.log("Wool+Balls: "+(woolAmt+ballAmt));
+        api.log("Wool+Balls: "+(woolAmt+ballAmt));
         if(woolAmt+ballAmt >= 20) return true;
         else return false;
     }
@@ -108,7 +105,7 @@ public class SheepShearer implements ApiScript {
                     if(api.myPlayer.hasItem("Shears")) {
                         api.interact.moveToAreaAnd(Sheep_Pen,()->api.interact.interactNpc("Sheep", "Shear"));
                     } else {
-                        client.log("Go to freds");
+                        api.log("Go to freds");
                         api.interact.moveToAreaAnd(Freds_House,()-> api.interact.pickUpItem("Shears"));
                     }
                 } else {
@@ -135,21 +132,6 @@ public class SheepShearer implements ApiScript {
     @Override
     public void paint(Graphics2D g) {
 
-    }
-
-    @Override
-    public void setTask(HashMap<String, Integer> tasks) {
-
-    }
-
-    @Override
-    public boolean hasTask() {
-        return false;
-    }
-
-    @Override
-    public boolean completedTask() {
-        return false;
     }
 
     @Override

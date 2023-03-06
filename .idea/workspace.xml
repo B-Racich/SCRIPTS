@@ -8,24 +8,96 @@
   <component name="ChangeListManager">
     <list default="true" id="8ce739ed-b453-437b-94ce-b12793008db1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/AIO_ORBS.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/ClueScrolls/Clues.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/ClueScrolls/Launcher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/Fighter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/Miner/Launcher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/Miner/Miner.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/API.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SCRIPTS/Core/API.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Antiban.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Banking$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Banking$methods.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Banking.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Common/ApiScript.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Common/LootLogger.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Common/StatTracker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Common/Timing.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Common/Timing.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Common/Utility.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Enemy$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Enemy$state.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Enemy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Fighter$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Fighter$state.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Fighter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Interact.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Miner$Rock.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/Miner.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/MyPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/MyPlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/NpcTracker$status.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Api/NpcTracker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Camera.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Client$Debug.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Core/Client.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/AIO_ORBS$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/AIO_ORBS$states.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/AIO_ORBS.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/ClueScrolls/Clues$state.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/ClueScrolls/Clues.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/ClueScrolls/Launcher$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/ClueScrolls/Launcher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Fighter$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Fighter$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Fighter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Miner/Launcher$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Miner/Launcher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Miner/Miner$PICKAXE.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Miner/Miner$state.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Miner/Miner.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Noober/Launcher$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Noober/Launcher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Noober/Noober$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Noober/Noober$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Noober/Noober$state.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Noober/Noober.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Quester/Launcher$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Quester/Launcher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Quester/Quester$state.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Quester/Quester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/RuneCrafter$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/RuneCrafter$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/RuneCrafter$Altar$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/RuneCrafter$Altar$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/RuneCrafter$Altar.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/RuneCrafter$states.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/RuneCrafter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Starter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Tester/Launcher$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Tester/Launcher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Tester/Tester$state.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Tester/Tester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Walker/Launcher$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Walker/Launcher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Walker/Walker$state.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Scripts/Walker/Walker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Template$state.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SCRIPTS/Template.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/API.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/API.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Antiban.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Antiban.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Api/Banking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Api/Banking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Api/Common/ApiScript.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Api/Common/Interfaces/ApiScript.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Api/Common/Timing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Api/Common/Timing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Api/Enemy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Api/Fighter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Api/Fighter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Api/Interact.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Api/Interact.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Api/MyPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Api/MyPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Api/NpcTracker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Api/NpcTracker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Scripts/Noober/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Noober/Launcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Scripts/Noober/Noober.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Noober/Noober.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Scripts/Quester/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Quester/Launcher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Scripts/Quester/Quester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Quester/Quester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/Quester/Quests/CooksAssistant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/CooksAssistant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/Quester/Quests/RomeoAndJuliet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/RomeoAndJuliet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/Quester/Quests/RuneMysteries.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/RuneMysteries.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/Quester/Quests/SheepShearer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/SheepShearer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/Quester/Quests/WitchesPotion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/WitchesPotion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/RuneCrafter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/Starter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/Tester/Launcher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/Tester/Tester.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/Walker/Launcher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Scripts/Walker/Walker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/CooksAssistant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/CooksAssistant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/RomeoAndJuliet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/RomeoAndJuliet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/RuneMysteries.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/RuneMysteries.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/SheepShearer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/SheepShearer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/WitchesPotion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/WitchesPotion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Template.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Template.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,55 +112,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quester.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="27" column="42" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1640#1641#0" expanded="true" />
-                <element signature="e#1668#1669#0" expanded="true" />
-                <element signature="e#1720#1721#0" expanded="true" />
-                <element signature="e#1748#1749#0" expanded="true" />
-                <element signature="e#1793#1794#0" expanded="true" />
-                <element signature="e#1820#1821#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Api/Interact.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-389">
-              <caret line="139" column="19" selection-start-line="139" selection-start-column="19" selection-end-line="139" selection-end-column="19" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Api/MyPlayer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3230">
-              <caret line="200" column="15" selection-start-line="200" selection-start-column="15" selection-end-line="200" selection-end-column="15" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#5750#5751#0" expanded="true" />
-                <element signature="e#5766#5767#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/SheepShearer.java">
+        <entry file="file://$PROJECT_DIR$/src/Scripts/Noober/Launcher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+            <state relative-caret-position="561">
+              <caret line="33" column="18" selection-start-line="33" selection-start-column="18" selection-end-line="33" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -97,10 +125,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/quest_configs">
+        <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Launcher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="21" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="21" />
+            <state relative-caret-position="51">
+              <caret line="3" column="16" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Core/API.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1428">
+              <caret line="89" column="24" selection-start-line="89" selection-start-column="24" selection-end-line="89" selection-end-column="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -110,8 +150,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -128,6 +168,8 @@
       <find>osBot</find>
       <find>Oopsie</find>
       <find>Tester</find>
+      <find>client.</find>
+      <find>client</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -139,57 +181,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Scripts/debug" />
-        <option value="$PROJECT_DIR$/src/Scripts/Walker.java" />
-        <option value="$PROJECT_DIR$/src/Core/Api/API.java" />
-        <option value="$PROJECT_DIR$/src/Scripts/Fighter.java" />
-        <option value="$PROJECT_DIR$/src/Scripts/Starter.java" />
-        <option value="$PROJECT_DIR$/src/Core/AIOLauncher.java" />
-        <option value="$PROJECT_DIR$/src/Scripts/Noober.java" />
-        <option value="$PROJECT_DIR$/src/Scripts/AIOLauncher.java" />
-        <option value="$PROJECT_DIR$/src/Scripts/Noober/Script.java" />
-        <option value="$PROJECT_DIR$/src/Core/Api/fight.java" />
-        <option value="$PROJECT_DIR$/src/Core/Api/Fight.java" />
-        <option value="$PROJECT_DIR$/src/Core/Api/Enemy.java" />
-        <option value="$PROJECT_DIR$/src/Scripts/Tester/Noober.java" />
-        <option value="$PROJECT_DIR$/src/Core/Api/Common/LootLogger.java" />
-        <option value="$PROJECT_DIR$/src/Core/Api/Cooker.java" />
-        <option value="$PROJECT_DIR$/src/Core/Api/Banking.java" />
-        <option value="$PROJECT_DIR$/src/Core/Api/MyPlayerTracker.java" />
-        <option value="$PROJECT_DIR$/src/Scripts/ClueScrolls/Launcher.java" />
-        <option value="$PROJECT_DIR$/src/Scripts/Tester/Launcher.java" />
-        <option value="$PROJECT_DIR$/src/Scripts/ClueScrolls/Clues.java" />
-        <option value="$PROJECT_DIR$/src/Scripts/Noober/Launcher.java" />
-        <option value="$PROJECT_DIR$/src/Scripts/Walker/Tester.java" />
-        <option value="$PROJECT_DIR$/src/Core/Antiban.java" />
-        <option value="$PROJECT_DIR$/src/Core/Api/NpcTracker.java" />
         <option value="$PROJECT_DIR$/src/Scripts/Tester/Tester.java" />
         <option value="$PROJECT_DIR$/src/Scripts/Walker/Launcher.java" />
-        <option value="$PROJECT_DIR$/src/Core/Client.java" />
         <option value="$PROJECT_DIR$/src/Scripts/Walker/Walker.java" />
         <option value="$PROJECT_DIR$/src/Scripts/Miner/Launcher.java" />
         <option value="$PROJECT_DIR$/src/Scripts/Miner/Miner.java" />
         <option value="$PROJECT_DIR$/src/Scripts/Quester/quests" />
         <option value="$PROJECT_DIR$/src/Core/Api/Common/ApiScriptModule.java" />
-        <option value="$PROJECT_DIR$/src/Core/Api/Common/ApiScript.java" />
-        <option value="$PROJECT_DIR$/src/Scripts/Quester/Launcher.java" />
-        <option value="$PROJECT_DIR$/src/Core/Api/Fighter.java" />
-        <option value="$PROJECT_DIR$/src/Core/Camera.java" />
-        <option value="$PROJECT_DIR$/src/Scripts/Noober/Noober.java" />
-        <option value="$PROJECT_DIR$/src/Core/API.java" />
-        <option value="$PROJECT_DIR$/src/Core/Api/MyPlayer.java" />
         <option value="$PROJECT_DIR$/src/Scripts/Quester/SheepShearer.java" />
         <option value="$PROJECT_DIR$/src/Scripts/Quester/WitchesPotion.java" />
         <option value="$PROJECT_DIR$/src/Scripts/RuneCrafter.java" />
         <option value="$PROJECT_DIR$/src/Scripts/Quester/CooksAssistant.java" />
         <option value="$PROJECT_DIR$/src/Scripts/Quester/RomeoAndJuliet.java" />
-        <option value="$PROJECT_DIR$/src/Scripts/Quester/Quester.java" />
         <option value="$PROJECT_DIR$/src/Scripts/Quester/Quests/RuneMysteries.java" />
         <option value="$PROJECT_DIR$/src/Scripts/Quester/Quests/CooksAssistant.java" />
         <option value="$PROJECT_DIR$/src/Scripts/Quester/Quests/WitchesPotion.java" />
-        <option value="$PROJECT_DIR$/src/Core/Api/Interact.java" />
         <option value="$PROJECT_DIR$/src/Scripts/Quester/Quests/SheepShearer.java" />
         <option value="$PROJECT_DIR$/src/Scripts/AIO_ORBS.java" />
+        <option value="$PROJECT_DIR$/src/Core/Api/Common/Timing.java" />
+        <option value="$PROJECT_DIR$/src/Core/Api/Common/Task.java" />
+        <option value="$PROJECT_DIR$/src/Core/Api/Common/ApiScript.java" />
+        <option value="$PROJECT_DIR$/src/Core/Api/Common/Quest.java" />
+        <option value="$PROJECT_DIR$/src/Core/Client.java" />
+        <option value="$PROJECT_DIR$/src/Core/API_bak.java" />
+        <option value="$PROJECT_DIR$/src/Core/Antiban.java" />
+        <option value="$PROJECT_DIR$/src/Core/Camera.java" />
+        <option value="$PROJECT_DIR$/src/Core/Api/MyPlayer.java" />
+        <option value="$PROJECT_DIR$/src/Core/Api/Interact.java" />
+        <option value="$PROJECT_DIR$/src/Core/Api/MyPlayerTracker.java" />
+        <option value="$PROJECT_DIR$/src/Core/Api/Miner.java" />
+        <option value="$PROJECT_DIR$/src/Core/Api/Common/LootLogger.java" />
+        <option value="$PROJECT_DIR$/src/Core/Api/NpcTracker.java" />
+        <option value="$PROJECT_DIR$/src/Core/Api/Fighter.java" />
+        <option value="$PROJECT_DIR$/src/Core/Api/Banking.java" />
+        <option value="$PROJECT_DIR$/src/Core/Api/Common/Utility.java" />
+        <option value="$PROJECT_DIR$/src/Core/Api/Common/StatTracker.java" />
+        <option value="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/CooksAssistant.java" />
+        <option value="$PROJECT_DIR$/src/Core/API.java" />
+        <option value="$PROJECT_DIR$/src/Scripts/Noober/Noober.java" />
+        <option value="$PROJECT_DIR$/src/Template.java" />
+        <option value="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/GoblinDiplomacy.java" />
+        <option value="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/WitchesPotion.java" />
+        <option value="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/SheepShearer.java" />
+        <option value="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/RuneMysteries.java" />
+        <option value="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/RestlessGhost.java" />
+        <option value="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/RomeoAndJuliet.java" />
+        <option value="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/ImpCatcher.java" />
+        <option value="$PROJECT_DIR$/src/Scripts/Quester/Quester.java" />
+        <option value="$PROJECT_DIR$/src/Core/Api/Common/Interfaces/ApiScript.java" />
+        <option value="$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/ErnestTheChicken.java" />
+        <option value="$PROJECT_DIR$/src/Scripts/Quester/Launcher.java" />
+        <option value="$PROJECT_DIR$/src/Scripts/Noober/Launcher.java" />
       </list>
     </option>
   </component>
@@ -206,7 +248,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -248,6 +289,37 @@
             </path>
             <path>
               <item name="SCRIPTS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SCRIPTS" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Scripts" type="462c0819:PsiDirectoryNode" />
+              <item name="Noober" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SCRIPTS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SCRIPTS" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Scripts" type="462c0819:PsiDirectoryNode" />
+              <item name="Quester" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SCRIPTS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SCRIPTS" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Scripts" type="462c0819:PsiDirectoryNode" />
+              <item name="Quester" type="462c0819:PsiDirectoryNode" />
+              <item name="Quests" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SCRIPTS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SCRIPTS" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Scripts" type="462c0819:PsiDirectoryNode" />
+              <item name="Quester" type="462c0819:PsiDirectoryNode" />
+              <item name="Quests" type="462c0819:PsiDirectoryNode" />
+              <item name="F2P" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SCRIPTS" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
@@ -255,6 +327,7 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -262,7 +335,7 @@
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="scripts" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1677583863427" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1678083446871" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/osbot 2.6.63.jar!/" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15332031" />
@@ -271,22 +344,22 @@
     <property name="settings.editor.selected.configurable" value="reference.settings.project.statistic.project.settings" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Commander\IdeaProjects\SCRIPTS\src\Scripts\Miner" />
+      <recent name="C:\Users\Commander\IdeaProjects\SCRIPTS\src\Scripts\Quester" />
+      <recent name="C:\Users\Commander\IdeaProjects\SCRIPTS\src\Scripts" />
+      <recent name="C:\Users\Commander\IdeaProjects\SCRIPTS\src\Scripts\Tester" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="Scripts.Walker" />
+      <recent name="Core.Api" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Commander\IdeaProjects\SCRIPTS\src\Scripts\Quester\Quests" />
       <recent name="C:\Users\Commander\IdeaProjects\SCRIPTS\src\Scripts\Walker" />
       <recent name="C:\Users\Commander\IdeaProjects\SCRIPTS" />
       <recent name="C:\Users\Commander\IdeaProjects\SCRIPTS\src\resources" />
       <recent name="C:\Users\Commander\IdeaProjects\SCRIPTS\src\Scripts" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="Scripts.Walker" />
-      <recent name="Core.Api" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Commander\IdeaProjects\SCRIPTS\src\Scripts\Miner" />
-      <recent name="C:\Users\Commander\IdeaProjects\SCRIPTS\src\Scripts\Quester" />
-      <recent name="C:\Users\Commander\IdeaProjects\SCRIPTS\src\Scripts" />
-      <recent name="C:\Users\Commander\IdeaProjects\SCRIPTS\src\Scripts\Tester" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -324,8 +397,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1035" y="0" width="1527" height="1407" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15269257" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15678255" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -333,7 +407,7 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49880764" visible="true" weight="0.32574567" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49880764" weight="0.32574567" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -388,138 +462,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="Refactor" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/src.zip!/java/lang/Thread.java" />
-    <entry file="file://$PROJECT_DIR$/src/Scripts/ClueScrolls/Clues.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11">
-          <caret line="61" column="13" lean-forward="true" selection-start-line="61" selection-start-column="13" selection-end-line="61" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2944#2945#0" expanded="true" />
-            <element signature="e#2972#2973#0" expanded="true" />
-            <element signature="e#3024#3025#0" expanded="true" />
-            <element signature="e#3052#3053#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Api/Common/LootLogger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Api/MyPlayerTracker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resources/osrs_world_map.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="jar://$USER_HOME$/Desktop/osbot 2.6.46.jar!/org/osbot/rs07/script/Script.class" />
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Noober/Launcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Desktop/osbot 2.6.46.jar!/org/osbot/rs07/script/MethodProvider.class" />
-    <entry file="file://$PROJECT_DIR$/src/Scripts/ClueScrolls/Launcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="35" column="24" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Tester/Launcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="33" column="27" lean-forward="true" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Walker/Launcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="39" column="27" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Walker/Walker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="57" column="23" selection-start-line="57" selection-start-column="16" selection-end-line="57" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2637#2638#0" expanded="true" />
-            <element signature="e#2665#2666#0" expanded="true" />
-            <element signature="e#2717#2718#0" expanded="true" />
-            <element signature="e#2745#2746#0" expanded="true" />
-            <element signature="e#2790#2791#0" expanded="true" />
-            <element signature="e#2817#2818#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Tester/Tester.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-340">
-          <caret line="23" column="50" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Api/Miner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Miner/Launcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Miner/Miner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="30" column="12" selection-start-line="30" selection-start-column="12" selection-end-line="30" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Tester/Tester.java" />
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Miner/Launcher.java" />
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Miner/Miner.java" />
     <entry file="file://$PROJECT_DIR$/src/Core/Api/Common/ApiScriptModule.java" />
-    <entry file="file://$PROJECT_DIR$/src/Core/Api/Common/ApiScript.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="35" lean-forward="true" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_201/src.zip!/java/util/function/BooleanSupplier.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
@@ -527,108 +473,145 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Api/NpcTracker.java">
+    <entry file="file://$PROJECT_DIR$/src/Core/Api/Antiban/Inventory.java" />
+    <entry file="file://$PROJECT_DIR$/src/Core/Api/Enemy.java" />
+    <entry file="file://$PROJECT_DIR$/src/Core/Api/Cooker.java" />
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/RomeoAndJuliet.java" />
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/RuneMysteries.java" />
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/CooksAssistant.java" />
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/WitchesPotion.java" />
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/SheepShearer.java" />
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Starter.java" />
+    <entry file="file://$PROJECT_DIR$/src/Scripts/RuneCrafter.java" />
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Fighter.java" />
+    <entry file="file://$PROJECT_DIR$/src/Scripts/AIO_ORBS.java" />
+    <entry file="jar://$USER_HOME$/Desktop/osbot 2.6.63.jar!/org/osbot/rs07/api/Store.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="74" column="46" selection-start-line="74" selection-start-column="37" selection-end-line="74" selection-end-column="46" />
+        <state relative-caret-position="399">
+          <caret line="154" column="19" selection-start-line="154" selection-start-column="19" selection-end-line="154" selection-end-column="19" />
+          <folding>
+            <element signature="e#5470#5471#0" expanded="true" />
+            <element signature="e#5511#5512#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/Api/Common/Timing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1260">
+          <caret line="100" column="15" selection-start-line="100" selection-start-column="15" selection-end-line="100" selection-end-column="15" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/quest_configs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="25" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/API2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="50" selection-start-line="50" selection-end-line="53" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1367#1368#0" expanded="true" />
+            <element signature="e#1388#1389#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/Antiban.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="33" column="24" selection-start-line="33" selection-start-column="19" selection-end-line="33" selection-end-column="24" />
+        <state relative-caret-position="2550">
+          <caret line="150" column="5" selection-start-line="150" selection-start-column="5" selection-end-line="150" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Launcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1011">
-          <caret line="60" column="77" selection-start-line="60" selection-start-column="77" selection-end-line="60" selection-end-column="77" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Api/Common/Utility.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="50" column="24" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#2163#2164#0" expanded="true" />
+            <element signature="e#4363#4364#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/Camera.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="38" column="11" selection-start-line="38" selection-start-column="11" selection-end-line="38" selection-end-column="11" />
+        <state relative-caret-position="595">
+          <caret line="35" column="23" lean-forward="true" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Api/Antiban/Inventory.java" />
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Noober/Noober.java">
+    <entry file="file://$PROJECT_DIR$/src/Core/Api/Interact.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="87" column="53" selection-start-line="87" selection-start-column="53" selection-end-line="87" selection-end-column="53" />
+        <state relative-caret-position="221">
+          <caret line="14" column="13" lean-forward="true" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#6396#6397#0" expanded="true" />
-            <element signature="e#6424#6425#0" expanded="true" />
-            <element signature="e#6476#6477#0" expanded="true" />
-            <element signature="e#6504#6505#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/API.java">
+    <entry file="file://$PROJECT_DIR$/src/Core/Api/MyPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="46" column="38" selection-start-line="46" selection-start-column="38" selection-end-line="46" selection-end-column="38" />
+        <state relative-caret-position="484">
+          <caret line="37" column="32" lean-forward="true" selection-start-line="37" selection-start-column="32" selection-end-line="37" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Client.java">
+    <entry file="file://$PROJECT_DIR$/src/Core/Api/MyPlayerTracker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1020">
-          <caret line="62" column="27" selection-start-line="62" selection-start-column="27" selection-end-line="62" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="416">
+          <caret line="42" column="29" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Api/Enemy.java">
+    <entry file="file://$PROJECT_DIR$/src/Core/Api/Miner.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2278">
-          <caret line="136" column="39" lean-forward="true" selection-start-line="136" selection-start-column="39" selection-end-line="136" selection-end-column="39" />
+        <state relative-caret-position="204">
+          <caret line="13" column="14" selection-start-line="13" selection-start-column="14" selection-end-line="13" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2197#2198#0" expanded="true" />
-            <element signature="e#2238#2239#0" expanded="true" />
+            <element signature="e#475#476#0" expanded="true" />
+            <element signature="e#505#506#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Api/Cooker.java" />
+    <entry file="file://$PROJECT_DIR$/src/Core/Api/Common/LootLogger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#192#193#0" expanded="true" />
+            <element signature="e#222#223#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/Api/NpcTracker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="38" column="22" selection-start-line="38" selection-start-column="22" selection-end-line="38" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/Api/Fighter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1406">
-          <caret line="96" column="52" selection-start-line="96" selection-start-column="52" selection-end-line="96" selection-end-column="52" />
+        <state relative-caret-position="3706">
+          <caret line="222" column="27" selection-start-line="222" selection-start-column="27" selection-end-line="222" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -637,158 +620,210 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/Api/Banking.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="38" column="29" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
+        <state relative-caret-position="416">
+          <caret line="40" column="20" lean-forward="true" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Api/Common/Timing.java">
+    <entry file="file://$PROJECT_DIR$/src/Core/Api/Common/Utility.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="63" column="35" selection-start-line="63" selection-start-column="19" selection-end-line="63" selection-end-column="35" />
+        <state relative-caret-position="272">
+          <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/RomeoAndJuliet.java" />
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/quest_configs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="21" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quester.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="42" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1640#1641#0" expanded="true" />
-            <element signature="e#1668#1669#0" expanded="true" />
-            <element signature="e#1720#1721#0" expanded="true" />
-            <element signature="e#1748#1749#0" expanded="true" />
-            <element signature="e#1793#1794#0" expanded="true" />
-            <element signature="e#1820#1821#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/RuneMysteries.java" />
-    <entry file="file://$PROJECT_DIR$/src/Core/Api/MyPlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3230">
-          <caret line="200" column="15" selection-start-line="200" selection-start-column="15" selection-end-line="200" selection-end-column="15" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5750#5751#0" expanded="true" />
-            <element signature="e#5766#5767#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/CooksAssistant.java" />
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/WitchesPotion.java" />
-    <entry file="file://$PROJECT_DIR$/src/Core/Api/Interact.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-389">
-          <caret line="139" column="19" selection-start-line="139" selection-start-column="19" selection-end-line="139" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/SheepShearer.java" />
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/CooksAssistant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="117" column="83" selection-start-line="117" selection-start-column="83" selection-end-line="117" selection-end-column="83" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Starter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="31" column="36" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/RomeoAndJuliet.java">
+    <entry file="file://$PROJECT_DIR$/src/Core/Api/Common/StatTracker.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <caret line="18" column="24" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/RuneCrafter.java">
+    <entry file="file://$PROJECT_DIR$/src/Template.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="142" column="28" selection-start-line="142" selection-start-column="28" selection-end-line="142" selection-end-column="28" />
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
           <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/RuneMysteries.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-102">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/Fighter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#571#572#0" expanded="true" />
+            <element signature="e#601#602#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/WitchesPotion.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="538">
-          <caret line="140" column="83" selection-start-line="140" selection-start-column="83" selection-end-line="140" selection-end-column="83" />
+        <state relative-caret-position="748">
+          <caret line="44" column="5" selection-start-line="44" selection-start-column="5" selection-end-line="44" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Scripts/AIO_ORBS.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="12" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#477#478#0" expanded="true" />
+            <element signature="e#513#514#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/SheepShearer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        <state relative-caret-position="1039">
+          <caret line="134" column="5" selection-start-line="134" selection-start-column="5" selection-end-line="134" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#577#578#0" expanded="true" />
+            <element signature="e#607#608#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/RuneMysteries.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1073">
+          <caret line="77" selection-start-line="77" selection-end-line="77" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#476#477#0" expanded="true" />
+            <element signature="e#506#507#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/RestlessGhost.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1039">
+          <caret line="91" column="5" selection-start-line="91" selection-start-column="5" selection-end-line="91" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#549#550#0" expanded="true" />
+            <element signature="e#579#580#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/RomeoAndJuliet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1836">
+          <caret line="108" column="5" selection-start-line="108" selection-start-column="5" selection-end-line="108" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#481#482#0" expanded="true" />
+            <element signature="e#511#512#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/ImpCatcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1377">
+          <caret line="81" column="23" selection-start-line="81" selection-start-column="23" selection-end-line="81" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#406#407#0" expanded="true" />
+            <element signature="e#436#437#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1056">
+          <caret line="82" selection-start-line="82" selection-end-line="82" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/Api/Common/Interfaces/Quest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/Api/Common/Interfaces/Task.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/Api/Common/Interfaces/ApiScript.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="35" selection-start-column="35" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/CooksAssistant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#489#490#0" expanded="true" />
+            <element signature="e#523#524#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/ErnestTheChicken.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="23" selection-start-line="27" selection-start-column="23" selection-end-line="27" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#691#692#0" expanded="true" />
+            <element signature="e#721#722#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Quests/F2P/GoblinDiplomacy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1215">
+          <caret line="249" column="5" selection-start-line="249" selection-start-column="5" selection-end-line="249" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Noober/Noober.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="38" column="23" selection-start-line="38" selection-start-column="23" selection-end-line="38" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/API.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1428">
+          <caret line="89" column="24" selection-start-line="89" selection-start-column="24" selection-end-line="89" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Quester/Launcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="16" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Scripts/Noober/Launcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="18" selection-start-line="33" selection-start-column="18" selection-end-line="33" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

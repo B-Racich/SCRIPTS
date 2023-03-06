@@ -94,4 +94,11 @@ public class Timing
         return waitCondition(condition, 20, timeout);
     }
 
+    public static boolean wait(int timeout)
+    {
+        long mark = currentMs();
+
+        return waitCondition(()->timeFromMark(mark) >= timeout, timeout);
+    }
+
 }
