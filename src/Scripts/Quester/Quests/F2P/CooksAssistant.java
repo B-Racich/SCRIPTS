@@ -40,6 +40,11 @@ public class CooksAssistant implements ApiScript, Quest {
     }
 
     @Override
+    public void shutdown() {
+
+    }
+
+    @Override
     public void paint(Graphics2D g) {
 
     }
@@ -70,8 +75,7 @@ public class CooksAssistant implements ApiScript, Quest {
     public int quest_state;
 
     public boolean isCompleted() {
-        if(api.mp.getQuests().isComplete(Quests.Quest.COOKS_ASSISTANT)) return true;
-        else return false;
+        return api.mp.getQuests().isComplete(Quests.Quest.COOKS_ASSISTANT);
     }
 
     private void quest() {

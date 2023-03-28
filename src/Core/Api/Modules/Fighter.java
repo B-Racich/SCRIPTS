@@ -22,7 +22,6 @@ public class Fighter {
      */
     private API api;
     private MethodProvider mp;
-    private MyPlayer myPlayer;
 
     private String npc_name = "";
     private String my_name = "";
@@ -39,7 +38,6 @@ public class Fighter {
 
     public NpcTracker tracker;
 
-    private int search_radius = 5;
     public HashMap<String, String> options;
 
     public enum state {
@@ -56,7 +54,7 @@ public class Fighter {
     public Fighter(API api) {
         this.api = api;
         mp = api.mp;
-        myPlayer = api.myPlayer;
+        MyPlayer myPlayer = api.myPlayer;
         my_name = mp.myPlayer().getName();
 
         fight_state = state.PASSIVE;
@@ -155,8 +153,7 @@ public class Fighter {
 
     public NPC getAttacker() {
         Optional<NPC> attacker = mp.npcs.getAll().stream().filter(x -> mp.myPlayer().equals(x.getInteracting())).findFirst();
-        if(attacker.isPresent()) return attacker.get();
-        else return null;
+        return attacker.orElse(null);
     }
 
     public void getNpc() {
@@ -174,6 +171,7 @@ public class Fighter {
             for (int i = 0; i < npcs.size(); i++) {
                 NPC temp = npcs.get(i);
                 distances[i] = mp.getMap().realDistance(temp.getPosition(), mp.myPosition());
+                int search_radius = 5;
                 Area npc_area = temp.getPosition().getArea(search_radius);
                 List<Player> players = mp.getPlayers().filter(player -> npc_area.contains(player) && !player.getName().equals(my_name));
                 for (Player player : players) {
@@ -244,7 +242,7 @@ public class Fighter {
 //        mp.log("Trying to Fight: "+tracker.getStatus());
         if(tracker.getStatus() == NpcTracker.status.IDLE) {
             Timing.waitCondition(()->npc.interact("Attack"),2500);
-            Timing.waitCondition(() -> tracker.getStatus() == NpcTracker.status.FIGHTING_PLAYER  ||  api.myPlayer.tracker.getStatus() == MyPlayerTracker.status.IN_COMBAT, 250, 5000);
+            Timing.waitCondition(() -> tracker.getStatus() == NpcTracker.status.FIGHTING_PLAYER ||  api.myPlayer.tracker.getStatus() == MyPlayerTracker.status.IN_COMBAT, 250, 5000);
             if (tracker.getStatus() == NpcTracker.status.FIGHTING_PLAYER || api.myPlayer.tracker.getStatus() == MyPlayerTracker.status.IN_COMBAT) {
                 fight_state = state.FIGHT;
             }

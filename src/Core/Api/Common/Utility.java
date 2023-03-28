@@ -12,11 +12,10 @@ public class Utility {
 
     public static boolean debug = false;
 
-    private API api;
     private MethodProvider mp;
 
     public Utility(API api) {
-        this.api = api;
+        API api1 = api;
         mp = api.mp;
     }
 

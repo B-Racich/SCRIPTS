@@ -25,8 +25,7 @@ public class ImpCatcher implements ApiScript, Quest {
     public int quest_state;
 
     public boolean isCompleted() {
-        if(api.mp.getQuests().isComplete(Quests.Quest.IMP_CATCHER)) return true;
-        else return false;
+        return api.mp.getQuests().isComplete(Quests.Quest.IMP_CATCHER);
     }
 
     enum state {}
@@ -93,6 +92,11 @@ public class ImpCatcher implements ApiScript, Quest {
 
     @Override
     public void pause() {
+
+    }
+
+    @Override
+    public void shutdown() {
 
     }
 

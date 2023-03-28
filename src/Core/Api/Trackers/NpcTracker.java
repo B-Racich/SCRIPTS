@@ -5,6 +5,8 @@ import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.model.NPC;
 import org.osbot.rs07.script.MethodProvider;
 
+import static org.osbot.rs07.script.MethodProvider.random;
+
 /**
  * Golden tidbits
  *
@@ -68,11 +70,11 @@ public class NpcTracker extends Thread {
 
     public status getStatus() {
         if(updateNPC()) {
-            if(npc_health > 0 && !npc_fighting && npc_target == "") npc_status = status.IDLE;
-            else if(npc_health <= 0) npc_status = status.DEAD;
-            else if(npc_attackable && npc_fighting && npc_target == mp.myPlayer().getName()) npc_status = status.FIGHTING_PLAYER;
-            else if(npc_fighting && npc_target != mp.myPlayer().getName()) npc_status = status.FIGHTING_OTHER;
-            else npc_status = status.NO_TARGET;
+            if(npc_health > 0 && !npc_fighting && npc_target == "") npc_status = NpcTracker.status.IDLE;
+            else if(npc_health <= 0) npc_status = NpcTracker.status.DEAD;
+            else if(npc_attackable && npc_fighting && npc_target == mp.myPlayer().getName()) npc_status = NpcTracker.status.FIGHTING_PLAYER;
+            else if(npc_fighting && npc_target != mp.myPlayer().getName()) npc_status = NpcTracker.status.FIGHTING_OTHER;
+            else npc_status = NpcTracker.status.NO_TARGET;
         }
         else if(api.myPlayer.underAttack()) {
             NPC attacker = api.fighter.getAttacker();
@@ -80,7 +82,7 @@ public class NpcTracker extends Thread {
                 setNPC(attacker);
         }
         else
-            npc_status = status.NO_TARGET;
+            npc_status = NpcTracker.status.NO_TARGET;
 //        mp.log("NpcTracker: getStatus: "+player_status);
         return npc_status;
     }
@@ -106,9 +108,9 @@ public class NpcTracker extends Thread {
     public void run() {
         try {
             getStatus();
-            while(npc_status != status.NO_TARGET) {
+            while(npc_status != NpcTracker.status.NO_TARGET) {
                 if (mp.getMap().realDistance(npc_position, mp.myPosition()) >= 30) shutdown();
-                sleep(250);
+                sleep( random(50,100));
             }
             this.shutdown();
         } catch (InterruptedException e) {

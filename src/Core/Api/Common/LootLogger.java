@@ -7,10 +7,9 @@ import java.util.HashMap;
 public class LootLogger {
 
     private HashMap<String, Long> items = new HashMap<>();
-    private API api;
 
     public LootLogger(API api) {
-        this.api = api;
+        API api1 = api;
     }
 
     public void log(String name, long amount) {

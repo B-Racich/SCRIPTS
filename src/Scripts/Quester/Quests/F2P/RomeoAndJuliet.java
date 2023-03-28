@@ -26,8 +26,7 @@ public class RomeoAndJuliet implements ApiScript, Quest {
     public int quest_state;
 
     public boolean isCompleted() {
-        if(api.mp.getQuests().isComplete(Quests.Quest.ROMEO_JULIET)) return true;
-        else return false;
+        return api.mp.getQuests().isComplete(Quests.Quest.ROMEO_JULIET);
     }
 
     enum state {}
@@ -102,6 +101,11 @@ public class RomeoAndJuliet implements ApiScript, Quest {
 
     @Override
     public void pause() {
+
+    }
+
+    @Override
+    public void shutdown() {
 
     }
 

@@ -183,6 +183,11 @@ public class Noober implements ApiScript {
     }
 
     @Override
+    public void shutdown() {
+
+    }
+
+    @Override
     public void paint(Graphics2D g) {
 
     }

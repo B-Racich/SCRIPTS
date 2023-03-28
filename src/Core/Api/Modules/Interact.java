@@ -13,18 +13,26 @@ import java.util.function.BooleanSupplier;
 public class Interact {
 
     private API api;
-    private Bot bot;
     private MethodProvider mp;
 
     public Interact(API api) {
         this.api = api;
-        bot = api.bot;
+        Bot bot = api.bot;
         mp = api.mp;
     }
 
     /**
      * NPC Interactions
      */
+
+    public boolean moveTo(Position pos, int dist) {
+        if(pos.getArea(dist).contains(api.mp.myPlayer())) {
+            return true;
+        }
+        else if(api.myPlayer.isIdle(false))
+            api.myPlayer.moveTo(pos.getArea(dist));
+        return false;
+    }
 
     public boolean moveToPosAnd(Position pos, int dist, BooleanSupplier condition) {
         if(pos.getArea(dist).contains(api.mp.myPlayer())) {
@@ -54,20 +62,14 @@ public class Interact {
 
     public boolean isTalking() {
         if(!mp.getWidgets().containingText("Click here to continue").isEmpty()) {
-            if(mp.getWidgets().containingText("Click here to continue").get(0).isVisible()) {
-                return true;
-            }
+            return mp.getWidgets().containingText("Click here to continue").get(0).isVisible();
         }
         else if(!mp.getWidgets().containingText("Please wait...").isEmpty()) {
-            if(mp.getWidgets().containingText("Please wait...").get(0).isVisible()) {
-                return true;
-            }
+            return mp.getWidgets().containingText("Please wait...").get(0).isVisible();
         }
         else if(mp.getDialogues().isPendingContinuation())
             return true;
-        else if(mp.getDialogues().inDialogue())
-            return true;
-        return false;
+        else return mp.getDialogues().inDialogue();
     }
 
     public boolean clickContinue() {
@@ -197,10 +199,7 @@ public class Interact {
     public boolean waitForInventoryChange(int waitTime) {
         int pre = mp.getInventory().getEmptySlots();
         Timing.waitCondition(() -> pre != mp.getInventory().getEmptySlots(), waitTime);
-        if(pre != mp.getInventory().getEmptySlots())
-            return true;
-        else
-            return false;
+        return pre != mp.getInventory().getEmptySlots();
     }
 
     public void interact(Entity en) {

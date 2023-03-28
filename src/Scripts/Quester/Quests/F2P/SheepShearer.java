@@ -29,8 +29,7 @@ public class SheepShearer implements ApiScript {
     public int quest_state;
 
     public boolean isCompleted() {
-        if(api.mp.getQuests().isComplete(Quests.Quest.SHEEP_SHEARER)) return true;
-        else return false;
+        return api.mp.getQuests().isComplete(Quests.Quest.SHEEP_SHEARER);
     }
 
     enum state {}
@@ -63,8 +62,7 @@ public class SheepShearer implements ApiScript {
         if(!hasShears) emptySlots--;
 
         api.log("Empty slots: "+emptySlots+"\tWool Required: "+woolRequired);
-        if(emptySlots >= 0) return true;
-        else return false;
+        return emptySlots >= 0;
     }
 
     private boolean hasWoolOrBall() {
@@ -72,8 +70,7 @@ public class SheepShearer implements ApiScript {
         long ballAmt = api.mp.getInventory().getAmount("Ball of wool");
 
         api.log("Wool+Balls: "+(woolAmt+ballAmt));
-        if(woolAmt+ballAmt >= 20) return true;
-        else return false;
+        return woolAmt + ballAmt >= 20;
     }
 
     private Area Freds_House = new Area(3191,3274,3189,3272);
@@ -127,6 +124,11 @@ public class SheepShearer implements ApiScript {
 
     @Override
     public void pause() {
+
+    }
+
+    @Override
+    public void shutdown() {
 
     }
 

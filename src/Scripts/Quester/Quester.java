@@ -2,21 +2,17 @@ package Scripts.Quester;
 
 import Core.API;
 import Core.Api.Common.Interfaces.ApiScript;
-import Core.Api.Common.Interfaces.Quest;
 import Scripts.Quester.Quests.F2P.*;
-import sun.font.Script;
 
 import java.awt.*;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 /**
  * The basic script template
- *
- * state - can be used to setup a state based script, otherwise create a regular onLoop script within the run() method
- *
+ * <p>
+ * state - can be used to set up a state based script, otherwise create a regular onLoop script within the run() method
+ * <p>
  * pause() - if setup can be used by other classes to pause the script when needed
- *
+ * <p>
  * if tasks are supported complete the task methods
  */
 
@@ -52,24 +48,20 @@ public class Quester implements ApiScript {
         goblinDiplomacy = new GoblinDiplomacy(api);
         restlessGhost = new RestlessGhost(api);
         ernestTheChicken = new ErnestTheChicken(api);
-
-//        api.antiban.idleFight = true;
     }
-
-    enum state {}
 
     @Override
     public void run() {
         try {
-            if(!cooksAssistant.isCompleted()) quest = cooksAssistant;
-            if(!witchesPotion.isCompleted()) quest = witchesPotion;
-            if(!sheepShearer.isCompleted()) quest = sheepShearer;
-            if(!romeoAndJuliet.isCompleted()) quest = romeoAndJuliet;
-            if(!runeMysteries.isCompleted()) quest = runeMysteries;
-            if(!impCatcher.isCompleted()) quest = impCatcher;
-            if(!goblinDiplomacy.isCompleted()) quest = goblinDiplomacy;
-            if(!restlessGhost.isCompleted()) quest = restlessGhost;
-            if(!ernestTheChicken.isCompleted()) quest = ernestTheChicken;
+            if (!cooksAssistant.isCompleted()) quest = cooksAssistant;
+            if (!witchesPotion.isCompleted()) quest = witchesPotion;
+            if (!sheepShearer.isCompleted()) quest = sheepShearer;
+            if (!romeoAndJuliet.isCompleted()) quest = romeoAndJuliet;
+            if (!runeMysteries.isCompleted()) quest = runeMysteries;
+            if (!impCatcher.isCompleted()) quest = impCatcher;
+            if (!goblinDiplomacy.isCompleted()) quest = goblinDiplomacy;
+            if (!restlessGhost.isCompleted()) quest = restlessGhost;
+            if (!ernestTheChicken.isCompleted()) quest = ernestTheChicken;
 
             quest.run();
         } catch (Exception e) {
@@ -78,6 +70,10 @@ public class Quester implements ApiScript {
             api.osbot.log(e.getStackTrace());
             api.log("SCRIPT: ENDS:==========");
         }
+    }
+
+    public void shutdown() {
+        ernestTheChicken.stageInProgress = false;
     }
 
     @Override
@@ -94,4 +90,6 @@ public class Quester implements ApiScript {
     public API.ScriptState getState() {
         return quest.getState();
     }
+
+    enum state {}
 }

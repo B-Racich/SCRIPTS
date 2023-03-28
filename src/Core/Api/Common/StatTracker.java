@@ -10,15 +10,13 @@ import java.util.concurrent.TimeUnit;
 
 public class StatTracker {
 
-    private API api;
-    private Bot bot;
     private MethodProvider mp;
 
     private HashMap<String, Integer> startLvls = new HashMap<>();
 
     public StatTracker(API api) {
-        this.api = api;
-        bot = api.bot;
+        API api1 = api;
+        Bot bot = api.bot;
         mp = bot.getMethods();
     }
 

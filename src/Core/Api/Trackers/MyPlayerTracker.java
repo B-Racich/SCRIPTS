@@ -6,6 +6,8 @@ import org.osbot.rs07.api.model.Player;
 import org.osbot.rs07.api.ui.Skill;
 import org.osbot.rs07.script.MethodProvider;
 
+import static org.osbot.rs07.script.MethodProvider.random;
+
 /**
  * Golden tidbits
  *
@@ -29,13 +31,7 @@ public class MyPlayerTracker extends Thread {
     private boolean runTime = true;
 
     public status player_status;
-    private Player my_player;
     private boolean is_moving;
-    private int current_hp;
-    private int max_hp;
-    private boolean is_attackable;
-    private String is_interacting;
-    private boolean under_attack;
     public int my_health;
     public Position my_position;
 
@@ -48,6 +44,7 @@ public class MyPlayerTracker extends Thread {
     }
 
     public void shutdown() {
+        runTime = false;
         this.interrupt();
     }
 
@@ -72,22 +69,22 @@ public class MyPlayerTracker extends Thread {
     }
 
     private void updatePlayer() {
-        my_player = mp.myPlayer();
-        max_hp = mp.getSkills().getStatic(Skill.HITPOINTS);
-        current_hp = mp.getSkills().getDynamic(Skill.HITPOINTS);
-        my_health = (int)((double)current_hp / (double)max_hp * 100);
+        Player my_player = mp.myPlayer();
+        int max_hp = mp.getSkills().getStatic(Skill.HITPOINTS);
+        int current_hp = mp.getSkills().getDynamic(Skill.HITPOINTS);
+        my_health = (int)((double) current_hp / (double) max_hp * 100);
         my_position = mp.myPosition();
-        under_attack = my_player.isUnderAttack();
-        is_attackable = my_player.isAttackable();
+        boolean under_attack = my_player.isUnderAttack();
+        boolean is_attackable = my_player.isAttackable();
         is_moving = my_player.isMoving();
-        is_interacting = (my_player.getInteracting() == null) ? "" : my_player.getInteracting().getName();
+        String is_interacting = (my_player.getInteracting() == null) ? "" : my_player.getInteracting().getName();
     }
 
     public void run() {
         try {
             while(runTime) {
                 getStatus();
-                sleep(250);
+                sleep( random(50,100));
             }
             this.shutdown();
         } catch (InterruptedException e) {

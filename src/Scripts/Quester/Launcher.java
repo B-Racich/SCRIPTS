@@ -2,6 +2,8 @@ package Scripts.Quester;
 
 //import Scripts.RuneCrafter;
 import Core.API;
+import Core.Api.Common.Timing;
+import Core.Api.Common.Utility;
 import org.osbot.rs07.api.model.Entity;
 import org.osbot.rs07.api.model.NPC;
 import org.osbot.rs07.script.Script;
@@ -24,7 +26,6 @@ import java.util.HashMap;
 @ScriptManifest(name = Quester.scriptName, author = "Bones", version = 1.0, info = "", logo = "")
 public class Launcher extends Script {
 
-    private Quester script;
     private API api;
 
     public HashMap<String, Integer> tasks = new HashMap<String, Integer>() {
@@ -35,16 +36,20 @@ public class Launcher extends Script {
         //Code here will execute before the loop is started
         log("LAUNCHER: Starting up...");
         api = new API(this);
-        script = new Quester(api);
+        Quester script = new Quester(api);
         api.setScript(script);
         api.runAntiban();
-        api.util.debug = true;
+        Utility.debug = true;
         log("LAUNCHER: Setup finished...");
     }
 
     @Override
     public void onExit() {
         //Code here will execute after the script ends
+        api.antiban.shutdown();
+        api.fighter.shutdown();
+        api.myPlayer.shutdown();
+        Timing.waitCondition(()->!api.antiban.isAlive(),10000);
         api.shutdown();
     }
 

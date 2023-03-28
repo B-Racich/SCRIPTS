@@ -27,5 +27,7 @@ public interface ApiScript {
 
     void pause();
 
+    void shutdown();
+
     void paint(Graphics2D g);
 }

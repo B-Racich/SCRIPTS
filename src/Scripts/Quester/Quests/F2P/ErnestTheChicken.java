@@ -8,14 +8,17 @@ import org.osbot.rs07.api.Quests;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.model.RS2Object;
+import org.osbot.rs07.event.WalkingEvent;
+import org.osbot.rs07.randoms.Maze;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 import java.util.List;
+import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
 
 import static Core.API.ScriptState.IDLE;
+import static org.osbot.rs07.script.MethodProvider.random;
 
 public class ErnestTheChicken implements ApiScript, Quest {
 
@@ -28,19 +31,23 @@ public class ErnestTheChicken implements ApiScript, Quest {
 
     public ErnestTheChicken(API api) {
         this.api = api;
+
+//        api.antiban.idleFight = true;
     }
 
     public boolean isCompleted() {
-        if(api.mp.getQuests().isComplete(Quests.Quest.ERNEST_THE_CHICKEN)) return true;
-        else return false;
+        return api.mp.getQuests().isComplete(Quests.Quest.ERNEST_THE_CHICKEN);
+    }
+
+    public void shutdown() {
+        stageInProgress = false;
     }
 
     public final int quest_id = 32;
     public int quest_state;
-    private API.ScriptState scriptState;
 
     public API.ScriptState getState() {
-        return scriptState;
+        return IDLE;
     }
 
     private Area Veronica_Area = new Area(3109,3329,3110,3330);
@@ -49,27 +56,23 @@ public class ErnestTheChicken implements ApiScript, Quest {
     private Position Bookcase_Pos = new Position(3098,3359,0);
     private Area Downstairs_Area = new Area(new Position(3090,9745,0), new Position(3118,9767,0));
 
-    private Area roomPos1 = new Area(3105,9758,3112,9767);
-    private Area roomPos2 = new Area(3096,9763,3099,9767);
-    private Area roomPos3 = new Area(3100,9763,3104,9767);
-    private Area roomPos4 = new Area(3096,9758,3099,9762);
-    private Area roomPos5 = new Area(3100,9758,3104,9762);
-    private Area bigRoom = new Area(3100,9750,3118,9757);
-    private Area oilRoom = new Area(0,0,0,0);
 
-    private boolean stage1 = false;
-    private boolean stage2 = false;
-    private boolean stage3 = false;
-    private boolean stage4 = false;
-    private boolean stage5 = false;
-    private boolean stage6 = false;
-    private boolean stage7 = false;
-    private boolean stage8 = false;
-    private boolean stage9 = false;
-    private boolean stage10 = false;
-    private boolean stage11 = false;
-    private boolean stage12 = false;
-    private boolean stage13 = false;
+    /**
+     *      /-------/
+     *      /2/3/ 1 /
+     *      /5/4/   /
+     * /----/-------/
+     * / oil/  Big  /
+     * /----/-------/
+     */
+
+    private Area Maze_Room_1 = new Area(3105,9758,3112,9767);
+    private Area Maze_Room_2 = new Area(3096,9763,3099,9767);
+    private Area Maze_Room_3 = new Area(3100,9763,3104,9767);
+    private Area Maze_Room_4 = new Area(3100,9758,3104,9762);
+    private Area Maze_Room_5 = new Area(3096,9758,3099,9762);
+    private Area Maze_Big_Room = new Area(3100,9750,3118,9757);
+    private Area Maze_Oil_Room = new Area(0,0,0,0);
 
     private static Position Maze_Door_1 = new Position(3108, 9758, 0);
     private static Position Maze_Door_2 = new Position(3105, 9760, 0);
@@ -81,12 +84,13 @@ public class ErnestTheChicken implements ApiScript, Quest {
     private static Position Maze_Door_8 = new Position(3102, 9763, 0);
     private static Position Maze_Door_9 = new Position(3100, 9755, 0);
 
+    private Position Sync_Spot = new Position(3105,9757,0);
+
     private enum LeverState {
         UP(2108),
         DOWN(2077);
 
         int model;
-        int String;
 
         static public String getState(int model) {
             if(model == 2108) return "Up";
@@ -99,45 +103,23 @@ public class ErnestTheChicken implements ApiScript, Quest {
         }
     }
 
-    boolean pullLever(String lever, LeverState state) {
-        RS2Object ob = api.mp.getObjects().closest(lever);
-        int[] modelIds;
-        if(ob != null) {
-            modelIds = ob.getModelIds();
-            if(modelIds != null && modelIds[0] != state.model) {
-                ob.interact("Pull");
-                Timing.waitCondition(() -> api.mp.getObjects().closest(lever).getModelIds()[0] == state.model, 5000);
-                return true;
-            }
-            else
-                return true;
-        }
-        return false;
-    }
 
-    private void goThroughDoor(Position entry, Position exit) {
-        api.mp.getWalking().webWalk(entry);
-        Timing.waitCondition(() -> api.myPlayer.isIdle(false) && api.myPlayer.isWithin(entry, 0), 3000);
-        if(api.myPlayer.isWithin(entry, 0)) {
-            RS2Object ob = api.mp.getObjects().closest("Door");
-            if(ob != null) {
-                ob.interact("Open");
-                Timing.waitCondition(() -> api.myPlayer.isWithin(exit, 0), 3000);
-            }
-        }
-    }
-
-    enum mazeState {
+    enum MazeState {
+        STAGE_START,
         STAGE_1,
         STAGE_2,
         STAGE_3,
         STAGE_4,
         STAGE_5,
-        STAGE_6;
+        STAGE_6,
+        STAGE_END
     }
 
-    HashMap<String, Boolean> doorStates = new HashMap<String, Boolean>();
-    HashMap<String, String> leverStates = new HashMap<String, String>();
+    private HashMap<String, String> stageDoorStates = new HashMap<String, String>();
+    private HashMap<String, String> stageLeverStates = new HashMap<String, String>();
+
+    private HashMap<String, String> currentDoorStates = new HashMap<String, String>();
+    private HashMap<String, String> currentLeverStates = new HashMap<String, String>();
 
     private void getLeverStates() {
         List<RS2Object> objects = api.mp.getObjects().getAll();
@@ -146,10 +128,11 @@ public class ErnestTheChicken implements ApiScript, Quest {
 
         while(itr.hasNext()) {
             RS2Object ob = itr.next();
-            if(ob.getName().contains("Lever"))  {
+            if(ob!= null && ob.getName().contains("Lever"))  {
                 levers.add(ob);
-                leverStates.put(ob.getName(), LeverState.getState(ob.getModelIds()[0]));
-//                api.log(ob.getName()+"\t:"+LeverState.getState(ob.getModelIds()[0]));
+                String isUp = ob.getModelIds()[0] == LeverState.UP.model ? "true" : "false";
+                currentLeverStates.put(ob.getName(), isUp);
+                api.log(ob.getName()+"\t:"+LeverState.getState(ob.getModelIds()[0]));
             }
         }
     }
@@ -178,9 +161,9 @@ public class ErnestTheChicken implements ApiScript, Quest {
                 doors.add(ob);
                 for(int i = 0; i < doorPosArr.length; i++) {
                     if(ob.getPosition().distance(doorPosArr[i]) <= 0) {
-                        boolean isOpen = ob.getModelIds()[0] == 11813 ? true : false;
-                        doorStates.put("Door "+(i+1), isOpen);
-                        //  api.log(ob.getName()+"\t:"+ob.getPosition()+"\t:"+isOpen);
+                        String isOpen = ob.getModelIds()[0] == 11813 ? "true" : "false";
+                        currentDoorStates.put("Door "+(i+1), isOpen);
+                        api.log(ob.getName()+" "+(i+1)+"\t:"+ob.getPosition()+"\t:"+isOpen);
                         break;
                     }
                 }
@@ -189,10 +172,151 @@ public class ErnestTheChicken implements ApiScript, Quest {
     }
 
     private void getMazeState() {
+        api.log("**getMazeState**");
+
+        if(!api.myPlayer.isWithin(Sync_Spot, 7))
+            api.interact.moveTo(Sync_Spot,7);
+
         getLeverStates();
         getDoorStates();
 
+        if(!stageInProgress) {
+            stageDoorStates = currentDoorStates;
+            stageLeverStates = currentLeverStates;
+        }
 
+        String[][] Current_Doors = new String[2][9];
+        String[][] Current_Levers = new String[2][6];
+
+        for(int i=0; i<Current_Doors[0].length; i++) {
+            int index=i+1;
+
+            String door = "Door "+index;
+            Current_Doors[0][i] = door;
+            Current_Doors[1][i] = stageDoorStates.get(door);
+        }
+
+        String[] leverNames = {"Lever A", "Lever B",  "Lever C",  "Lever D",  "Lever E",  "Lever F"};
+        for(int i=0; i<leverNames.length; i++) {
+            String lever = leverNames[i];
+
+            Current_Levers[0][i] = lever;
+            Current_Levers[1][i] = stageLeverStates.get(lever);
+        }
+
+        api.log(Arrays.deepToString(Current_Doors));
+        api.log("==============================");
+        api.log(Arrays.deepToString(Current_Levers));
+
+        /**
+         * Start
+         */
+        String[][] Maze_Start_Doors = new String[][]{
+                {"Door 1",  "Door 2",   "Door 3",   "Door 4",   "Door 5",   "Door 6",   "Door 7",   "Door 8",   "Door 9"},
+                {"false",   "false",    "false",    "false",    "false",    "false",    "false",    "false",    "false",}};
+
+        String[][] Maze_Start_Levers = new String[][]{
+                {"Lever A", "Lever B",  "Lever C",  "Lever D",  "Lever E",  "Lever F"},
+                {"true",    "true",     "true",     "true",     "true",     "true"}};
+        /**
+         * Stage 1
+         */
+        String[][] Maze_Doors_1 = new String[][]{
+                {"Door 1",  "Door 2",   "Door 3",   "Door 4",   "Door 5",   "Door 6",   "Door 7",   "Door 8",   "Door 9"},
+                {"true",   "true",    "false",    "false",    "false",    "false",    "false",    "false",    "false",}};
+
+        String[][] Maze_Levers_1 = new String[][]{
+                {"Lever A", "Lever B",  "Lever C",  "Lever D",  "Lever E",  "Lever F"},
+                {"false",    "false",     "true",     "true",     "true",     "true"}};
+        /**
+         * Stage 2
+         */
+        String[][] Maze_Doors_2 = new String[][]{
+                {"Door 1",  "Door 2",   "Door 3",   "Door 4",   "Door 5",   "Door 6",   "Door 7",   "Door 8",   "Door 9"},
+                {"true",   "true",    "true",    "true",    "false",    "false",    "false",    "false",    "false",}};
+
+        String[][] Maze_Levers_2 = new String[][]{
+                {"Lever A", "Lever B",  "Lever C",  "Lever D",  "Lever E",  "Lever F"},
+                {"false",    "false",     "true",     "false",     "true",     "true"}};
+        /**
+         * Stage 3
+         */
+            String[][] Maze_Doors_3 = new String[][]{
+                    {"Door 1",  "Door 2",   "Door 3",   "Door 4",   "Door 5",   "Door 6",   "Door 7",   "Door 8",   "Door 9"},
+                    {"false",   "false",    "false",    "false",    "false",    "false",    "false",    "false",    "false",}};
+
+            String[][] Maze_Levers_3 = new String[][]{
+                    {"Lever A", "Lever B",  "Lever C",  "Lever D",  "Lever E",  "Lever F"},
+                    {"true",    "true",     "true",     "true",     "true",     "true"}};
+        /**
+         * Stage 4
+         */
+        String[][] Maze_Doors_4 = new String[][]{
+                {"Door 1",  "Door 2",   "Door 3",   "Door 4",   "Door 5",   "Door 6",   "Door 7",   "Door 8",   "Door 9"},
+                {"false",   "false",    "false",    "false",    "false",    "false",    "false",    "false",    "false",}};
+
+        String[][] Maze_Levers_4 = new String[][]{
+                {"Lever A", "Lever B",  "Lever C",  "Lever D",  "Lever E",  "Lever F"},
+                {"true",    "true",     "true",     "true",     "true",     "true"}};
+        /**
+         * Stage 5
+         */
+        String[][] Maze_Doors_5 = new String[][]{
+                {"Door 1",  "Door 2",   "Door 3",   "Door 4",   "Door 5",   "Door 6",   "Door 7",   "Door 8",   "Door 9"},
+                {"false",   "false",    "false",    "false",    "false",    "false",    "false",    "false",    "false",}};
+
+        String[][] Maze_Levers_5 = new String[][]{
+                {"Lever A", "Lever B",  "Lever C",  "Lever D",  "Lever E",  "Lever F"},
+                {"true",    "true",     "true",     "true",     "true",     "true"}};
+        /**
+         * Stage 6
+         */
+        String[][] Maze_Doors_6 = new String[][]{
+                {"Door 1",  "Door 2",   "Door 3",   "Door 4",   "Door 5",   "Door 6",   "Door 7",   "Door 8",   "Door 9"},
+                {"false",   "false",    "false",    "false",    "false",    "false",    "false",    "false",    "false",}};
+
+        String[][] Maze_Levers_6 = new String[][]{
+                {"Lever A", "Lever B",  "Lever C",  "Lever D",  "Lever E",  "Lever F"},
+                {"true",    "true",     "true",     "true",     "true",     "true"}};
+
+        if(Arrays.deepEquals(Current_Doors,Maze_Doors_1) && Arrays.deepEquals(Current_Levers,Maze_Levers_1)) {
+            api.log("Matched 1");
+            mazeState = MazeState.STAGE_1;
+        }
+        else if(Arrays.deepEquals(Current_Doors,Maze_Doors_2) && Arrays.deepEquals(Current_Levers,Maze_Levers_2)) {
+            api.log("Matched 2");
+            mazeState = MazeState.STAGE_2;
+        }
+        else if(Arrays.deepEquals(Current_Doors,Maze_Doors_3) && Arrays.deepEquals(Current_Levers,Maze_Levers_3)) {
+            api.log("Matched 3");
+            mazeState = MazeState.STAGE_3;
+        }
+        else if(Arrays.deepEquals(Current_Doors,Maze_Doors_4) && Arrays.deepEquals(Current_Levers,Maze_Levers_4)) {
+            api.log("Matched 4");
+            mazeState = MazeState.STAGE_4;
+        }
+        else if(Arrays.deepEquals(Current_Doors,Maze_Doors_5) && Arrays.deepEquals(Current_Levers,Maze_Levers_5)) {
+            api.log("Matched 5");
+            mazeState = MazeState.STAGE_5;
+        }
+        else if(Arrays.deepEquals(Current_Doors,Maze_Doors_6) && Arrays.deepEquals(Current_Levers,Maze_Levers_6)) {
+            api.log("Matched 6");
+            mazeState = MazeState.STAGE_6;
+        }
+        else {
+            api.log("Matched Nothing");
+            mazeState = MazeState.STAGE_START;
+        }
+    }
+
+    public boolean stageInProgress = false;
+    public MazeState mazeState = MazeState.STAGE_START;
+
+    private void walkThroughDoor(Position doorPos) {
+        api.mp.getWalking().walk(doorPos);
+        Timing.wait(random(4000, 5000));
+        api.interact.interactOb("Door", "Open");
+        Timing.wait(random(4000, 5000));
     }
 
     @Override
@@ -204,7 +328,7 @@ public class ErnestTheChicken implements ApiScript, Quest {
             api.log("Ernest The Chicken: " + quest_id + " - " + quest_state);
             switch (quest_state) {
                 default:
-                    scriptState = IDLE;
+                    API.ScriptState scriptState = IDLE;
                     break;
                 case 0:
                     api.interact.moveToAreaAnd(Veronica_Area, () -> api.interact.talkNPC("Veronica", new int[]{1}));
@@ -227,8 +351,125 @@ public class ErnestTheChicken implements ApiScript, Quest {
                                 return true;
                             });
                         } else {
-                            getMazeState();
+                            if(!stageInProgress)
+                                getMazeState();
+                            api.log(mazeState+" "+stageInProgress);
+                            switch(mazeState) {
+                                case STAGE_START:
+                                    api.log("**IN STAGE_START**");
+                                    stageInProgress = true;
+                                    while(stageInProgress) {
+                                        if (Boolean.parseBoolean(currentLeverStates.get("Lever A"))) {
+                                            api.interact.interactOb("Lever A", "Pull");
+                                            Timing.waitCondition(() -> {
+                                                RS2Object temp = api.mp.getObjects().filter(ob -> ob.getName().equals("Lever A") && ob.getModelIds()[0] == LeverState.DOWN.model).get(0);
+                                                return temp != null;
+                                            }, 4000);
+                                        } else if (Boolean.parseBoolean(currentLeverStates.get("Lever B"))) {
+                                            api.interact.interactOb("Lever B", "Pull");
+                                            Timing.waitCondition(() -> {
+                                                RS2Object temp = api.mp.getObjects().filter(ob -> ob.getName().equals("Lever B") && ob.getModelIds()[0] == LeverState.DOWN.model).get(0);
+                                                return temp != null;
+                                            }, 4000);
+                                        } else if (!Maze_Room_1.contains(api.mp.myPlayer())) {
+                                            walkThroughDoor(Maze_Door_1);
+                                        } else stageInProgress = false;
+                                    }
+                                    break;
+                                case STAGE_1:
+                                    api.log("**IN STAGE_1**");
+                                    stageInProgress = true;
+                                    while(stageInProgress) {
+                                        if(Boolean.parseBoolean(currentLeverStates.get("Lever D")))
+                                            if(!Maze_Room_1.contains(api.mp.myPlayer())) {
+                                                walkThroughDoor(Maze_Door_1);
 
+                                            api.interact.interactOb("Lever D","Pull");
+                                            Timing.waitCondition(()->{
+                                                RS2Object temp = api.mp.getObjects().filter(ob->ob.getName().equals("Lever D") && ob.getModelIds()[0] == LeverState.DOWN.model).get(0);
+                                                return temp != null;
+                                            },4000);
+
+                                        } else if(!Maze_Big_Room.contains(api.mp.myPlayer()))
+                                            walkThroughDoor(Maze_Door_1);
+                                        else stageInProgress = false;
+                                    }
+                                    break;
+                                case STAGE_2:
+                                    stageInProgress = true;
+                                    api.log("**IN STAGE_2**");
+                                    while(stageInProgress) {
+                                        getMazeState();
+                                        if (!Boolean.parseBoolean(currentLeverStates.get("Lever A")) || !Boolean.parseBoolean(currentLeverStates.get("Lever B"))) {
+                                            if(!Maze_Big_Room.contains(api.mp.myPlayer())) {
+                                                walkThroughDoor(Maze_Door_1);
+                                            } else if(!Boolean.parseBoolean(currentLeverStates.get("Lever A"))) {
+                                                api.interact.interactOb("Lever A", "Pull");
+                                                Timing.waitCondition(() -> {
+                                                    RS2Object temp = api.mp.getObjects().filter(ob -> ob.getName().equals("Lever A") && ob.getModelIds()[0] == LeverState.UP.model).get(0);
+                                                    return temp != null;
+                                                }, 4000);
+                                            } else if (!Boolean.parseBoolean(currentLeverStates.get("Lever B"))) {
+                                                api.interact.interactOb("Lever B", "Pull");
+                                                Timing.waitCondition(() -> {
+                                                    RS2Object temp = api.mp.getObjects().filter(ob -> ob.getName().equals("Lever B") && ob.getModelIds()[0] == LeverState.UP.model).get(0);
+                                                    return temp != null;
+                                                }, 4000);
+                                            }
+                                        } else if (Boolean.parseBoolean(currentLeverStates.get("Lever A")) && Boolean.parseBoolean(currentLeverStates.get("Lever B")) && !Maze_Room_2.contains(api.mp.myPlayer())) {
+                                            if(!Maze_Room_5.contains(api.mp.myPlayer())) {
+                                                if(!Maze_Room_4.contains(api.mp.myPlayer()))
+                                                    walkThroughDoor(Maze_Door_3);
+                                                else
+                                                    walkThroughDoor(Maze_Door_4);
+                                            } else
+                                                walkThroughDoor(Maze_Door_5);
+                                        } else stageInProgress = false;
+                                    }
+                                    break;
+                                case STAGE_3:
+                                    stageInProgress = true;
+                                    api.log("**IN STAGE_3**");
+                                    while(stageInProgress) {
+                                        if (Boolean.parseBoolean(currentLeverStates.get("Lever E")) || Boolean.parseBoolean(currentLeverStates.get("Lever F"))) {
+                                            if(!Maze_Room_5.contains(api.mp.myPlayer())) {
+                                                if(!Maze_Room_5.contains(api.mp.myPlayer())) {
+                                                    if(!Maze_Room_4.contains(api.mp.myPlayer()))
+                                                        walkThroughDoor(Maze_Door_3);
+                                                    else
+                                                        walkThroughDoor(Maze_Door_4);
+                                                } else
+                                                    walkThroughDoor(Maze_Door_5);
+                                            } else if(Boolean.parseBoolean(currentLeverStates.get("Lever E"))) {
+                                                api.interact.interactOb("Lever E", "Pull");
+                                                Timing.waitCondition(() -> {
+                                                    RS2Object temp = api.mp.getObjects().filter(ob -> ob.getName().equals("Lever E") && ob.getModelIds()[0] == LeverState.DOWN.model).get(0);
+                                                    return temp != null;
+                                                }, 10000);
+                                            } else if (Boolean.parseBoolean(currentLeverStates.get("Lever F"))) {
+                                                api.interact.interactOb("Lever F", "Pull");
+                                                Timing.waitCondition(() -> {
+                                                    RS2Object temp = api.mp.getObjects().filter(ob -> ob.getName().equals("Lever F") && ob.getModelIds()[0] == LeverState.DOWN.model).get(0);
+                                                    return temp != null;
+                                                }, 10000);
+                                            }
+                                        } else if(!Maze_Room_1.contains(api.mp.myPlayer())){
+                                            if(!Maze_Room_3.contains(api.mp.myPlayer()))
+                                                walkThroughDoor(Maze_Door_6);
+                                            else
+                                                walkThroughDoor(Maze_Door_7);
+                                        } else stageInProgress = false;
+                                    }
+                                    break;
+                                case STAGE_4:
+                                    break;
+                                case STAGE_5:
+                                    break;
+                                case STAGE_6:
+                                    break;
+                                case STAGE_END:
+                                    break;
+                            }
                         }
                     }
                     break;

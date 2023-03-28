@@ -27,8 +27,7 @@ public class GoblinDiplomacy implements ApiScript, Quest {
     public int quest_state;
 
     public boolean isCompleted() {
-        if(api.mp.getQuests().isComplete(Quests.Quest.GOBLIN_DIPLOMACY)) return true;
-        else return false;
+        return api.mp.getQuests().isComplete(Quests.Quest.GOBLIN_DIPLOMACY);
     }
 
     enum state {}
@@ -63,19 +62,15 @@ public class GoblinDiplomacy implements ApiScript, Quest {
        boolean hasBerries = api.myPlayer.hasItem("Redberries",3);
        boolean hasWoadleaves = api.myPlayer.hasItem("Woad leaf",2);
        boolean hasOnions = api.myPlayer.hasItem("Onion",2);
-       if((madeRedDye || hasBerries)
-           && (madeYellowDye || hasOnions)
-           && (madeBlueDye || hasWoadleaves)
-       ) return true;
-       else return false;
+        return (madeRedDye || hasBerries)
+                && (madeYellowDye || hasOnions)
+                && (madeBlueDye || hasWoadleaves);
     }
 
     private boolean hasDyedMail() {
-        if(api.myPlayer.hasItem("Blue goblin mail") &&
-            api.myPlayer.hasItem("Orange goblin mail") &&
-            api.myPlayer.hasItem("Goblin mail")
-        ) return true;
-        else return false;
+        return api.myPlayer.hasItem("Blue goblin mail") &&
+                api.myPlayer.hasItem("Orange goblin mail") &&
+                api.myPlayer.hasItem("Goblin mail");
     }
 
     private boolean madeYellowDye = false;
@@ -92,8 +87,6 @@ public class GoblinDiplomacy implements ApiScript, Quest {
     private boolean hasGoblinMail_2 = false;
     private boolean hasGoblinMail_3 = false;
 
-    private boolean hasGoblinMails = false;
-
     private boolean hasEnoughGold(String item) {
         if(item == "Redberries") {
             int coins = (int)api.mp.getInventory().getAmount("Coins");
@@ -101,8 +94,7 @@ public class GoblinDiplomacy implements ApiScript, Quest {
             int berryCost = 3;
 
             api.log("Cost calc: "+(coins - ((3-berries)*berryCost)));
-            if(coins - ((3-berries)*berryCost) >= 0) return true;
-            else return false;
+            return coins - ((3 - berries) * berryCost) >= 0;
         }
         else if(item == "Dyes") {
             int cost = 15;
@@ -112,8 +104,7 @@ public class GoblinDiplomacy implements ApiScript, Quest {
 
             int coins = (int)api.mp.getInventory().getAmount("Coins");
 
-            if(coins >= cost) return true;
-            else return false;
+            return coins >= cost;
         }
         return false;
     }
@@ -122,7 +113,7 @@ public class GoblinDiplomacy implements ApiScript, Quest {
     public void run() throws NullPointerException {
         quest_state = api.mp.getConfigs().get(quest_id);
         madeDyes = madeBlueDye && madeRedDye && madeYellowDye;
-        hasGoblinMails = hasGoblinMail_1 && hasGoblinMail_2 && hasGoblinMail_3;
+        boolean hasGoblinMails = hasGoblinMail_1 && hasGoblinMail_2 && hasGoblinMail_3;
 
         if(api.interact.isTalking()) {
             api.interact.clickContinue();
@@ -243,6 +234,11 @@ public class GoblinDiplomacy implements ApiScript, Quest {
 
     @Override
     public void pause() {
+
+    }
+
+    @Override
+    public void shutdown() {
 
     }
 

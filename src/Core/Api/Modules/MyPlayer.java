@@ -64,13 +64,11 @@ public class MyPlayer {
      */
 
     public boolean inArea(Area area) {
-        if(area.contains(tracker.my_position)) { return true; }
-        else { return false; }
+        return area.contains(tracker.my_position);
     }
 
     public boolean isWithin(Position pos, int radius) {
-        if(pos.distance(tracker.my_position) <= radius) return true;
-        return false;
+        return pos.distance(tracker.my_position) <= radius;
     }
 
     public boolean moveTo(Area area) {
@@ -85,8 +83,7 @@ public class MyPlayer {
      *  [Logic]
      */
     public boolean shouldEat() {
-        if((int)tracker.my_health <= eatAt) { return true; }
-        else { return false; }
+        return tracker.my_health <= eatAt;
     }
 
     public boolean shouldFlee() {
@@ -104,8 +101,7 @@ public class MyPlayer {
     }
 
     public boolean hasFood() {
-        if(mp.getInventory().contains(foodStrings)) { return true; }
-        else { return false; }
+        return mp.getInventory().contains(foodStrings);
     }
 
     /**
@@ -145,8 +141,7 @@ public class MyPlayer {
      * @return
      */
     public boolean ableToFight() {
-        if(!shouldEat() && !underAttack()) { return true; }
-        else { return false; }
+        return !shouldEat() && !underAttack();
     }
 
     public boolean underAttack() {
@@ -158,35 +153,29 @@ public class MyPlayer {
         // a ranged/magic attack was launched against the bot
 
         if(check_1 || check_2 || check_3) return true;
-        if(tracker.player_status == MyPlayerTracker.status.FIGHTING) return true;
-        else return false;
+        return tracker.player_status == MyPlayerTracker.status.FIGHTING;
     }
 
     public boolean canLoot() {
-        if(mp.getInventory().getEmptySlots() > 0) { return true; }
-        else { return false; }
+        return mp.getInventory().getEmptySlots() > 0;
     }
 
 
     public boolean hasBones() {
         List<Item> bones = mp.getInventory().filter(item -> item.getName().contains("bones") || item.getName().contains("Bones"));
-        if(bones != null && !bones.isEmpty()) { return true; }
-        else { return false; }
+        return bones != null && !bones.isEmpty();
     }
 
     public boolean hasEquipped(EquipmentSlot slot, String item) {
-        if(mp.getEquipment().isWearingItem(slot, item)) { return true; }
-        else return false;
+        return mp.getEquipment().isWearingItem(slot, item);
     }
 
     public boolean hasItem(String item) {
-        if(mp.getInventory().contains(item)) return true;
-        else return false;
+        return mp.getInventory().contains(item);
     }
 
     public boolean hasItem(String item, int amt) {
-        if(mp.getInventory().contains(item) && mp.getInventory().getAmount(item) >= amt) return true;
-        else return false;
+        return mp.getInventory().contains(item) && mp.getInventory().getAmount(item) >= amt;
     }
 
     public boolean isBusy(boolean combatCheck) {

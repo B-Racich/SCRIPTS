@@ -79,8 +79,7 @@ public class Miner {
             RS2Object available_rock = mp.getObjects().closest(ob -> rock.hasOre(ob));
             if(available_rock != null && available_rock.interact("Mine")) {
                 Timing.waitCondition(() -> !available_rock.exists(), 250, 5000);
-                if(!available_rock.exists()) return true;
-                else return false;
+                return !available_rock.exists();
             } else return false;
         } else return false;
     }

@@ -7,6 +7,7 @@ import org.osbot.rs07.api.ui.Tab;
 import org.osbot.rs07.script.MethodProvider;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import static Core.API.ScriptState.IDLE;
 import static org.osbot.rs07.script.MethodProvider.random;
@@ -26,21 +27,38 @@ public class Antiban extends Thread {
 
     public Antiban(API api) {
         this.api = api;
-        mp = api.osbot.getBot().getMethods();
+        mp = api.mp;
     }
 
     public void run() {
         try {
-            while(runTime) {
+            // The following test is necessary to get fast interrupts.  If
+            // it is replaced with 'true', the queue will be drained before
+            // the interrupt is noticed.  (Thanks Tim)
+            while (!Thread.interrupted()) {
                 if(check())
                     activate();
                 sleep(sleepTime);
             }
-            api.util.log("Antiban: Shutting down");
-        } catch (InterruptedException e) {
-            api.util.log(e.toString());
+        } catch (InterruptedException ex) {
+            // We are done.
         }
     }
+
+//    public void run() {
+//        try {
+//            while(runTime) {
+//                if(!runTime)
+//                    break;
+//                if(check())
+//                    activate();
+//                sleep(sleepTime);
+//            }
+//            api.util.log("Antiban: Shutting down");
+//        } catch (InterruptedException e) {
+//            api.osbot.log(e.getStackTrace());
+//        }
+//    }
 
     public void pause() {
 
@@ -54,25 +72,25 @@ public class Antiban extends Thread {
 
     public boolean check() {
         clickContinue();
-
-        if(idleFight && api.script.getState() == IDLE)
-            idleFight();
+        if(api.script != null) {
+//            api.log("Antiban: "+idleFight+"\t:"+api.script.getState());
+//            api.log("Antiban: "+idleFight);
+            if(idleFight && api.script.getState() == IDLE)
+                idleFight();
+        }
 
         time = System.currentTimeMillis();
         long diff = (time - last)/1000;
-        api.util.log("Antiban: check "+diff+" : "+checkTime);
-        int rand = (int)(Math.random()*1000);
+//        api.util.log("Antiban: check "+diff+" : "+checkTime);
 //        sleepTime = ((checkTime-diff)*1000 >= 500) ? (checkTime-diff)*1000 : 500;
-        sleepTime = rand;
+        sleepTime = random(50,100);
 
-        if(diff >= checkTime) return true;
-
-        else return false;
+        return diff >= checkTime;
     }
 
     public void activate() {
         checkTime = random(15,90);
-        sleepTime = 500;
+        sleepTime = random(50,100);
         last = System.currentTimeMillis();
         int rand = random(0,10);
         api.util.log("Antiban: Activate : "+rand);
@@ -90,6 +108,7 @@ public class Antiban extends Thread {
     }
 
     public void shutdown() {
+        runTime = false;
         this.interrupt();
     }
 

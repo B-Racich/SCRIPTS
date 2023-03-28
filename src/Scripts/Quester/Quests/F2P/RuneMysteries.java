@@ -26,8 +26,7 @@ public class RuneMysteries implements ApiScript, Quest {
     public int quest_state;
 
     public boolean isCompleted() {
-        if(api.mp.getQuests().isComplete(Quests.Quest.RUNE_MYSTERIES)) return true;
-        else return false;
+        return api.mp.getQuests().isComplete(Quests.Quest.RUNE_MYSTERIES);
     }
 
     enum state {}
@@ -70,6 +69,11 @@ public class RuneMysteries implements ApiScript, Quest {
 
     @Override
     public void pause() {
+
+    }
+
+    @Override
+    public void shutdown() {
 
     }
 

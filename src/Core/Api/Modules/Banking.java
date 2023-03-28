@@ -16,7 +16,6 @@ import java.util.List;
 public class Banking {
 
     private API api;
-    private Bot bot;
     private MethodProvider mp;
 
     /**
@@ -41,7 +40,7 @@ public class Banking {
 
     public Banking(API api) {
         this.api = api;
-        bot = api.bot;
+        Bot bot = api.bot;
         mp = api.mp;
     }
 
@@ -65,7 +64,7 @@ public class Banking {
                 NPC banker = bankerItr.next();
                 banker.interact("Bank");
                 Timing.waitCondition(() -> mp.getBank().isOpen(), 250, 2000);
-                if(mp.getBank().isOpen()) return true;
+                return mp.getBank().isOpen();
             }
         }
         return false;
@@ -80,7 +79,7 @@ public class Banking {
                 NPC banker = bankerItr.next();
                 banker.interact("Exchange");
                 Timing.waitCondition(() -> mp.getBank().isOpen(), 250, 2000);
-                if(mp.getBank().isOpen()) return true;
+                return mp.getBank().isOpen();
             }
         }
         return false;

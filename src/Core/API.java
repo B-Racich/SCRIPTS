@@ -5,6 +5,7 @@ import Core.Api.Antiban;
 import Core.Api.Common.Interfaces.ApiScript;
 import Core.Api.Common.LootLogger;
 import Core.Api.Common.StatTracker;
+import Core.Api.Common.Timing;
 import Core.Api.Common.Utility;
 import Core.Api.Modules.*;
 import org.osbot.rs07.Bot;
@@ -44,6 +45,8 @@ public class API {
     public LootLogger logger;
     public Miner miner;
 
+    public Thread antibanThread;
+
     enum Debug {
         ALL,
         BANKING,
@@ -62,16 +65,13 @@ public class API {
 
     public API(Script osbot) {
         osbot.log("API: initiating...");
+
         this.osbot = osbot;
+        bot = osbot.bot;
+        mp = bot.getMethods();
         antiban = new Antiban(this);
         camera = new Camera(this);
-        osbot.log("API: initiated...");
 
-        bot = osbot.bot;
-        antiban = antiban;
-        camera = camera;
-
-        mp = bot.getMethods();
         myPlayer = new MyPlayer(this);
         interact = new Interact(this);
         fighter = new Fighter(this);
@@ -80,6 +80,8 @@ public class API {
         stats = new StatTracker(this);
         logger = new LootLogger(this);
         miner = new Miner(this);
+
+        osbot.log("API: initiated...");
     }
 
     public enum ScriptState{
@@ -122,11 +124,22 @@ public class API {
     }
 
     public void shutdown() {
-        antiban.runTime = false;
-        antiban.shutdown();
-        fighter.shutdown();
-        myPlayer.shutdown();
-        osbot.log("API: shutdown...");
+        try {
+            antiban.runTime = false;
+            script.shutdown();
+            antiban.interrupt();
+            antiban.shutdown();
+            fighter.tracker.shutdown();
+            myPlayer.tracker.shutdown();
+            fighter.shutdown();
+            myPlayer.shutdown();
+            antiban = null;
+            fighter = null;
+            myPlayer = null;
+            osbot.log("API: shutdown...");
+        } catch(Exception e) {
+            api.osbot.log(e.getStackTrace());
+        }
     }
 
     public void log(String str) {

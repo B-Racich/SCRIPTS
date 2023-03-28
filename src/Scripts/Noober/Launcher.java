@@ -1,6 +1,7 @@
 package Scripts.Noober;
 
 import Core.API;
+import Core.Api.Common.Utility;
 import org.osbot.rs07.script.Script;
 import org.osbot.rs07.script.ScriptManifest;
 
@@ -21,7 +22,6 @@ import java.util.HashMap;
 @ScriptManifest(name = Noober.scriptName, author = "Bones", version = 1.0, info = "", logo = "")
 public class Launcher extends Script {
 
-    private Noober script;
     private API api;
 
     public HashMap<String, Integer> tasks = new HashMap<String, Integer>() {
@@ -32,10 +32,10 @@ public class Launcher extends Script {
         //Code here will execute before the loop is started
         log("Starting up...");
         api = new API(this);
-        script = new Noober(api);
+        Noober script = new Noober(api);
         api.setScript(script);
         api.runAntiban();
-        api.api.util.debug = true;
+        Utility.debug = true;
         log("Setup finished...");
     }
 

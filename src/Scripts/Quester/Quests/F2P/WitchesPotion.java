@@ -41,6 +41,11 @@ public class WitchesPotion implements ApiScript, Quest {
     }
 
     @Override
+    public void shutdown() {
+
+    }
+
+    @Override
     public void paint(Graphics2D g) {
 
     }
@@ -62,17 +67,14 @@ public class WitchesPotion implements ApiScript, Quest {
     public int quest_state;
 
     public boolean isCompleted() {
-        if(api.mp.getQuests().isComplete(Quests.Quest.WITCHS_POTION)) return true;
-        else return false;
+        return api.mp.getQuests().isComplete(Quests.Quest.WITCHS_POTION);
     }
 
     private boolean hasItems() {
-        if(api.myPlayer.hasItem("Rat's tail")
+        return api.myPlayer.hasItem("Rat's tail")
                 && api.myPlayer.hasItem("Eye of newt")
                 && api.myPlayer.hasItem("Burnt meat")
-                && api.myPlayer.hasItem("Onion"))
-        { return true;
-        } else return false;
+                && api.myPlayer.hasItem("Onion");
     }
 
     private void quest() {

@@ -15,13 +15,11 @@ import static Core.API.ScriptState.IDLE;
 
 public class Template implements ApiScript {
 
-    private API api;
-
     private long timeBegan;
     private long timeRan;
 
     public Template(API api) {
-        this.api = api;
+        API api1 = api;
     }
 
     enum state {}
@@ -33,6 +31,11 @@ public class Template implements ApiScript {
 
     @Override
     public void pause() {
+
+    }
+
+    @Override
+    public void shutdown() {
 
     }
 

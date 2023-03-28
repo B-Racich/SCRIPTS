@@ -25,14 +25,12 @@ public class RestlessGhost implements ApiScript, Quest {
     }
 
     public boolean isCompleted() {
-        if(api.mp.getQuests().isComplete(Quests.Quest.THE_RESTLESS_GHOST)) return true;
-        else return false;
+        return api.mp.getQuests().isComplete(Quests.Quest.THE_RESTLESS_GHOST);
     }
 
     enum state {}
 
     public final int quest_id = 107;
-    private int quest_state;
 
     private Area Church_Area = new Area(3243,3208,3244,3211);
     private Area Swamp_Area = new Area(3146,3173,3149,3175);
@@ -58,7 +56,7 @@ public class RestlessGhost implements ApiScript, Quest {
 
     @Override
     public void run() throws NullPointerException {
-        quest_state = api.mp.getConfigs().get(quest_id);
+        int quest_state = api.mp.getConfigs().get(quest_id);
 
         api.log("Restless Ghost: " + quest_id + " - " + quest_state);
         switch (quest_state) {
@@ -84,6 +82,11 @@ public class RestlessGhost implements ApiScript, Quest {
 
     @Override
     public void pause() {
+
+    }
+
+    @Override
+    public void shutdown() {
 
     }
 
